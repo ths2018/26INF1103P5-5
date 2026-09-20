@@ -1,0 +1,9 @@
+#put your API key in here
+.env
+
+#python enironment
+.venv/
+
+# python cache
+__pycache__/
+*.pyc
