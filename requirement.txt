@@ -1,2 +1,2 @@
-example of .env file:
-GENAI_API_KEY=genai_api_key
+google-genai
+python-dotenv
