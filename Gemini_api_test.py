@@ -51,10 +51,18 @@ while True:
     if user_input.lower() == "quit":
         break
 
-    response = chat.send_message(
-        message=user_input
-    )
+    else:
+         try:
+            response = chat.send_message(
+            message=user_input
+         )
 
-    print("\nAI:")
-    print(response.text)
-    print()
+            print("\nAI:")
+            print(response.text)
+            ()
+
+         except Exception as e:
+            print("\nAI:")
+            print("Sorry, we are currently unable to connect to the healthcare assessment service.")
+            print("Please try again later or seek professional medical assistance if needed.")
+            print()
