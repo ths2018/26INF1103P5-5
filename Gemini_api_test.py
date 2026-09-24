@@ -107,7 +107,6 @@ while True:
         print("Exiting application. Stay healthy!")
         break
 
-<<<<<<< HEAD
     if user_input.lower().startswith("history"):
         parts = user_input.split(" ", 1)
         keyword = parts[1].strip() if len(parts) > 1 else ""
@@ -166,20 +165,3 @@ while True:
         print("\nAI:")
         print("Sorry, we are currently unable to connect to the healthcare assessment service.")
         print("Please try again or seek professional medical assistance if needed.")
-=======
-    else:
-         try:
-            response = chat.send_message(
-            message=user_input
-         )
-
-            print("\nAI:")
-            print(response.text)
-            ()
-
-         except Exception as e:
-            print("\nAI:")
-            print("Sorry, we are currently unable to connect to the healthcare assessment service.")
-            print("Please try again later or seek professional medical assistance if needed.")
-            print()
->>>>>>> cc238b09d3b914c67ba9f6b4447abf3999c119f8
