@@ -1,4 +1,7 @@
+import csv
 import json
+import sys
+import subprocess
 from datetime import datetime
 from google import genai
 from google.genai import types 
@@ -6,7 +9,9 @@ from dotenv import load_dotenv
 import os
 
 DATA_FILE = "symptom_assessments.json"
-
+CSV_FILE = "symptom_assessments.csv"
+XLSX_FILE = "symptom_assessments.xlsx"
+FIELDS = ["timestamp", "user_input", "ai_response"]
 # --- Data Persistence Functions ---
 
 def load_records(filename=DATA_FILE):
@@ -49,7 +54,95 @@ def filter_records_by_keyword(keyword, records=None):
         r for r in records 
         if keyword_lower in r["user_input"].lower() or keyword_lower in r["ai_response"].lower()
     ]
+# --- Exporting to Excel (CSV) ---
+def convert_json_to_xlsx(xlsx_file=XLSX_FILE):
+    """Writes all saved records to an Excel workbook."""
+    try:
+        from openpyxl import Workbook
+    except ImportError:
+        print("Excel export needs the 'openpyxl' package.")
+        print("Install it with: pip install openpyxl")
+        print("Or use the 'export' command to save a CSV instead, which Excel can also open.")
+        return None
 
+    records = load_records()
+    if not records:
+        print("No records to export yet.")
+        return None
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Assessments"
+    ws.append(FIELDS)
+    for record in records:
+        ws.append([record.get(field, "") for field in FIELDS])
+
+    ws.column_dimensions["A"].width = 25
+    ws.column_dimensions["B"].width = 50
+    ws.column_dimensions["C"].width = 80
+
+    try:
+        wb.save(xlsx_file)
+    except OSError as e:
+        print(f"Error: could not write '{xlsx_file}': {e}")
+        return None
+
+    print(f"Exported {len(records)} record(s) to '{xlsx_file}'.")
+    return len(records)
+
+def convert_json_to_csv(json_file=DATA_FILE, csv_file=CSV_FILE):
+    """Read the JSON records and write them to a CSV file.
+    Returns the number of records written, or None on failure."""
+    if not os.path.exists(json_file):
+        print(f"Error: '{json_file}' not found.")
+        return None
+ 
+    try:
+        with open(json_file, "r", encoding="utf-8") as f:
+            records = json.load(f)
+    except (json.JSONDecodeError, OSError) as e:
+        print(f"Error: could not read '{json_file}': {e}")
+        return None
+ 
+    if not isinstance(records, list):
+        print(f"Error: '{json_file}' does not contain a list of records.")
+        return None
+ 
+    try:
+        # utf-8-sig lets Excel open the file with correct characters;
+        # newline="" stops blank lines appearing on Windows.
+        with open(csv_file, "w", newline="", encoding="utf-8-sig") as f:
+            writer = csv.DictWriter(f, fieldnames=FIELDS, extrasaction="ignore")
+            writer.writeheader()
+            for record in records:
+                writer.writerow({field: record.get(field, "") for field in FIELDS})
+    except OSError as e:
+        print(f"Error: could not write '{csv_file}': {e}")
+        return None
+ 
+    print(f"Converted {len(records)} record(s) to '{csv_file}'.")
+    return len(records)
+
+# --- Opening the CSV file in Excel ---
+def open_file(filename=XLSX_FILE):
+    """Opens a file with the system's default application."""
+    if not os.path.exists(filename):
+        print(f"'{filename}' not found. Type 'export xlsx' first to create it.")
+        return False
+
+    try:
+        if sys.platform.startswith("win"):
+            os.startfile(filename)
+        elif sys.platform == "darwin":
+            subprocess.run(["open", filename], check=True)
+        else:
+            subprocess.run(["xdg-open", filename], check=True)
+    except (OSError, subprocess.CalledProcessError) as e:
+        print(f"Could not open '{filename}': {e}")
+        return False
+
+    print(f"Opening '{filename}'...")
+    return True
 # --- Main Application Setup ---
 
 load_dotenv()
@@ -97,7 +190,7 @@ chat = client.chats.create(
 saved_records = load_records()
 print(f"--- Healthcare Assistant Initialized ---")
 print(f"Loaded {len(saved_records)} existing assessment log(s).\n")
-print("Commands: Type 'quit' to exit, or 'history <keyword>' to search past entries.")
+print("Commands: Type 'quit' to exit, or 'history <keyword>' to search past entries, or 'export' to save records to CSV.")
 print("-" * 50)
 
 while True:
@@ -106,6 +199,11 @@ while True:
     if user_input.lower() == "quit":
         print("Exiting application. Stay healthy!")
         break
+
+    if user_input.lower() == "export xlsx":
+        if convert_json_to_xlsx():
+            open_file()
+        continue
 
     if user_input.lower().startswith("history"):
         parts = user_input.split(" ", 1)
