@@ -1,0 +1,12 @@
+[
+    {
+        "timestamp": "2026-09-27T21:50:22.879531",
+        "user_input": "I cut my finger",
+        "ai_response": "Hello! I can help you assess your finger cut to figure out the next steps. \n\nTo make sure I give you the safest advice, could you please tell me a bit more about what happened?\n\n1. **How deep is the cut, and is the bleeding severe or not stopping after 5 to 10 minutes of direct pressure?**\n2. **How did the cut happen?** (For example, was it with a clean kitchen knife, a dirty/rusty metal object, or broken glass?)\n3. **Are you experiencing any numbness, tingling, or difficulty moving your finger?**\n4. **When was your last tetanus vaccination?**\n\nOnce I have a bit more information, I can guide you on what to do next. If at any point your bleeding is heavy and will not stop, please head directly to a hospital Accident and Emergency (A&E) department or call 995 for an ambulance in Singapore."
+    },
+    {
+        "timestamp": "2026-09-27T21:56:40.332527",
+        "user_input": "hello",
+        "ai_response": "Hello! I am a healthcare symptom assessment assistant designed to help you understand your symptoms and guide you on the appropriate next steps for care in Singapore. \n\nPlease note that I am here to help with an initial assessment and provide guidance, not to give a medical diagnosis. \n\nTo get started, **what symptoms or health concerns are you experiencing today?**"
+    }
+]
