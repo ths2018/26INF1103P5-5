@@ -1,6 +1,7 @@
 from google import genai
 from google.genai import types
 from dotenv import load_dotenv
+import time
 import os
 
 load_dotenv()
@@ -14,33 +15,28 @@ client = genai.Client(api_key=api_key)
 
 
 system_instruction = """
-You are a healthcare symptom assessment assistant for a student software project.
-
 Your role is to perform an initial symptom assessment, NOT provide a medical diagnosis.
 
 The country of residence is Singapore, so consider local healthcare resources
 and guidelines when providing guidance.
 
-You must:
+If you do NOT have enought information:
+- Set urgency to insufficient_information.
+- Provide follow-up question.
+- Do NOT provide next-step guidance yet.
 
-1. Identify potentially emergency symptoms.
-2. Ask follow-up questions when important information is missing.
-3. Classify urgency as exactly one of:
-   - emergency
-   - urgent
-   - non-urgent
-   - insufficient_information
-4. Provide appropriate next-step guidance.
-5. Do not make assumptions when important information is missing.
-6. If there is uncertainty, ask follow-up questions or recommend professional
-   medical assessment.
-7. For injuries, consider how the injury occurred and whether contamination
-   or environmental exposure is relevant.
-8. Keep recommendations clear and understandable.
-9. Have a certainty threshold of at least 80% before providing a recommendation.
-   If below this threshold, recommend professional medical assessment.
+If you have at least 80% certainty: 
+- Set urgency to emergency, urgent, or non-urgent.
+- Provide next-step guidance.
+- Do NOT provide follow-up question.
 
-Emergency symptoms should always be prioritized over other considerations.
+Use this format:
+
+Urgency classification: <classification>
+Certainty: <percentage>
+Follow-Up Questions:
+<question>
+
 """
 
 
@@ -48,18 +44,27 @@ config = types.GenerateContentConfig(
     system_instruction=system_instruction
 )
 
-chat = client.chats.create(
-    model="gemini-3.5-flash-lite",
-    config=config
+def create_chat():
+ return client.chats.create(
+        model="gemini-3.5-flash-lite",
+        config=config
 )
 
-def ask_ai(user_input):
-    """
-    Sends the user's input to Gemini
-    and returns the AI response.
-    """
+def resume_chat(history):
+   return client.chats.create(
+      model="gemini-3.5-flash -lite",
+      config = config,
+      history=history
+   )
+
+def ask_ai(chat,user_input):
     try:
+        print("Waiting for AI response......")
+        start_time = time.time()
         response = chat.send_message(user_input)
+
+        elapsed = time.time() - start_time
+        print(f"AI responded in {elapsed:.2f} seconds.")
 
         return response.text
 
@@ -67,3 +72,6 @@ def ask_ai(user_input):
         print(f"[DEBUG] Gemini error: {e}")
 
         return None
+
+def get_chat_history(chat):
+   return chat.get_history()
