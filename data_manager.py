@@ -3,11 +3,13 @@ import json
 import sys
 import subprocess
 from datetime import datetime
+from google.genai.types import Content, Part
 import os
+
 DATA_FILE = "symptom_assessments.json"
 CSV_FILE = "symptom_assessments.csv"
 XLSX_FILE = "symptom_assessments.xlsx"
-FIELDS = ["timestamp", "user_input", "ai_response"]
+FIELDS = ["timestamp", "case_id", "user_input", "ai_response"]
 # --- Data Persistence Functions ---
 
 def load_records(filename=DATA_FILE):
@@ -23,11 +25,32 @@ def load_records(filename=DATA_FILE):
     except (json.JSONDecodeError, IOError, OSError) as e:
         print(f"[Warning] Could not load '{filename}' due to error: {e}. Starting with an empty record set.")
         return []
+    
+def prepare_chat_history(records):
+    """Converts saved JSON records into google-genai Content objects."""
+    formatted_history = []
+    for r in records:
+        # Reconstruct the user message
+        formatted_history.append(
+            Content(
+                role="user",
+                parts=[Part.from_text(text=r["user_input"])]
+            )
+        )
+        # Reconstruct the AI response
+        formatted_history.append(
+            Content(
+                role="model",
+                parts=[Part.from_text(text=r["ai_response"])]
+            )
+        )
+    return formatted_history
 
 def save_record(user_input, response_text, filename=DATA_FILE):
     """Appends a single assessment record to the JSON file safely."""
     records = load_records(filename)
     new_record = {
+        "case_id": len(records) + 1,
         "timestamp": datetime.now().isoformat(),
         "user_input": user_input,
         "ai_response": response_text
@@ -105,8 +128,6 @@ def convert_json_to_csv(json_file=DATA_FILE, csv_file=CSV_FILE):
         return None
  
     try:
-        # utf-8-sig lets Excel open the file with correct characters;
-        # newline="" stops blank lines appearing on Windows.
         with open(csv_file, "w", newline="", encoding="utf-8-sig") as f:
             writer = csv.DictWriter(f, fieldnames=FIELDS, extrasaction="ignore")
             writer.writeheader()
@@ -139,71 +160,3 @@ def open_file(filename=XLSX_FILE):
 
     print(f"Opening '{filename}'...")
     return True
-
-
-saved_records = load_records()
-print(f"--- Healthcare Assistant Initialized ---")
-print(f"Loaded {len(saved_records)} existing assessment log(s).\n")
-print("Commands: Type 'quit' to exit, or 'history <keyword>' to search past entries, or 'export' to save records to CSV.")
-print("-" * 50)
-
-while True:
-    user_input = input("Enter your question: ")
-    
-    if user_input.lower() == "quit":
-        print("Exiting application. Stay healthy!")
-        break
-
-    if user_input.lower() == "export xlsx":
-        if convert_json_to_xlsx():
-            open_file()
-        continue
-
-    if user_input.lower().startswith("history"):
-        parts = user_input.split(" ", 1)
-        keyword = parts[1].strip() if len(parts) > 1 else ""
-        results = filter_records_by_keyword(keyword)
-        
-        if not results:
-            print(f"\nNo matching records found for '{keyword}'.")
-            continue
-
-        page_size = 2  # Number of records to show per page
-        total_records = len(results)
-        total_pages = (total_records + page_size - 1) // page_size
-        current_page = 0
-
-        while True:
-            start_idx = current_page * page_size
-            end_idx = start_idx + page_size
-            page_items = results[start_idx:end_idx]
-
-            print(f"\n{'='*20} History (Page {current_page + 1} of {total_pages}) {'='*20}")
-            
-            for idx, record in enumerate(page_items, start=start_idx + 1):
-                print(f"\n[Record #{idx}/{total_records}] - {record['timestamp']}")
-                print(f"User Question:\n{record['user_input']}")
-                print(f"\nFull AI Response:\n{record['ai_response']}")
-                print("-" * 60)
-
-            # Navigational prompts
-            nav_options = []
-            if current_page < total_pages - 1:
-                nav_options.append("'n' for next page")
-            if current_page > 0:
-                nav_options.append("'p' for previous page")
-            nav_options.append("'q' to exit search")
-
-            action = input(f"\nNavigation [{', '.join(nav_options)}]: ").strip().lower()
-
-            if action == 'n' and current_page < total_pages - 1:
-                current_page += 1
-            elif action == 'p' and current_page > 0:
-                current_page -= 1
-            elif action in ['q', 'exit', 'quit']:
-                print("Exited history view.")
-                break
-            else:
-                print("Invalid option or end of pages reached.")
-
-        continue
