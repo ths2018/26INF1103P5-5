@@ -140,6 +140,29 @@ def convert_json_to_csv(json_file=DATA_FILE, csv_file=CSV_FILE):
     print(f"Converted {len(records)} record(s) to '{csv_file}'.")
     return len(records)
 
+def check_relevance_with_history(new_query, past_records, client):
+    """Checks if the new prompt is contextually related to past assessments."""
+    if not past_records:
+        return False
+
+    summary_of_past = "\n".join([f"- User: {r['user_input']}" for r in past_records[-5:]])
+    
+    classification_prompt = f"""
+    Analyze if the New Prompt is contextually related to the Past Symptoms/Prompts.
+    
+    Past Prompts:
+    {summary_of_past}
+    
+    New Prompt: "{new_query}"
+    
+    Reply ONLY with 'YES' if related, or 'NO' if unrelated.
+    """
+    res = client.models.generate_content(
+      model="gemini-3.5-flash",
+      contents=classification_prompt
+    )
+    return "YES" in res.text.strip().upper()
+    
 # --- Opening the CSV file in Excel ---
 def open_file(filename=XLSX_FILE):
     """Opens a file with the system's default application."""
