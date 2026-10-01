@@ -1,3 +1,4 @@
+from ai_manager import ask_ai, check_relevance
 from ai_manager import ask_ai, create_chat
 from input_manager import input_manager, get_symptoms, create_prompt
 chat = create_chat()
@@ -95,6 +96,76 @@ def process_interaction(user_input):
         'has_follow_up': follow_up,
         'is_emergency': emergency
     }
+
+def is_memory_question(user_input):
+    """
+    Checks if the user input is asking about memory or past interactions.
+    """
+    memory_phrases = [
+        "what do you remember",
+        "what did we talk about",
+        "do you remember",
+        "what were my symptoms",
+        "what did i tell you",
+        "what have i told you",
+        "remember my",
+        "remember what",
+        "previous conversation",
+        "previous case",
+        "our previous chat",
+        "earlier conversation",
+        "earlier case"
+    ]
+    input_lower = user_input.lower().strip()
+
+    return any(
+        phrase in input_lower 
+        for phrase in memory_phrases
+    )
+
+def is_case_related(user_input, active_case):
+   if not active_case or not active_case.get("logs"):
+        return True
+
+   if is_memory_question(user_input):
+        return True
+
+   return check_relevance(user_input, active_case)
+
+def is_memory_question(user_input):
+    """
+    Checks if the user input is asking about memory or past interactions.
+    """
+    memory_phrases = [
+        "what do you remember",
+        "what did we talk about",
+        "do you remember",
+        "what were my symptoms",
+        "what did i tell you",
+        "what have i told you",
+        "remember my",
+        "remember what",
+        "previous conversation",
+        "previous case",
+        "our previous chat",
+        "earlier conversation",
+        "earlier case"
+    ]
+    input_lower = user_input.lower().strip()
+
+    return any(
+        phrase in input_lower 
+        for phrase in memory_phrases
+    )
+
+def is_case_related(user_input, active_case):
+   if not active_case or not active_case.get("logs"):
+        return True
+
+   if is_memory_question(user_input):
+        return True
+
+   return check_relevance(user_input, active_case)
 
 if __name__ == "__main__":
     user_input = input_manager()
