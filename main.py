@@ -1,4 +1,4 @@
-from ai_manager import ask_ai, check_relevance, create_chat
+from ai_manager import ask_ai, create_chat
 from data_manager import (
     add_log,
     close_case,
@@ -12,6 +12,7 @@ from data_manager import (
     open_file,
     show_history,
 )
+from logic_manager import is_memory_question, is_case_related
  
 HELP_TEXT = """Commands:
   quit                 exit the program
@@ -64,7 +65,7 @@ def print_cases():
  
 def main():
     print("==============================")
-    print("   HEALTHCARE ASSESSMENT CHATBOT")
+    print("HEALTHCARE ASSESSMENT CHATBOT")
     print("==============================")
     print(HELP_TEXT)
     print()
@@ -123,9 +124,15 @@ def main():
             continue
  
         # --- Case routing: decide which case this message belongs to ---
-        if active_case["logs"] and not check_relevance(user_input, active_case):
+        if(
+            active_case["logs"] 
+            and not is_memory_question(user_input)
+            and not is_case_related(user_input, active_case)
+        ):
             first_entry = active_case["logs"][0]["user_input"][:30]
+
             print(f"\n[System] This looks unrelated to {active_case['case_id']}.json.")
+
             if not ask_yes_no(f"Is it related to your earlier entry ({first_entry}...)? (y/n): "):
                 active_case, chat = start_new_case(active_case)
             else:
