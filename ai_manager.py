@@ -30,6 +30,8 @@ If you have at least 80% certainty:
 - Provide next-step guidance.
 - Do NOT provide follow-up question.
 
+Please ask the follow up question one by one instead of having multiple question at the same time.
+
 Use this format:
 
 Urgency classification: <classification>
