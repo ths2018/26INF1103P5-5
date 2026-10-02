@@ -1,4 +1,5 @@
 from datetime import datetime, date
+import time
 
 
 # Get and validate patient's name
@@ -20,6 +21,7 @@ def get_name():
 def get_dob():
     while True:
         dob_input = input("Enter date of birth (DD/MM/YYYY): ").strip()
+
         try:
             dob = datetime.strptime(dob_input, "%d/%m/%Y").date()
 
@@ -61,10 +63,26 @@ def get_gender():
         ).strip().lower()
 
         if gender in valid_genders:
+            if gender == "m":
+                gender = "male"
+            elif gender == "f":
+                gender = "female"
             return gender.title()
 
         print("Please enter a valid option.")
 
+def has_symptoms():
+    while True:
+        answer = input("Do you currently have any symptoms? (Yes/No): ").strip().lower()
+
+        if answer == "yes":
+            return True
+
+        elif answer == "no":
+            return False
+
+        else:
+            print("Invalid input. Please enter Yes or No.")
 
 # Get and validate symptoms
 def get_symptoms():
@@ -91,88 +109,146 @@ def get_symptoms():
         print("Please enter at least one valid symptom.")
 
 
-# Get symptom history
-def get_symptom_history():
+# Get symptom duration
+def get_symptom_duration():
+    valid_units = [
+        "minute", "minutes",
+        "hour", "hours",
+        "day", "days",
+        "week", "weeks",
+        "month", "months",
+        "year", "years"
+    ]
+
     while True:
-        history = input(
-            "Enter symptom history or type 'None': "
-        ).strip()
+        duration = input(
+            "Enter symptom duration (e.g. 3 days, 2 weeks): "
+        ).strip().lower()
 
-        if history == "":
-            print("Please enter symptom history or type 'None'.")
-
-        else:
-            return history
-
-
-# Get drug allergies
-def get_drug_allergy():
-    while True:
-        allergy = input(
-            "Enter drug allergies separated by commas, or type 'None': "
-        ).strip()
-
-        if allergy == "":
-            print("Please enter an allergy or type 'None'.")
+        if duration == "":
+            print("Please enter symptom duration.")
             continue
 
-        if allergy.lower() == "none":
-            return []
+        parts = duration.split()
 
-        allergy_list = []
+        # Must contain exactly 2 parts: number + unit
+        if len(parts) != 2:
+            print("Please enter duration in the format: 3 days")
+            continue
 
-        for item in allergy.split(","):
-            item = item.strip()
+        number = parts[0]
+        unit = parts[1]
 
-            if item:
-                allergy_list.append(item)
+        # Check that first part is a positive number
+        if not number.isdigit():
+            print("Duration must start with a number.")
+            continue
 
-        if allergy_list:
-            return allergy_list
+        if int(number) <= 0:
+            print("Duration must be greater than 0.")
+            continue
+
+        # Check that second part is a valid unit
+        if unit not in valid_units:
+            print(
+                "Please use minutes, hours, days, weeks, months, or years."
+            )
+            continue
+
+        return duration
+
+
+# # Get drug allergies
+# def get_drug_allergy():
+    # while True:
+        # allergy = input(
+            # "Enter drug allergies separated by commas, or type 'None': "
+        # ).strip()
+
+        # if allergy == "":
+            # print("Please enter an allergy or type 'None'.")
+            # continue
+
+        # if allergy.lower() == "none":
+            # return []
+
+        # allergy_list = []
+
+        # for item in allergy.split(","):
+            # item = item.strip()
+
+            # if item:
+                # allergy_list.append(item)
+
+        # if allergy_list:
+            # return allergy_list
 
 
 # Main Input Manager
 def input_manager():
-
-    print("\n==============================")
-    print("     PATIENT INFORMATION")
-    print("==============================")
+    print("=== Patient Information ===")
 
     name = get_name()
-
     dob = get_dob()
-
-    # Calculate age automatically
     age = calculate_age(dob)
-
     gender = get_gender()
 
-    symptoms = get_symptoms()
+    # Ask whether patient has symptoms
+    symptoms_present = has_symptoms()
 
-    symptom_history = get_symptom_history()
+    if symptoms_present:
+        symptoms = get_symptoms()
+        symptom_duration = get_symptom_duration()
+    else:
+        symptoms = "Healed"
+        symptom_duration = "None"
 
-    drug_allergy = get_drug_allergy()
+    #drug_allergy = get_drug_allergy()
 
-    # Automatically generate timestamp
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    timestamp = time.strftime("%d/%m/%Y %H:%M:%S")
 
-    # Store validated information
     patient_data = {
         "name": name,
-        "dob": dob.strftime("%d/%m/%Y"),
+        "dob": dob,
         "age": age,
         "gender": gender,
+        "has_symptoms": symptoms_present,
         "symptoms": symptoms,
-        "symptom_history": symptom_history,
-        "drug_allergy": drug_allergy,
+        "symptom_duration": symptom_duration,
+        #"drug_allergy": drug_allergy,
         "timestamp": timestamp
     }
 
     return patient_data
 
 
+# Convert patient information into a human-style prompt
+def create_prompt(patient_data):
+
+    symptoms = ", ".join(patient_data["symptoms"])
+
+    # if patient_data["drug_allergy"]:
+        # allergies = ", ".join(patient_data["drug_allergy"])
+    # else:
+        # allergies = "None"
+
+    prompt = f"""
+Hi, my name is {patient_data["name"]}. I am {patient_data["age"]} years old and my gender is {patient_data["gender"]}.
+
+I am currently experiencing the following symptoms: {symptoms}.
+I have been experiencing these symptoms for {patient_data["symptom_duration"]}.
+
+Based on the information I have provided, how serious could my condition be?
+What should I do next, and are there any warning signs that I should look out for?
+"""
+
+    return prompt
+
+
 # Run Input Manager
-patient_data = input_manager()
+pa = input_manager()
+prompt = create_prompt(pa)
+
 
 
 # Display collected information
@@ -180,24 +256,17 @@ print("\n==============================")
 print("       PATIENT SUMMARY")
 print("==============================")
 
-print("Name:", patient_data["name"])
-print("Date of Birth:", patient_data["dob"])
-print("Age:", patient_data["age"])
-print("Gender:", patient_data["gender"])
 
-print("Symptoms:", ", ".join(patient_data["symptoms"]))
-
-print("Symptom History:", patient_data["symptom_history"])
-
-if patient_data["drug_allergy"]:
-    print(
-        "Drug Allergy:",
-        ", ".join(patient_data["drug_allergy"])
-    )
-else:
-    print("Drug Allergy: None")
-
-print("Timestamp:", patient_data["timestamp"])
 
 print("==============================")
 print("Input successfully validated.")
+
+
+# Generate prompt for chatbot
+#prompt = create_prompt(patient_data)
+
+print("\n==============================")
+print("       CHATBOT PROMPT")
+print("==============================")
+
+print(prompt)
