@@ -1,19 +1,40 @@
 from datetime import datetime, date
+from unittest import result
+from ai_manager import create_chat
+from data_manager import (
+    add_log,
+    close_case,
+    convert_json_to_csv,
+    convert_json_to_xlsx,
+    create_new_case,
+    filter_records_by_keyword,
+    get_active_case,
+    list_case_files,
+    load_case,
+    open_file,
+    show_history,
+)
+from logic_manager import is_case_related, process_interaction
 import time
 
 HELP_TEXT = """
 What would you like to do?
 
-1. Start a new conversation
+1. Start a conversation
 2. View all saved cases
 3. Browse conversation history
 4. Export all records to CSV
 5. Export all records to Excel
 6. Quit
 """
-
+def welcome_message():
+    print("==============================")
+    print("HEALTHCARE ASSESSMENT CHATBOT")
+    print("==============================")
+    print()
 
 def get_menu_input():
+
     print(HELP_TEXT)
     while True:
         choice = input("Enter your choice (1-6): ").strip()
@@ -275,3 +296,30 @@ def get_additional_input(follow_up_question):
             print("Please provide an answer.")
         else:
             return additional_input
+
+def ask_yes_no(prompt):
+    """Keeps asking until the user answers y or n."""
+    while True:
+        answer = input(prompt).strip().lower()
+        if answer in ("y", "yes"):
+            return True
+        if answer in ("n", "no"):
+            return False
+        print("Please enter 'y' or 'n'.")
+
+def print_cases():
+    files = list_case_files()
+    print(f"\n{'=' * 20} Saved Cases ({len(files)}) {'=' * 20}")
+    if not files:
+        print("No cases saved yet.")
+        return
+ 
+    for path in files:
+        case = load_case(path)
+        if not case:
+            continue
+        status = "ACTIVE" if case["status"] == "open" else "CLOSED"
+        logs = case["logs"]
+        initial = logs[0]["user_input"][:30] if logs else "Empty"
+        print(f"- [{case['case_id']}.json] {status:<6} | Logs: {len(logs)} | Initial: {initial}...")
+    print("=" * 58)
