@@ -1,5 +1,4 @@
 from unittest import result
-
 from ai_manager import create_chat
 from data_manager import (
     add_log,
@@ -15,26 +14,7 @@ from data_manager import (
     show_history,
 )
 from logic_manager import is_case_related, process_interaction
- 
-HELP_TEXT = """Commands:
-  quit                 exit the program
-  cases                list all saved cases
-  new                  close the current case and start a new one
-  history [keyword]    browse past entries (optionally filtered by keyword)
-  export               save all records to CSV
-  export xlsx          save all records to Excel and open it"""
- 
- 
-def ask_yes_no(prompt):
-    """Keeps asking until the user answers y or n."""
-    while True:
-        answer = input(prompt).strip().lower()
-        if answer in ("y", "yes"):
-            return True
-        if answer in ("n", "no"):
-            return False
-        print("Please enter 'y' or 'n'.")
- 
+from input_manager import get_menu_input, get_additional_input, input_manager, create_prompt, ask_yes_no, print_cases, welcome_message
  
 def start_new_case(active_case):
     """Closes the current case (if any), creates a new one and a fresh chat."""
@@ -45,33 +25,10 @@ def start_new_case(active_case):
     new_case = create_new_case()
     print(f"[System] Created new active case: {new_case['case_id']}.json\n")
     return new_case, create_chat(new_case)
- 
- 
-def print_cases():
-    files = list_case_files()
-    print(f"\n{'=' * 20} Saved Cases ({len(files)}) {'=' * 20}")
-    if not files:
-        print("No cases saved yet.")
-        return
- 
-    for path in files:
-        case = load_case(path)
-        if not case:
-            continue
-        status = "ACTIVE" if case["status"] == "open" else "CLOSED"
-        logs = case["logs"]
-        initial = logs[0]["user_input"][:30] if logs else "Empty"
-        print(f"- [{case['case_id']}.json] {status:<6} | Logs: {len(logs)} | Initial: {initial}...")
-    print("=" * 58)
-
 
 def main():
-    print("==============================")
-    print("HEALTHCARE ASSESSMENT CHATBOT")
-    print("==============================")
-    print(HELP_TEXT)
-    print()
- 
+    welcome_message()
+
     # Resume the newest case if it is still open, otherwise start a fresh one
     active_case = get_active_case() or create_new_case()
     chat = create_chat(active_case)
@@ -80,7 +37,7 @@ def main():
  
     while True:
         try:
-            user_input = input("Enter your symptoms/question: ").strip()
+            user_input = get_menu_input()
         except (KeyboardInterrupt, EOFError):
             print("\nExiting application. Stay healthy!")
             break
