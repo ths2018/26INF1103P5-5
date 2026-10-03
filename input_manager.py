@@ -1,6 +1,26 @@
 from datetime import datetime, date
 import time
 
+HELP_TEXT = """
+What would you like to do?
+
+1. Start a new conversation
+2. View all saved cases
+3. Browse conversation history
+4. Export all records to CSV
+5. Export all records to Excel
+6. Quit
+"""
+
+
+def get_menu_input():
+    print(HELP_TEXT)
+    while True:
+        choice = input("Enter your choice (1-6): ").strip()
+
+        if choice in ["1", "2", "3", "4", "5", "6"]:
+            return choice
+        print("Invalid input. Please enter a number from 1 to 6.")
 
 # Get and validate patient's name
 def get_name():
@@ -122,7 +142,7 @@ def get_symptom_duration():
 
     while True:
         duration = input(
-            "Enter symptom duration (e.g. 3 days, 2 weeks): "
+            "Enter how long you have had your symptoms (e.g. 3 days, 2 weeks): "
         ).strip().lower()
 
         if duration == "":
@@ -244,29 +264,14 @@ What should I do next, and are there any warning signs that I should look out fo
 
     return prompt
 
+def get_additional_input(follow_up_question):
+    while True:
+        print("\nAdditional information is required.")
+        print(follow_up_question)
 
-# Run Input Manager
-pa = input_manager()
-prompt = create_prompt(pa)
+        additional_input = input("Answer: ").strip()
 
-
-
-# Display collected information
-print("\n==============================")
-print("       PATIENT SUMMARY")
-print("==============================")
-
-
-
-print("==============================")
-print("Input successfully validated.")
-
-
-# Generate prompt for chatbot
-#prompt = create_prompt(patient_data)
-
-print("\n==============================")
-print("       CHATBOT PROMPT")
-print("==============================")
-
-print(prompt)
+        if additional_input == "":
+            print("Please provide an answer.")
+        else:
+            return additional_input
