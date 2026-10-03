@@ -1,4 +1,6 @@
-from ai_manager import ask_ai, create_chat
+from unittest import result
+
+from ai_manager import create_chat
 from data_manager import (
     add_log,
     close_case,
@@ -12,7 +14,7 @@ from data_manager import (
     open_file,
     show_history,
 )
-from logic_manager import is_memory_question, is_case_related
+from logic_manager import is_case_related, process_interaction
  
 HELP_TEXT = """Commands:
   quit                 exit the program
@@ -61,8 +63,8 @@ def print_cases():
         initial = logs[0]["user_input"][:30] if logs else "Empty"
         print(f"- [{case['case_id']}.json] {status:<6} | Logs: {len(logs)} | Initial: {initial}...")
     print("=" * 58)
- 
- 
+
+
 def main():
     print("==============================")
     print("HEALTHCARE ASSESSMENT CHATBOT")
@@ -126,7 +128,6 @@ def main():
         # --- Case routing: decide which case this message belongs to ---
         if(
             active_case["logs"] 
-            and not is_memory_question(user_input)
             and not is_case_related(user_input, active_case)
         ):
             first_entry = active_case["logs"][0]["user_input"][:30]
@@ -140,7 +141,10 @@ def main():
  
         # --- Ask the AI ---
         print("\nSending to AI...")
-        ai_response = ask_ai(chat, user_input)
+
+        result = process_interaction(user_input, chat)
+        ai_response = result["ai_response"]
+
  
         if ai_response is None:
             print("\nAI service is currently unavailable.")

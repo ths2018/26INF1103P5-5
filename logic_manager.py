@@ -1,7 +1,6 @@
 from ai_manager import ask_ai, check_relevance
-from ai_manager import ask_ai, create_chat
 from input_manager import input_manager, get_symptoms, create_prompt
-chat = create_chat()
+
 
 def is_non_health_related(user_input):
     # Define a list of keywords that are common in non-health-related questions
@@ -14,9 +13,108 @@ def is_non_health_related(user_input):
 
 def is_health_related(user_input):
     health_keywords = [
-        "health", "sick", "ill", "pain", "symptom", "fever", "cough", "headache", "flu", "dizziness", "diarrhea", "swelling", "edema", "man health", "cold",
-        "medicine", "doctor", "clinic", "treatment", "injury", "infection", "wellness","healed","recovered",
-        "disease", "diagnosis", "prescription", "hospital", "nausea", "vomit", "rash", "covid-19", "stabbed", "stab", "covid 19", "ache", "sore throat", "cramps"
+        
+     # General health
+        "health", "healthy", "sick", "ill", "illness", "unwell",
+        "symptom", "symptoms", "condition", "disease", "disorder",
+        "medical", "medically", "wellness", "recovered", "healed",
+
+        # Pain
+        "pain", "ache", "aching", "sore", "soreness", "hurt",
+        "hurting", "tender", "tenderness", "cramp", "cramps",
+        "burning", "stinging", "throbbing", "sharp pain",
+
+        # Common symptoms
+        "fever", "temperature", "chills", "sweating",
+        "cough", "coughing", "sneeze", "sneezing",
+        "runny nose", "blocked nose", "stuffy nose",
+        "sore throat", "headache", "migraine",
+        "dizziness", "dizzy", "faint", "fainting",
+        "weakness", "fatigue", "tired", "exhausted",
+        "nausea", "nauseous", "vomit", "vomiting",
+        "diarrhea", "constipation", "bloating",
+        "stomach ache", "abdominal pain",
+        "swelling", "swollen", "edema",
+        "rash", "itch", "itchy", "hives",
+        "bleeding", "blood", "bruise", "bruising",
+        "numbness", "tingling",
+        "shortness of breath", "breathing difficulty",
+        "difficulty breathing", "breathless",
+        "chest pain", "palpitations",
+        "heart racing", "fast heartbeat",
+
+        # Injuries
+        "injury", "injured", "wound", "cut", "cuts",
+        "scrape", "scraped", "scratch", "scratched",
+        "burn", "burned", "burnt",
+        "bruise", "bruised",
+        "sprain", "sprained",
+        "strain", "strained",
+        "fracture", "broken bone",
+        "dislocation", "dislocated",
+        "swollen ankle", "twisted ankle",
+        "stab", "stabbed", "stabbing",
+        "puncture", "puncture wound",
+        "bite", "bitten", "insect bite",
+
+        # Respiratory
+        "flu", "influenza", "cold", "covid", "covid-19",
+        "coronavirus", "asthma", "wheezing",
+        "phlegm", "mucus", "congestion",
+        "respiratory infection",
+
+        # Digestive
+        "indigestion", "heartburn", "acid reflux",
+        "gastric", "stomach", "abdomen",
+        "abdominal", "appetite", "loss of appetite",
+        "food poisoning",
+
+        # Skin
+        "skin", "acne", "pimple", "eczema",
+        "psoriasis", "blister", "boil",
+        "dry skin", "redness", "irritation",
+
+        # Mental/emotional health
+        "anxiety", "anxious", "panic", "panic attack",
+        "stress", "depression", "depressed",
+        "insomnia", "sleep problems", "sleeping problems",
+
+        # Medical care
+        "doctor", "clinic", "hospital", "nurse",
+        "pharmacist", "medicine", "medication",
+        "drug", "treatment", "therapy",
+        "prescription", "diagnosis", "checkup",
+        "medical appointment", "emergency room",
+        "ambulance",
+
+        # Conditions
+        "diabetes", "asthma", "allergy", "allergic",
+        "infection", "bacterial infection", "viral infection",
+        "high blood pressure", "hypertension",
+        "low blood pressure", "migraine",
+
+        # Body parts
+        "head", "eye", "eyes", "ear", "ears",
+        "nose", "mouth", "throat", "neck",
+        "shoulder", "arm", "elbow", "wrist", "hand",
+        "finger", "fingers", "chest", "back",
+        "stomach", "abdomen", "hip", "leg",
+        "knee", "ankle", "foot", "feet",
+        "toe", "toes",
+
+        # Medication/allergy
+        "drug allergy", "allergy", "allergic reaction",
+        "side effect", "side effects",
+        "dosage", "dose", "overdose",
+
+        # Urgent warning symptoms
+        "unconscious", "unresponsive", "seizure",
+        "convulsion", "collapsed", "collapse",
+        "severe bleeding", "heavy bleeding",
+        "vomiting blood", "blood in stool",
+        "coughing blood", "loss of consciousness",
+        "confusion", "difficulty speaking",
+        "weakness on one side", "vision loss"
     ]
     input_lower = user_input.lower()
     return any(keyword in input_lower for keyword in health_keywords)
@@ -56,121 +154,126 @@ def is_emergency(ai_response):
     response_lower = ai_response.lower()
     return any(keyword in response_lower for keyword in emergency_keywords)
 
-def process_interaction(user_input):
+def is_memory_question(user_input):
     """
-    Orchestrates the flow: parses input, gets AI response, validates, and checks follow-up.
+    Checks if the user input is asking about memory or past interactions.
     """
+    memory_phrases = [
+        "what do you remember",
+        "what did we talk about",
+        "do you remember",
+        "what were my symptoms",
+        "what did i tell you",
+        "what have i told you",
+        "remember my",
+        "remember what",
+        "previous conversation",
+        "previous case",
+        "our previous chat",
+        "earlier conversation",
+        "earlier case"
+    ]
+    input_lower = user_input.lower().strip()
+
+    return any(
+        phrase in input_lower 
+        for phrase in memory_phrases
+    )
+
+def is_case_related(user_input, active_case):
+   if not active_case or not active_case.get("logs"):
+        return True
+
+   if is_memory_question(user_input):
+        return True
+
+   return check_relevance(user_input, active_case)
+
+def process_interaction(user_input, chat):
+    """
+    Orchestrates the flow: checks the input, gets AI response,
+    validates the response, and handles memory questions.
+    """
+
     parsed_input = user_input
 
-    if not is_health_related(user_input):
+    # ---------------------------------
+    # Memory question
+    # ---------------------------------
+
+    if is_memory_question(user_input):
+        ai_response = ask_ai(chat, parsed_input)
+
+        if ai_response is None:
             return {
-                'ai_response': "I'm sorry, but that question is not health-related. Please ask about health issues.",
+                'ai_response': None,
                 'is_relevant': False,
                 'has_follow_up': False,
-                'is_health_related': False
-            }
-        
-    if is_non_health_related(user_input):
-            return {
-                'ai_response': "I'm sorry, but that question is not health-related. Please ask about health issues.",
-                'is_relevant': False,
-                'has_follow_up': False,
-                'is_health_related': False
+                'is_health_related': True,
+                'is_emergency': False
             }
 
-    ai_response = ask_ai(chat,parsed_input)
+        return {
+            'ai_response': ai_response,
+            'is_relevant': True,
+            'has_follow_up': False,
+            'is_health_related': True,
+            'is_emergency': False
+        }
+
+    # ---------------------------------
+    # Health check
+    # ---------------------------------
+
+    if not is_health_related(user_input):
+        return {
+            'ai_response': "I'm sorry, but that question is not health-related. Please ask about health issues.",
+            'is_relevant': False,
+            'has_follow_up': False,
+            'is_health_related': False,
+            'is_emergency': False
+        }
+
+    # ---------------------------------
+    # Non-health check
+    # ---------------------------------
+
+    if is_non_health_related(user_input):
+        return {
+            'ai_response': "I'm sorry, but that question is not health-related. Please ask about health issues.",
+            'is_relevant': False,
+            'has_follow_up': False,
+            'is_health_related': False,
+            'is_emergency': False
+        }
+
+    # ---------------------------------
+    # Ask AI
+    # ---------------------------------
+
+    ai_response = ask_ai(chat, parsed_input)
 
     if ai_response is None:
         return {
-            'ai_response': "Sorry, the AI service is currently unavailable. Please try again later.",
+            'ai_response': None,
             'is_relevant': False,
-            'has_follow_up': False
+            'has_follow_up': False,
+            'is_health_related': True,
+            'is_emergency': False
         }
-    
+
+    # ---------------------------------
+    # Validate AI response
+    # ---------------------------------
+
     relevant = is_answer_relevant(user_input, ai_response)
     follow_up = has_follow_up_question(ai_response)
     emergency = is_emergency(ai_response)
+
     return {
         'ai_response': ai_response,
         'is_relevant': relevant,
         'has_follow_up': follow_up,
+        'is_health_related': True,
         'is_emergency': emergency
     }
-
-def is_memory_question(user_input):
-    """
-    Checks if the user input is asking about memory or past interactions.
-    """
-    memory_phrases = [
-        "what do you remember",
-        "what did we talk about",
-        "do you remember",
-        "what were my symptoms",
-        "what did i tell you",
-        "what have i told you",
-        "remember my",
-        "remember what",
-        "previous conversation",
-        "previous case",
-        "our previous chat",
-        "earlier conversation",
-        "earlier case"
-    ]
-    input_lower = user_input.lower().strip()
-
-    return any(
-        phrase in input_lower 
-        for phrase in memory_phrases
-    )
-
-def is_case_related(user_input, active_case):
-   if not active_case or not active_case.get("logs"):
-        return True
-
-   if is_memory_question(user_input):
-        return True
-
-   return check_relevance(user_input, active_case)
-
-def is_memory_question(user_input):
-    """
-    Checks if the user input is asking about memory or past interactions.
-    """
-    memory_phrases = [
-        "what do you remember",
-        "what did we talk about",
-        "do you remember",
-        "what were my symptoms",
-        "what did i tell you",
-        "what have i told you",
-        "remember my",
-        "remember what",
-        "previous conversation",
-        "previous case",
-        "our previous chat",
-        "earlier conversation",
-        "earlier case"
-    ]
-    input_lower = user_input.lower().strip()
-
-    return any(
-        phrase in input_lower 
-        for phrase in memory_phrases
-    )
-
-def is_case_related(user_input, active_case):
-   if not active_case or not active_case.get("logs"):
-        return True
-
-   if is_memory_question(user_input):
-        return True
-
-   return check_relevance(user_input, active_case)
-
-if __name__ == "__main__":
-    user_input = input_manager()
-    result = process_interaction(user_input)
-    print("AI Response:", result['ai_response'])
-    print("Relevant Answer:", result['is_relevant'])
-    print("Has Follow-up Question:", result['has_follow_up'])
-    print("Emergency Situation:", result['is_emergency'])
