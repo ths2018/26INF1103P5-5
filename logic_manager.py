@@ -1,5 +1,5 @@
 from ai_manager import ask_ai, check_relevance
-#from input_manager import input_manager, get_symptoms, create_prompt
+from input_manager import input_manager, get_symptoms, create_prompt
 
 
 def is_non_health_related(user_input):
@@ -154,47 +154,6 @@ def is_emergency(ai_response):
     response_lower = ai_response.lower()
     return any(keyword in response_lower for keyword in emergency_keywords)
 
-def process_interaction(user_input):
-    """
-    Orchestrates the flow: parses input, gets AI response, validates, and checks follow-up.
-    """
-    parsed_input = user_input
-
-    if not is_health_related(user_input):
-            return {
-                'ai_response': "I'm sorry, but that question is not health-related. Please ask about health issues.",
-                'is_relevant': False,
-                'has_follow_up': False,
-                'is_health_related': False
-            }
-        
-    if is_non_health_related(user_input):
-            return {
-                'ai_response': "I'm sorry, but that question is not health-related. Please ask about health issues.",
-                'is_relevant': False,
-                'has_follow_up': False,
-                'is_health_related': False
-            }
-
-    ai_response = ask_ai(chat,parsed_input)
-
-    if ai_response is None:
-        return {
-            'ai_response': "Sorry, the AI service is currently unavailable. Please try again later.",
-            'is_relevant': False,
-            'has_follow_up': False
-        }
-    
-    relevant = is_answer_relevant(user_input, ai_response)
-    follow_up = has_follow_up_question(ai_response)
-    emergency = is_emergency(ai_response)
-    return {
-        'ai_response': ai_response,
-        'is_relevant': relevant,
-        'has_follow_up': follow_up,
-        'is_emergency': emergency
-    }
-
 def is_memory_question(user_input):
     """
     Checks if the user input is asking about memory or past interactions.
@@ -229,6 +188,61 @@ def is_case_related(user_input, active_case):
         return True
 
    return check_relevance(user_input, active_case)
+
+def extract_follow_up_question(response_text):
+    """
+    Extracts the 'Follow-Up Questions' section from the AI response text.
+    Assumes the section starts with 'Follow-Up Questions:' and ends at the next label or end of string.
+    """
+    lines = response_text.splitlines()
+    capture = False
+    follow_up_lines = []
+    for line in lines:
+        if line.strip().startswith("Follow-Up Questions:"):
+            capture = True
+            continue  # Skip the label line itself
+        if capture:
+            # Stop if we reach another section label (e.g., 'Next-Step Guidance:')
+            if ":" in line and not line.startswith(" "):
+                break
+            if line.strip():  # Skip empty lines
+                follow_up_lines.append(line.strip())
+    return "\n".join(follow_up_lines) if follow_up_lines else None
+
+def extract_section(response_text, section_label, stop_labels=None):
+    """
+    Extracts the content of a section from the AI response text.
+    Stops only at the next known top-level section label.
+    """
+    if stop_labels is None:
+        # Add all possible section labels here
+        stop_labels = [
+            "Urgency classification:",
+            "Certainty:",
+            "Follow-Up Questions:",
+            "Next-Step Guidance:",
+            "AI Response:"
+        ]
+        stop_labels = [lbl for lbl in stop_labels if lbl != section_label]  # Don't include the current section label
+
+    lines = response_text.splitlines()
+    capture = False
+    section_lines = []
+    for line in lines:
+        if line.strip().startswith(section_label):
+            capture = True
+            continue  # Skip the label line itself
+        if capture:
+            # Stop if we reach another top-level section label
+            if any(line.strip().startswith(lbl) for lbl in stop_labels):
+                break
+            section_lines.append(line.rstrip())
+    # Remove leading/trailing blank lines
+    while section_lines and section_lines[0] == '':
+        section_lines.pop(0)
+    while section_lines and section_lines[-1] == '':
+        section_lines.pop()
+    return "\n".join(section_lines) if section_lines else None
 
 def process_interaction(user_input, chat):
     """
@@ -293,6 +307,17 @@ def process_interaction(user_input, chat):
     # ---------------------------------
 
     ai_response = ask_ai(chat, parsed_input)
+
+    # ---------------------------------
+    # Checking if AI response contains follow-up questions or next-step guidance
+    # ---------------------------------
+
+    if has_follow_up_question(ai_response) is True:
+        follow_up_question = extract_follow_up_question(ai_response)
+        print("Follow-Up Question:", follow_up_question)
+
+    next_step_guidance = extract_section(ai_response, "Next-Step Guidance:")
+    print("Next-Step Guidance:", next_step_guidance)
 
     if ai_response is None:
         return {
