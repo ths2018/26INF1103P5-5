@@ -175,6 +175,29 @@ def convert_json_to_xlsx(xlsx_file=XLSX_FILE):
     for row in ws.iter_rows(min_row=1, max_row=ws.max_row, max_col=len(EXPORT_FIELDS)):
         for cell in row:
             cell.alignment = wrap
+        # Bold line under the last row of each case (wherever case_id changes)
+    thick = Border(bottom=Side(style="medium"))
+    for i in range(len(records) - 1):
+        if records[i].get("case_id") != records[i + 1].get("case_id"):
+            for cell in ws[i + 2][:len(EXPORT_FIELDS)]:  # +2 = header row + 1-based index
+                cell.border = thick
+
+    # Conditional formatting on ai_response (shades the whole cell)
+    col = chr(ord("A") + EXPORT_FIELDS.index("ai_response"))
+    rng = f"{col}2:{col}{ws.max_row}"
+    first = f"{col}2"
+    rules = [  # (text the response starts with, fill colour)
+        ("urgency classification: insufficient_information", "808080"),  # grey
+        ("urgency classification: emergency",                "FFC7CE"),  # red
+        ("urgency classification: non-urgent",               "FFFF00"),  # yellow
+        ("urgency classification: urgent",                   "FFA500"),  # orange
+    ]
+    for text, colour in rules:
+        fill = PatternFill(start_color=colour, end_color=colour, fill_type="solid")
+        ws.conditional_formatting.add(
+            rng,
+            FormulaRule(formula=[f'LEFT(LOWER({first}),{len(text)})="{text}"'], fill=fill),
+        )
 
     try:
         wb.save(xlsx_file)
@@ -192,7 +215,6 @@ def convert_json_to_csv(csv_file=CSV_FILE):
     if not records:
         print("No records to export yet.")
         return None
- 
     os.makedirs(os.path.dirname(csv_file), exist_ok=True)
  
     try:
