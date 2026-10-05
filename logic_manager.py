@@ -1,6 +1,6 @@
 from ai_manager import ask_ai, check_relevance
 from ai_manager import ask_ai, create_chat
-from input_manager import input_manager, get_symptoms, create_prompt
+#from input_manager import input_manager, get_symptoms, create_prompt
 chat = create_chat()
 
 def is_non_health_related(user_input):
@@ -86,6 +86,13 @@ def process_interaction(user_input):
             'is_relevant': False,
             'has_follow_up': False
         }
+
+    if has_follow_up_question(ai_response) is True:
+        follow_up_question = extract_follow_up_question(ai_response)
+        print("Follow-Up Question:", follow_up_question)
+
+    next_step_guidance = extract_section(ai_response, "Next-Step Guidance:")
+    print("Next-Step Guidance:", next_step_guidance)
     
     relevant = is_answer_relevant(user_input, ai_response)
     follow_up = has_follow_up_question(ai_response)
@@ -167,10 +174,65 @@ def is_case_related(user_input, active_case):
 
    return check_relevance(user_input, active_case)
 
+def extract_follow_up_question(response_text):
+    """
+    Extracts the 'Follow-Up Questions' section from the AI response text.
+    Assumes the section starts with 'Follow-Up Questions:' and ends at the next label or end of string.
+    """
+    lines = response_text.splitlines()
+    capture = False
+    follow_up_lines = []
+    for line in lines:
+        if line.strip().startswith("Follow-Up Questions:"):
+            capture = True
+            continue  # Skip the label line itself
+        if capture:
+            # Stop if we reach another section label (e.g., 'Next-Step Guidance:')
+            if ":" in line and not line.startswith(" "):
+                break
+            if line.strip():  # Skip empty lines
+                follow_up_lines.append(line.strip())
+    return "\n".join(follow_up_lines) if follow_up_lines else None
+
+def extract_section(response_text, section_label, stop_labels=None):
+    """
+    Extracts the content of a section from the AI response text.
+    Stops only at the next known top-level section label.
+    """
+    if stop_labels is None:
+        # Add all possible section labels here
+        stop_labels = [
+            "Urgency classification:",
+            "Certainty:",
+            "Follow-Up Questions:",
+            "Next-Step Guidance:",
+            "AI Response:"
+        ]
+        stop_labels = [lbl for lbl in stop_labels if lbl != section_label]  # Don't include the current section label
+
+    lines = response_text.splitlines()
+    capture = False
+    section_lines = []
+    for line in lines:
+        if line.strip().startswith(section_label):
+            capture = True
+            continue  # Skip the label line itself
+        if capture:
+            # Stop if we reach another top-level section label
+            if any(line.strip().startswith(lbl) for lbl in stop_labels):
+                break
+            section_lines.append(line.rstrip())
+    # Remove leading/trailing blank lines
+    while section_lines and section_lines[0] == '':
+        section_lines.pop(0)
+    while section_lines and section_lines[-1] == '':
+        section_lines.pop()
+    return "\n".join(section_lines) if section_lines else None
+
 if __name__ == "__main__":
-    user_input = input_manager()
+    user_input = input("Enter your health-related question: ")
     result = process_interaction(user_input)
-    print("AI Response:", result['ai_response'])
+    #print("AI Response:", result['ai_response'])
     print("Relevant Answer:", result['is_relevant'])
     print("Has Follow-up Question:", result['has_follow_up'])
     print("Emergency Situation:", result['is_emergency'])
