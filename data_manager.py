@@ -145,35 +145,66 @@ def convert_json_to_xlsx(xlsx_file=XLSX_FILE):
     """Writes all saved records to an Excel workbook."""
     try:
         from openpyxl import Workbook
+        from openpyxl.styles import Alignment, Border, Side, PatternFill
+        from openpyxl.formatting.rule import FormulaRule
     except ImportError:
         print("Excel export needs the 'openpyxl' package.")
         print("Install it with: pip install openpyxl")
         print("Or use the 'export' command to save a CSV instead, which Excel can also open.")
         return None
- 
+
     records = load_all_logs()
     if not records:
         print("No records to export yet.")
         return None
- 
+
     os.makedirs(os.path.dirname(xlsx_file), exist_ok=True)
- 
+
     wb = Workbook()
     ws = wb.active
     ws.title = "Assessments"
     ws.append(EXPORT_FIELDS)
     for record in records:
         ws.append([record.get(field, "") for field in EXPORT_FIELDS])
- 
+
     for column, width in zip("ABCD", (12, 25, 50, 80)):
         ws.column_dimensions[column].width = width
- 
+
+    # Wrap text in every cell (top-aligned so tall rows read cleanly)
+    wrap = Alignment(wrap_text=True, vertical="top")
+    for row in ws.iter_rows(min_row=1, max_row=ws.max_row, max_col=len(EXPORT_FIELDS)):
+        for cell in row:
+            cell.alignment = wrap
+        # Bold line under the last row of each case (wherever case_id changes)
+    thick = Border(bottom=Side(style="medium"))
+    for i in range(len(records) - 1):
+        if records[i].get("case_id") != records[i + 1].get("case_id"):
+            for cell in ws[i + 2][:len(EXPORT_FIELDS)]:  # +2 = header row + 1-based index
+                cell.border = thick
+
+    # Conditional formatting on ai_response (shades the whole cell)
+    col = chr(ord("A") + EXPORT_FIELDS.index("ai_response"))
+    rng = f"{col}2:{col}{ws.max_row}"
+    first = f"{col}2"
+    rules = [  # (text the response starts with, fill colour)
+        ("urgency classification: insufficient_information", "808080"),  # grey
+        ("urgency classification: emergency",                "FFC7CE"),  # red
+        ("urgency classification: non-urgent",               "FFFF00"),  # yellow
+        ("urgency classification: urgent",                   "FFA500"),  # orange
+    ]
+    for text, colour in rules:
+        fill = PatternFill(start_color=colour, end_color=colour, fill_type="solid")
+        ws.conditional_formatting.add(
+            rng,
+            FormulaRule(formula=[f'LEFT(LOWER({first}),{len(text)})="{text}"'], fill=fill),
+        )
+
     try:
         wb.save(xlsx_file)
     except OSError as e:
         print(f"Error: could not write '{xlsx_file}': {e}")
         return None
- 
+
     print(f"Exported {len(records)} record(s) to '{xlsx_file}'.")
     return len(records)
  
@@ -184,7 +215,6 @@ def convert_json_to_csv(csv_file=CSV_FILE):
     if not records:
         print("No records to export yet.")
         return None
- 
     os.makedirs(os.path.dirname(csv_file), exist_ok=True)
  
     try:
