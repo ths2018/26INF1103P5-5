@@ -14,7 +14,7 @@ from data_manager import (
     show_history,
 )
 from logic_manager import is_case_related, process_interaction
-from input_manager import get_menu_input, get_additional_input, input_manager, create_prompt, ask_yes_no, print_cases, welcome_message
+from input_output_manager import get_menu_input, get_additional_input, input_manager, create_prompt, ask_yes_no, print_cases, welcome_message
  
 def start_new_case(active_case):
     """Closes the current case (if any), creates a new one and a fresh chat."""

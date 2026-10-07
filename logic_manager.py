@@ -1,5 +1,5 @@
 from ai_manager import ask_ai, check_relevance
-from input_manager import input_manager, get_symptoms, create_prompt
+from input_output_manager import input_manager, get_symptoms, create_prompt
 
 
 def is_non_health_related(user_input):
