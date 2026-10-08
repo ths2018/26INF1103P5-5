@@ -2,19 +2,9 @@ from datetime import datetime, date
 from unittest import result
 from ai_manager import create_chat
 from data_manager import (
-    add_log,
-    close_case,
-    convert_json_to_csv,
-    convert_json_to_xlsx,
-    create_new_case,
-    filter_records_by_keyword,
-    get_active_case,
     list_case_files,
-    load_case,
-    open_file,
-    show_history,
+    load_case
 )
-from logic_manager import is_case_related, process_interaction
 import time
 
 HELP_TEXT = """
@@ -323,3 +313,6 @@ def print_cases():
         initial = logs[0]["user_input"][:30] if logs else "Empty"
         print(f"- [{case['case_id']}.json] {status:<6} | Logs: {len(logs)} | Initial: {initial}...")
     print("=" * 58)
+
+def print_output(output):
+    print(output)
