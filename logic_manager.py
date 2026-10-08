@@ -1,15 +1,20 @@
-from ai_manager import ask_ai, check_relevance
-from input_manager import input_manager, get_symptoms, create_prompt
-
-
-def is_non_health_related(user_input):
-    # Define a list of keywords that are common in non-health-related questions
-    non_health_keywords = [
-        "how much", "what is", "calculate", "solve", "1+", "2+", "math", "number", "calculate", "=", "file path", "how", "am i"
-    ]
-    # Convert the input to lowercase for case-insensitive matching
-    input_lower = user_input.lower()
-    return any(keyword in input_lower for keyword in non_health_keywords)
+from ai_manager import ask_ai, check_relevance, create_chat 
+from input_output_manager import input_manager, create_prompt, get_additional_input, print_cases, keyword_input, print_output
+from data_manager import (
+    add_log,
+    close_case,
+    convert_json_to_csv,
+    convert_json_to_xlsx,
+    create_new_case,
+    filter_records_by_keyword,
+    get_active_case,
+    list_case_files,
+    load_case,
+    open_file,
+    show_history,
+)
+import re
+chat = create_chat()
 
 def is_health_related(user_input):
     health_keywords = [
@@ -156,7 +161,10 @@ def is_emergency(ai_response):
 
 #Age Risk 
 def is_high_risk_age(age):
-    return age < 5 or age > 65
+    if age < 5 or age > 65:
+        return "High risk age group"
+    else:
+        return "Not high risk age group"
 
 def is_memory_question(user_input):
     """
@@ -318,21 +326,6 @@ def process_interaction(user_input, chat):
             'is_emergency': False,
             'certainty': 0.0
         }
-
-    # ---------------------------------
-    # Non-health check
-    # ---------------------------------
-
-    if is_non_health_related(user_input):
-        return {
-            'ai_response': "I'm sorry, but that question is not health-related. Please ask about health issues.",
-            'is_relevant': False,
-            'has_follow_up': False,
-            'is_health_related': False,
-            'is_emergency': False,
-            'certainty':0.0
-        }
-
     # ---------------------------------
     # Ask AI
     # ---------------------------------
@@ -343,12 +336,16 @@ def process_interaction(user_input, chat):
     # Checking if AI response contains follow-up questions or next-step guidance
     # ---------------------------------
 
-    if has_follow_up_question(ai_response) is True:
-        follow_up_question = extract_follow_up_question(ai_response)
-        print("Follow-Up Question:", follow_up_question)
+    while True:
+        if has_follow_up_question(ai_response) is True:
+            follow_up_question = extract_follow_up_question(ai_response)
+            additional_info = get_additional_input(follow_up_question)
+            ai_response = ask_ai(chat, additional_info)
+        else:
+            break
 
     next_step_guidance = extract_section(ai_response, "Next-Step Guidance:")
-    print("Next-Step Guidance:", next_step_guidance)
+    print_output(f"Next-Step Guidance: {next_step_guidance}")
 
     if ai_response is None:
         return {
@@ -368,6 +365,7 @@ def process_interaction(user_input, chat):
     follow_up = has_follow_up_question(ai_response)
     emergency = is_emergency(ai_response)
     certainty = get_certainty(ai_response)
+    #age_risk = is_high_risk_age("age")
 
     return {
         'ai_response': ai_response,
@@ -375,5 +373,32 @@ def process_interaction(user_input, chat):
         'has_follow_up': follow_up,
         'is_health_related': True,
         'is_emergency': emergency,
-        'certainty': certainty
+        'certainty': certainty,
+        #'age_risk': age_risk
     }
+
+def menu_selection(choice):
+    if choice == "1":
+        user_input = input_manager()
+        prompt = create_prompt(user_input)
+        interaction = process_interaction(prompt, chat)
+    elif choice == "2":
+        print_cases()
+    elif choice == "3":
+        keyword = keyword_input()
+        results = filter_records_by_keyword(keyword)
+        if not results:
+            print_output(f"\nNo matching records found for '{keyword}'.")
+        else:
+            show_history(results)
+    elif choice == "4":
+        convert_json_to_csv()
+    elif choice == "5":
+        if convert_json_to_xlsx():
+            open_file()
+    else:
+        quit()
+
+
+
+        

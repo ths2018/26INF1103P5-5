@@ -316,3 +316,10 @@ def print_cases():
 
 def print_output(output):
     print(output)
+
+def keyword_input():
+    keyword = input("Enter a keyword to search in conversation history: ").strip()
+    if keyword:
+        return keyword
+    else:
+        print("Keyword cannot be empty.")
