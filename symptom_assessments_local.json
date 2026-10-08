@@ -1,0 +1,187 @@
+[
+    {
+        "timestamp": "2026-09-25T14:58:06.067936",
+        "user_input": "hi",
+        "ai_response": "Hello! I am a healthcare symptom assessment assistant for this student project. \n\nHow can I help you today? Please let me know what symptoms or health concerns you are experiencing, and we can get started. \n\n*(Please note: I provide initial symptom assessments and guidance based on Singapore healthcare resources, but I cannot provide a medical diagnosis.)*"
+    },
+    {
+        "timestamp": "2026-09-25T14:58:20.990351",
+        "user_input": "i am having cough ",
+        "ai_response": "Thank you for letting me know. To help me better understand your situation and provide the right guidance, I need to ask you a few follow-up questions:\n\n1. How long have you had this cough?\n2. Do you have any other symptoms, such as a fever, shortness of breath, chest pain, or coughing up blood?\n3. Do you have any underlying medical conditions (like asthma or heart disease)?\n\nPlease share these details so I can assess your symptoms properly."
+    },
+    {
+        "timestamp": "2026-09-25T14:58:35.254673",
+        "user_input": "1. 3 days",
+        "ai_response": "Thank you for providing that detail. However, I still need a bit more information to properly assess your situation, as you haven't mentioned whether you have any other symptoms or underlying conditions.\n\nCould you please let me know:\n1. Do you have any other symptoms, such as a fever, shortness of breath, chest pain, or coughing up blood?\n2. Do you have any underlying medical conditions (such as asthma, diabetes, or heart disease)?\n\nOnce you share these details, I will be able to give you the appropriate guidance."
+    },
+    {
+        "timestamp": "2026-09-25T15:05:53.525948",
+        "user_input": "1.c:\\SIT\\Programming\\26INF1103P5-5\\.venv\\Scripts\\python.exe c:/SIT/Programming/26INF1103P5-5/Gemini_api_test.py",
+        "ai_response": "It looks like you accidentally pasted a computer file path and command instead of your symptoms. \n\nSince I don't have the missing information about your cough yet (such as whether you have a fever, shortness of breath, or underlying medical conditions), I don't have enough details to fully assess your urgency. \n\nIf you are just experiencing a simple, mild cough for the past 3 days without any severe symptoms:\n* **Urgency Classification:** non-urgent\n* **Next Steps:** You can manage symptoms at home with rest, hydration, and over-the-counter throat lozenges or cough medicine from a local Guardian or Watsons pharmacy. \n\nHowever, **if you experience any emergency symptoms**—such as severe difficulty breathing, sudden chest pain, or coughing up blood—please seek immediate medical attention at a hospital Accident & Emergency (A&E) department or call 995.\n\nWould you like to continue discussing your cough, or did you have any other questions?"
+    },
+    {
+        "timestamp": "2026-09-25T15:11:28.881493",
+        "user_input": "export",
+        "ai_response": "It looks like you typed \"export.\" Are you trying to export our conversation, or did you mean to share another symptom or message? \n\nPlease let me know how I can help you with your health assessment today!"
+    },
+    {
+        "timestamp": "2026-09-25T15:11:52.953932",
+        "user_input": "export our conversation",
+        "ai_response": "I am unable to directly export or download our conversation history as a file for you, as I don't have access to file-saving functions in this chat interface. \n\nHowever, you can easily save our chat yourself by:\n1. Highlighting and copying the text of our conversation with your mouse or keyboard, then pasting it into a document (like Notepad or Microsoft Word).\n2. Using your browser's \"Save Page As\" feature if you are viewing this on a desktop browser.\n\nIf you need any more information about your cough or Singapore healthcare resources before you go, just let me know!"
+    },
+    {
+        "timestamp": "2026-09-25T15:12:15.179014",
+        "user_input": "q",
+        "ai_response": "It looks like you might have typed \"q\" by mistake. \n\nAre you looking to quit or end our conversation, or do you have any other questions or symptoms you'd like to check?"
+    },
+    {
+        "timestamp": "2026-09-25T15:13:01.275696",
+        "user_input": "& c:\\SIT\\Programming\\26INF1103P5-5\\.venv\\Scripts\\python.exe c:/SIT/Programming/26INF1103P5-5/Gemini_api_test.py",
+        "ai_response": "It looks like you accidentally pasted a command prompt execution line instead of describing your symptoms! \n\nCould you please let me know what symptoms you or someone else is experiencing today? Please include details such as:\n- What the main symptoms are\n- When they started\n- How severe they are\n- If there was any recent injury or illness\n\nOnce you provide this information, I can help you assess the situation and recommend the appropriate next steps in Singapore."
+    },
+    {
+        "timestamp": "2026-09-25T15:13:03.691967",
+        "user_input": "& c:\\SIT\\Programming\\26INF1103P5-5\\.venv\\Scripts\\python.exe c:/SIT/Programming/26INF1103P5-5/Gemini_api_test.py",
+        "ai_response": "It appears you are still sharing a command line path rather than describing a health concern. \n\nAs a healthcare symptom assessment assistant, I need to know your symptoms to help. Please let me know what you are experiencing (for example, chest pain, a fever, an injury, or a rash) so I can ask the right follow-up questions and guide you on what to do next in Singapore. \n\nIf this is a technical error, please type out your medical question or symptoms instead. If you are experiencing a life-threatening medical emergency (such as severe chest pain, sudden weakness, or difficulty breathing), please call **995** immediately or go to the nearest hospital Emergency Department."
+    },
+    {
+        "timestamp": "2026-09-25T15:13:14.571164",
+        "user_input": "export",
+        "ai_response": "It looks like you entered \"export,\" which might be a command you intended to run in your terminal. \n\nSince I am here to help with health symptoms and guidance based in Singapore, could you please let me know what symptoms or health concerns you are experiencing? \n\nPlease share details such as:\n- What symptoms are present (e.g., pain, fever, injury)?\n- When did they start?\n- How severe are they?\n\nOnce you provide that information, I can help assess the situation. If you are experiencing a medical emergency, please call **995** immediately."
+    },
+    {
+        "timestamp": "2026-09-25T15:13:38.024664",
+        "user_input": "export",
+        "ai_response": "Hello! I am a healthcare symptom assessment assistant designed to help you understand your symptoms and guide you on the appropriate next steps for care in Singapore. \n\nPlease note that I can help perform an initial symptom assessment, but I do not provide medical diagnoses. \n\nTo get started, **could you please tell me what symptoms or health concerns you are experiencing today?** \n\nIf your concern is related to an injury, please also let me know:\n* How the injury occurred\n* Whether there was any contamination (such as dirt, rust, or animal contact) or specific environmental exposure involved"
+    },
+    {
+        "timestamp": "2026-09-25T15:14:30.965895",
+        "user_input": "export xlx",
+        "ai_response": "It looks like you might be trying to export data or looking for a spreadsheet file (\"xlx\"). As a healthcare symptom assessment assistant, I don't have the capability to generate or export files. \n\nHowever, I am here to help you assess any health symptoms or concerns you might be experiencing. If you have any medical symptoms you would like to discuss, please let me know what they are, along with:\n* How long you have had them\n* Any other relevant details (such as how an injury happened, if applicable)\n\nIf you are looking for medical records or health data export tools in Singapore, you may want to log in to the **HealthHub SG** portal or app using your Singpass, as it manages personal health records and appointment details."
+    },
+    {
+        "timestamp": "2026-09-26T18:25:20.952914",
+        "user_input": "hi ",
+        "ai_response": "Hello! I am here to help you perform an initial symptom assessment and guide you on what steps to take next. \n\nTo get started, could you please tell me what symptoms or health concerns you are experiencing today?"
+    },
+    {
+        "timestamp": "2026-09-26T18:25:49.437722",
+        "user_input": "i am having cough and flu for 3 weeks and starting to have fever of 40 degree",
+        "ai_response": "Thank you for providing that information. \n\nA high fever of 40°C (104°F) combined with a persistent cough and flu symptoms lasting for 3 weeks is concerning and requires prompt medical attention. \n\nTo help me better understand your situation:\n1. Are you experiencing any of the following emergency symptoms right now: severe difficulty breathing, chest pain, confusion, or bluish lips/face?\n2. Do you have any underlying medical conditions (such as asthma, diabetes, heart disease, or a compromised immune system)?\n\n***\n\n### Urgency Classification\n**emergency**\n\n### Next-Step Guidance\nBecause your fever has reached 40°C and your symptoms have lasted for 3 weeks, you should seek immediate medical evaluation. \n\n* **If you are experiencing severe difficulty breathing, chest pain, or confusion:** Call **995** for an emergency ambulance immediately, or go to the nearest hospital Emergency Department (ED) such as Singapore General Hospital, National University Hospital, or Tan Tock Seng Hospital.\n* **If you do not have those severe emergency symptoms:** You should still seek urgent medical attention today. Visit a nearby General Practitioner (GP) clinic or an Urgent Care Centre. If it is after clinic hours, consider visiting a 24-hour clinic or a hospital's Urgent Care/Children's Emergency (if applicable). \n\nPlease monitor your temperature closely and do not delay seeking professional medical care."
+    },
+    {
+        "timestamp": "2026-09-26T18:36:44.099190",
+        "user_input": "i have a wound on my hand",
+        "ai_response": "To help me better understand your situation and provide the right guidance, could you please answer a few questions about the wound on your hand?\n\n1. **How did the injury happen**, and was it caused by something dirty, rusty, metal, or an animal/human bite? Also, when did it happen?\n2. **How deep or large is the wound**, and is it still bleeding? If so, has the bleeding stopped with direct pressure?\n3. **Are you experiencing any emergency symptoms**, such as severe uncontrolled bleeding, numbness, inability to move your fingers, or signs of a severe allergic reaction?\n4. **When was your last tetanus vaccination?**\n5. **Do you have any other symptoms**, such as redness spreading out from the wound, warmth, pus, fever, or red streaks?\n\n***\n\n### Classification\n**urgency:** insufficient_information"
+    },
+    {
+        "timestamp": "2026-09-26T18:46:46.602379",
+        "user_input": "i have cough ",
+        "ai_response": "To help me better understand your situation and give you the right guidance for your cough, could you please answer a few questions?\n\n1. **How long have you had this cough**, and is it dry or bringing up phlegm/mucus?\n2. **Are you experiencing any emergency symptoms**, such as severe difficulty breathing, shortness of breath when resting, chest pain, coughing up blood, or a sudden blue tint to your lips or face?\n3. **Do you have a fever**, chills, body aches, or other symptoms like a sore throat or runny nose?\n4. **Do you have any underlying medical conditions**, such as asthma, chronic bronchitis, heart conditions, or a weakened immune system?\n\n***\n\n### Classification\n**urgency:** insufficient_information"
+    },
+    {
+        "timestamp": "2026-09-26T18:52:22.012751",
+        "user_input": "c:\\SIT\\Programming\\26INF1103P5-5\\.venv\\Scripts\\python.exe c:/SIT/Programming/26INF1103P5-5/Gemini_api_test.py",
+        "ai_response": "It looks like you accidentally pasted a command path for running a Python script instead of describing a health symptom! \n\nIf you are experiencing any health symptoms or injuries, please let me know what you are feeling, and I will be happy to help you assess the urgency and recommend appropriate next steps in Singapore."
+    },
+    {
+        "timestamp": "2026-09-26T18:52:29.693519",
+        "user_input": "i have a cyst on my back ",
+        "ai_response": "To help me better understand your situation and provide the right guidance regarding the cyst on your back, could you please answer a few questions?\n\n1. **How long has the cyst been there**, and has it recently changed in size, shape, or color?\n2. **Are you experiencing any pain, tenderness, warmth, or swelling** around the area?\n3. **Is the skin over it broken, draining pus or blood, or foul-smelling?**\n4. **Are you having any systemic symptoms**, such as a fever or chills?\n\n***\n\n### Classification\n**urgency:** insufficient_information"
+    },
+    {
+        "timestamp": "2026-09-26T18:53:19.248438",
+        "user_input": "i dont know ",
+        "ai_response": "Because you are unsure about the details of the cyst on your back, it is best to have it evaluated by a healthcare professional to confirm what it is and ensure it is not becoming infected. \n\n### Next-Step Guidance (Singapore Healthcare Resources)\n* **Non-Emergency / Routine Care:** Schedule an appointment with a General Practitioner (GP) at a local neighborhood clinic (Polyclinic or private GP clinic). They can examine the cyst and advise whether it needs treatment, drainage, or removal.\n* **When to seek more urgent care:** Go to an Urgent Care Clinic or a hospital Emergency Department (A&E) immediately if you develop emergency symptoms such as:\n  * Rapidly spreading redness, severe pain, or warmth around the area.\n  * A high fever or chills.\n  * Sudden, severe swelling or signs of a severe infection.\n\n***\n\n### Classification\n**urgency:** non-urgent"
+    },
+    {
+        "timestamp": "2026-09-26T18:53:58.375385",
+        "user_input": "i have cough ",
+        "ai_response": "To help me assess your cough properly, could you please answer a few quick questions?\n\n1. **How long have you had this cough**, and is it dry or are you coughing up phlegm?\n2. **Are you experiencing any emergency symptoms**, such as severe shortness of breath, difficulty breathing, chest pain, coughing up blood, or a bluish tint to your lips or face?\n3. **Do you have a fever**, chills, or body aches?\n4. **Do you have any underlying medical conditions**, such as asthma, chronic obstructive pulmonary disease (COPD), heart disease, or a weakened immune system?\n\n***\n\n### Classification\n**urgency:** insufficient_information"
+    },
+    {
+        "timestamp": "2026-09-26T18:55:28.587762",
+        "user_input": "c:\\SIT\\Programming\\26INF1103P5-5\\.venv\\Scripts\\python.exe c:/SIT/Programming/26INF1103P5-5/input_manager.py",
+        "ai_response": "It looks like you accidentally pasted another file path for a Python script! \n\nIf you are dealing with a cough or any other health symptoms, please let me know the details so I can help you assess the urgency and guide you on what to do next in Singapore."
+    },
+    {
+        "timestamp": "2026-09-26T18:55:36.777016",
+        "user_input": "c:\\SIT\\Programming\\26INF1103P5-5\\.venv\\Scripts\\python.exe c:/SIT/Programming/26INF1103P5-5/input_manager.py",
+        "ai_response": "It seems you have pasted the file path again. If you have a health concern or symptom you would like to assess, please type it out here, and I will be glad to assist you!"
+    },
+    {
+        "timestamp": "2026-09-26T19:03:41.265264",
+        "user_input": "c:\\SIT\\Programming\\26INF1103P5-5\\.venv\\Scripts\\python.exe c:/SIT/Programming/26INF1103P5-5/Gemini_api_test.py",
+        "ai_response": "It appears you are testing your software setup. If you have any medical symptoms or questions about a health issue in Singapore, please share them so I can assist you with a symptom assessment."
+    },
+    {
+        "timestamp": "2026-09-26T19:03:49.318562",
+        "user_input": "c:\\SIT\\Programming\\26INF1103P5-5\\.venv\\Scripts\\python.exe c:/SIT/Programming/26INF1103P5-5/Gemini_api_test.py",
+        "ai_response": "It looks like you're still pasting your test script path. If you need a symptom assessment, please let me know what symptoms you are experiencing."
+    },
+    {
+        "timestamp": "2026-09-26T19:03:59.458799",
+        "user_input": "palpitation",
+        "ai_response": "To help me assess your palpitations safely, could you please answer a few quick questions?\n\n1. **Are you currently experiencing any emergency symptoms**, such as severe chest pain, pressure or tightness, shortness of breath, dizziness, lightheadedness, fainting (syncope), or confusion?\n2. **How long do these palpitations last**, and how often do they happen?\n3. **Did they start suddenly or gradually**, and do they happen at rest or during physical activity?\n4. **Do you have any known heart conditions**, high blood pressure, or a history of thyroid issues?\n\n***\n\n### Classification\n**urgency:** insufficient_information"
+    },
+    {
+        "timestamp": "2026-09-26T19:26:19.765103",
+        "user_input": "c:\\SIT\\Programming\\26INF1103P5-5\\.venv\\Scripts\\python.exe c:/SIT/Programming/26INF1103P5-5/Gemini_api_test.py",
+        "ai_response": "It looks like you are testing your code again! \n\nIf you are experiencing heart palpitations or any other health symptoms, please share them with me so I can help you assess the situation properly. Otherwise, good luck with debugging your software project!"
+    },
+    {
+        "timestamp": "2026-09-26T19:26:32.875694",
+        "user_input": "i ate peanuts 1 hour ago ",
+        "ai_response": "To help me assess this situation safely, I need to know why you are mentioning peanuts and if you are having any physical reactions. \n\nCould you please answer these quick questions?\n\n1. **Are you experiencing any emergency symptoms right now**, such as:\n   * Difficulty breathing, wheezing, or a tight chest?\n   * Swelling of your lips, tongue, or throat?\n   * Dizziness, lightheadedness, confusion, or fainting?\n   * Widespread hives or a severe rash?\n2. **Do you have a known peanut or nut allergy?**\n3. **Why are you concerned about eating peanuts** (e.g., did you accidentally consume them despite an allergy, or are you just feeling unwell after eating them)?\n\n***\n\n### Classification\n**urgency:** insufficient_information"
+    },
+    {
+        "timestamp": "2026-09-26T19:28:57.262218",
+        "user_input": "mens& c:\\SIT\\Programming\\26INF1103P5-5\\.venv\\Scripts\\python.exe c:/SIT/Programming/26INF1103P5-5/Gemini_api_test.py",
+        "ai_response": "It looks like you accidentally pasted a command prompt line rather than describing a health symptom! \n\nCould you please let me know what symptoms or health concerns you or someone else is experiencing? Once you share the details, I can help perform an initial assessment and guide you on the appropriate next steps in Singapore."
+    },
+    {
+        "timestamp": "2026-09-26T19:29:13.483812",
+        "user_input": " mens health ",
+        "ai_response": "Thank you for reaching out. \"Men's health\" is a very broad category, and I need a bit more specific information to provide a safe and helpful assessment. \n\nTo help me understand what is going on, could you please answer a few questions?\n\n1. **What specific symptoms, changes, or concerns are you experiencing?** (For example: pain, unusual lumps, urinary issues, skin changes, fatigue, or injury?)\n2. **When did these symptoms start, and have they been getting worse?**\n3. **Are you experiencing any severe symptoms, such as:**\n   - Sudden, severe chest pain or pressure?\n   - Severe shortness of breath?\n   - Sudden weakness, numbness, or difficulty speaking?\n   - Sudden, severe pain in the abdomen, groin, or testicles?\n\nOnce you provide a few more details, I can better assist you and recommend the right next steps. \n\n***\n\n*Urgency Classification:* `insufficient_information`"
+    },
+    {
+        "timestamp": "2026-09-26T19:30:01.261007",
+        "user_input": "none, i want to keep it confidential ",
+        "ai_response": "I understand completely, and privacy is very important when it comes to health concerns. \n\nBecause I am an automated assistant for a student software project, I don't store your personal identity, and our conversation is designed to help you figure out what steps to take next. However, if you prefer complete privacy and confidentiality regarding sensitive men's health issues, you may want to consider these local options in Singapore:\n\n1. **Telemedicine Apps (Private and Confidential):** \n   Platforms like *Doctor Anywhere*, *RafflesConnect*, or *WhiteCoat* allow you to consult a licensed doctor securely from your own device. Your medical records and consultation details remain strictly confidential between you and the healthcare provider.\n2. **Polyclinics or Private General Practitioners (GPs):** \n   Visiting a neighborhood GP clinic or a polyclinic is also completely confidential under Singapore's medical confidentiality laws. \n3. **Anonymous Helplines:** \n   If you have specific concerns (such as sexual health or mental well-being) and want to speak to someone anonymously before seeing a doctor, organizations like the *Aids Action Board Singapore* or *IMH's Mental Health Helpline* offer confidential advice.\n\nIf you ever feel comfortable sharing general details about what you are dealing with (like physical symptoms or lifestyle concerns), I can help guide you on how urgent it might be. Otherwise, booking a confidential consultation with a GP or via a telemedicine app is the safest way to get professional advice.\n\n***\n\n*Urgency Classification:* `non-urgent`"
+    },
+    {
+        "timestamp": "2026-09-26T19:32:22.262726",
+        "user_input": "eye pain ",
+        "ai_response": "Thank you for providing that detail. Eye pain is something that should be evaluated carefully, as certain eye conditions can worsen quickly.\n\nTo help me assess the situation more accurately, could you please answer a few questions?\n\n1. **Which eye is affected, or is it both?**\n2. **What does the pain feel like?** (e.g., sharp, aching, burning, or a feeling like something is stuck in your eye?)\n3. **How did the pain start?** (e.g., did it happen gradually, or was there an injury, a chemical splash, or exposure to dust/debris?)\n4. **Are you experiencing any other symptoms along with the eye pain, such as:**\n   - Sudden blurry vision, double vision, or loss of vision?\n   - Extreme sensitivity to light (photophobia)?\n   - Redness, swelling, or unusual discharge/watering?\n   - A headache, nausea, or vomiting?\n\nOnce you share these details, I can provide more specific guidance. \n\n*Note: If you experienced any recent chemical splash, high-speed grinding injury, or sudden loss of vision, please let me know immediately.*\n\n***\n\n*Urgency Classification:* `insufficient_information`"
+    },
+    {
+        "timestamp": "2026-09-26T19:33:47.357865",
+        "user_input": "not sure feels like there is a forign body in my eye",
+        "ai_response": "Thank you for providing that detail. Feeling like there is a foreign body in your eye can be caused by something as simple as dust or an eyelash, but it can also be due to a scratch on the cornea (corneal abrasion) or a small particle trapped under the eyelid. \n\nBecause I am missing information about whether there was an injury or exposure (such as working with tools, wind, or dust), I cannot fully rule out a more serious issue. \n\n### Immediate Safety Warning:\n* **Do NOT rub your eye.** Rubbing can scratch the cornea further or embed a foreign object deeper into the eye tissue.\n* **Do NOT attempt to remove an embedded object** with tweezers or any sharp instruments.\n\n### Next Steps in Singapore:\n* **If you suspect a chemical splash, a high-speed metal fragment (e.g., from hammering or grinding), or if you experience sudden vision loss, severe pain, or bleeding:** \n  Go immediately to the **A&E (Accident and Emergency) department** at the nearest hospital (such as Singapore General Hospital, Khoo Teck Puat Hospital, or NUH) or visit the **Singapore National Eye Centre (SNEC)** urgent care clinic.\n* **If it is a mild sensation (like dust or an eyelash) without severe pain or vision changes:**\n  You can try gently flushing your eye with sterile saline solution or clean, lukewarm water. \n* **If the foreign body sensation persists, or if you notice continued redness, pain, or blurred vision:**\n  Visit a nearby **General Practitioner (GP)** or an **optometrist** promptly so they can examine your eye under magnification and safely remove any trapped particles.\n\n***\n\n*Urgency Classification:* `urgent`"
+    },
+    {
+        "timestamp": "2026-09-26T19:34:37.021677",
+        "user_input": "menses",
+        "ai_response": "It looks like you mentioned \"menses,\" which refers to menstruation or menstrual periods. \n\nEarlier, you mentioned experiencing \"eye pain\" and feeling like there was a foreign body in your eye, and now you've mentioned menses. To help me give you the right guidance, could you clarify:\n\n1. Are you experiencing eye pain *and* menstrual-related symptoms (such as severe cramps, heavy bleeding, or unusual pain)?\n2. Or is the mention of menses a separate question or a correction to your previous input?\n\nPlease share a bit more context about what you are currently experiencing so I can provide the appropriate guidance.\n\n***\n\n*Urgency Classification:* `insufficient_information`"
+    },
+    {
+        "timestamp": "2026-09-26T19:35:57.761362",
+        "user_input": "i am & c:\\SIT\\Programming\\26INF1103P5-5\\.venv\\Scripts\\python.exe c:/SIT/Programming/26INF1103P5-5/Gemini_api_test.py",
+        "ai_response": "It looks like your message contains a file path and a command prompt entry rather than a description of a health symptom. \n\nIf you are experiencing any health symptoms or have an injury you would like to assess, please describe what you are feeling, including:\n* What your main symptoms are\n* When they started\n* How severe they are\n* Any relevant details (for example, how an injury occurred or if there was any exposure to contamination)\n\nOnce you provide this information, I can help assess the situation and provide guidance based on healthcare resources available in Singapore."
+    },
+    {
+        "timestamp": "2026-09-26T19:36:09.079997",
+        "user_input": "i want to take mc",
+        "ai_response": "To help me understand your situation and provide the appropriate next steps—including guidance related to getting a Medical Certificate (MC) in Singapore—could you please tell me:\n\n1. **What specific symptoms** are you currently experiencing?\n2. **When** did these symptoms start?\n3. How severe are they?\n\nOnce you share these details, I can assess your symptoms and guide you on whether you need to visit a General Practitioner (GP) or polyclinic, which is required to obtain an MC in Singapore."
+    },
+    {
+        "timestamp": "2026-09-26T19:37:16.870394",
+        "user_input": "stomach pain and vomitting",
+        "ai_response": "To help me better understand what is going on, could you please answer a few questions?\n\n1. **How long have you been experiencing the stomach pain and vomiting?**\n2. **What does the pain feel like (e.g., sharp, crampy, dull, constant, or coming in waves), and where is it located?**\n3. **Have you noticed any other symptoms, such as fever, diarrhea, blood in your vomit or stool, dizziness, or a stiff neck?**\n4. **Is there any possibility you might be pregnant (if applicable), or have you eaten anything unusual recently?**\n\n***\n\n### When to Seek Emergency Care Immediately\nPlease go to a hospital Emergency Department (A&E) or call **995** right away if you experience any of the following emergency symptoms:\n* Sudden, severe, or worsening abdominal pain\n* Vomiting blood or material that looks like coffee grounds\n* Black, tarry, or bloody stools\n* Inability to keep any fluids down due to persistent vomiting\n* Confusion, dizziness, fainting, or feeling lightheaded when standing\n* High fever accompanied by a stiff neck or severe headache\n\n*Disclaimer: I am an AI symptom assessment assistant for a student software project, not a doctor. This information is for initial guidance only and does not replace professional medical advice.*"
+    },
+    {
+        "timestamp": "2026-09-26T19:38:36.741403",
+        "user_input": "i dont know anything but my stomach hurts",
+        "ai_response": "Because I don't have enough details about your symptoms, duration, or severity, I cannot fully assess your condition right now. \n\n### Recommended Next Steps\n\n1. **Monitor your symptoms closely:** Watch for any red-flag symptoms, such as severe pain, vomiting blood, high fever, or dizziness.\n2. **Consult a healthcare professional:** Since stomach pain can be caused by many different things (ranging from mild indigestion to more serious conditions), it is best to visit a local General Practitioner (GP) for a proper physical examination. \n   * If you are in Singapore, you can visit a nearby neighbourhood GP clinic or polyclinic. \n   * If your symptoms worsen or clinics are closed, you can visit a hospital Urgent Care Centre (UCC) or 24-hour A&E department if it becomes a severe emergency.\n\n***\n\n**Urgency Classification:**\n* **insufficient_information**"
+    }
+]

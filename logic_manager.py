@@ -1,5 +1,5 @@
 from ai_manager import ask_ai, check_relevance
-from input_output_manager import input_manager, get_symptoms, create_prompt
+from input_manager import input_manager, get_symptoms, create_prompt
 
 
 def is_non_health_related(user_input):
@@ -154,6 +154,10 @@ def is_emergency(ai_response):
     response_lower = ai_response.lower()
     return any(keyword in response_lower for keyword in emergency_keywords)
 
+#Age Risk 
+def is_high_risk_age(age):
+    return age < 5 or age > 65
+
 def is_memory_question(user_input):
     """
     Checks if the user input is asking about memory or past interactions.
@@ -243,6 +247,29 @@ def extract_section(response_text, section_label, stop_labels=None):
     while section_lines and section_lines[-1] == '':
         section_lines.pop()
     return "\n".join(section_lines) if section_lines else None
+#Certainty
+def get_certainty(ai_response):
+    """
+    Gets the certainty as a number between 0.0 and 1.0.
+    Works with a dict response (uses its 'certainty' value) or with the
+    text response (reads the 'Certainty:' section, e.g. '0.85' or '85%').
+    Defaults to 1.0 if no certainty can be found.
+    """
+    if isinstance(ai_response, dict):
+        return ai_response.get("certainty", 1.0)
+ 
+    certainty_text = extract_section(ai_response, "Certainty:")
+    if not certainty_text:
+        return 1.0
+ 
+    match = re.search(r"\d+(?:\.\d+)?", certainty_text)
+    if not match:
+        return 1.0
+ 
+    value = float(match.group())
+    if "%" in certainty_text or value > 1:
+        value = value / 100
+    return value
 
 def process_interaction(user_input, chat):
     """
@@ -265,7 +292,8 @@ def process_interaction(user_input, chat):
                 'is_relevant': False,
                 'has_follow_up': False,
                 'is_health_related': True,
-                'is_emergency': False
+                'is_emergency': False,
+                'certainty': 0.0
             }
 
         return {
@@ -273,7 +301,8 @@ def process_interaction(user_input, chat):
             'is_relevant': True,
             'has_follow_up': False,
             'is_health_related': True,
-            'is_emergency': False
+            'is_emergency': False,
+            'certainty': 1.0
         }
 
     # ---------------------------------
@@ -286,7 +315,8 @@ def process_interaction(user_input, chat):
             'is_relevant': False,
             'has_follow_up': False,
             'is_health_related': False,
-            'is_emergency': False
+            'is_emergency': False,
+            'certainty': 0.0
         }
 
     # ---------------------------------
@@ -299,7 +329,8 @@ def process_interaction(user_input, chat):
             'is_relevant': False,
             'has_follow_up': False,
             'is_health_related': False,
-            'is_emergency': False
+            'is_emergency': False,
+            'certainty':0.0
         }
 
     # ---------------------------------
@@ -325,7 +356,8 @@ def process_interaction(user_input, chat):
             'is_relevant': False,
             'has_follow_up': False,
             'is_health_related': True,
-            'is_emergency': False
+            'is_emergency': False,
+            'certainty' :0.0
         }
 
     # ---------------------------------
@@ -335,11 +367,13 @@ def process_interaction(user_input, chat):
     relevant = is_answer_relevant(user_input, ai_response)
     follow_up = has_follow_up_question(ai_response)
     emergency = is_emergency(ai_response)
+    certainty = get_certainty(ai_response)
 
     return {
         'ai_response': ai_response,
         'is_relevant': relevant,
         'has_follow_up': follow_up,
         'is_health_related': True,
-        'is_emergency': emergency
+        'is_emergency': emergency,
+        'certainty': certainty
     }
