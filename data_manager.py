@@ -8,8 +8,10 @@ from datetime import datetime
  
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CASE_DIR = os.path.join(BASE_DIR, "case")
+
 CSV_FILE = os.path.join(CASE_DIR, "case.csv")
 XLSX_FILE = os.path.join(CASE_DIR, "case.xlsx")
+
 EXPORT_FIELDS = ["case_id", "timestamp", "user_input", "ai_response"]
  
 CASE_PATTERN = re.compile(r"case_(\d+)\.json")
@@ -19,6 +21,10 @@ CASE_PATTERN = re.compile(r"case_(\d+)\.json")
 def list_case_files():
     """Returns paths of all case_<n>.json files, sorted by number (oldest first)."""
     found = []
+
+    if not os.path.isdir(CASE_DIR):
+        return []
+        
     if os.path.isdir(CASE_DIR):
         for name in os.listdir(CASE_DIR):
             match = CASE_PATTERN.fullmatch(name)
@@ -46,7 +52,8 @@ def load_case(filepath):
     case_id = os.path.splitext(os.path.basename(filepath))[0]
  
     if isinstance(data, list):  # legacy format: just a list of records
-        return {"case_id": case_id, "status": "closed", "logs": data}
+        logs = data
+        return {"case_id": case_id, "status": "closed", "logs": logs}
  
     if isinstance(data, dict):
         case = dict(data)
@@ -60,6 +67,7 @@ def load_case(filepath):
  
 def save_case(case):
     """Writes a case to disk (via a temp file so a crash can't corrupt it)."""
+
     os.makedirs(CASE_DIR, exist_ok=True)
     path = case_path(case["case_id"])
     tmp_path = path + ".tmp"

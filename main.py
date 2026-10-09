@@ -1,49 +1,106 @@
-from unittest import result
+import traceback
 from ai_manager import create_chat
+from input_output_manager import print_output
 from data_manager import (
-    add_log,
     close_case,
-    convert_json_to_csv,
-    convert_json_to_xlsx,
     create_new_case,
-    filter_records_by_keyword,
     get_active_case,
-    list_case_files,
-    load_case,
-    open_file,
-    show_history,
 )
-from logic_manager import is_case_related, process_interaction, menu_selection
-from input_output_manager import get_menu_input, get_additional_input, input_manager, create_prompt, ask_yes_no, print_cases, welcome_message
+from input_output_manager import (
+    get_menu_input,
+    welcome_message,
+)
+from logic_manager import menu_selection
  
 def start_new_case(active_case):
     """Closes the current case (if any), creates a new one and a fresh chat."""
     if active_case:
         close_case(active_case)
-        print(f"[System] Closed {active_case['case_id']}.json.")
+        print_output(f"[System] Closed {active_case['case_id']}.json.")
  
     new_case = create_new_case()
-    print(f"[System] Created new active case: {new_case['case_id']}.json\n")
+    print_output(f"[System] Created new active case: {new_case['case_id']}.json\n")
     return new_case, create_chat(new_case)
 
 def main():
     welcome_message()
 
-    # Resume the newest case if it is still open, otherwise start a fresh one
-    active_case = get_active_case() or create_new_case()
-    chat = create_chat(active_case)
-    print(f"[System] Active case: {active_case['case_id']}.json "
-          f"({len(active_case['logs'])} earlier entries)\n")
- 
+    try:
+        active_case = get_active_case()
+
+        if active_case is None:
+            active_case = create_new_case()
+            print_output(
+                f"[System] Created active case: "
+                f"{active_case['case_id']}.json"
+            )
+
+        chat = create_chat(active_case)
+
+        print_output(
+            f"[System] Active case: "
+            f"{active_case['case_id']}.json "
+            f"({len(active_case.get('logs', []))} "
+            f"saved entries)\n"
+        )
+
+    except Exception as exc:
+        print_output(
+            "[Fatal Error] Could not initialise "
+            f"the application: {exc}"
+        )
+        return
+
     while True:
         try:
-            user_choice = get_menu_input()
-        except (KeyboardInterrupt, EOFError):
-            print("\nExiting application. Stay healthy!")
+            choice = get_menu_input()
+
+            active_case, chat, should_quit = menu_selection(
+                choice,
+                active_case,
+                chat,
+            )
+
+            if should_quit:
+                close_case(active_case)
+
+                print_output(
+                    f"\n[System] Closed "
+                    f"{active_case['case_id']}.json."
+                )
+
+                print_output(
+                    "Exiting application. Stay healthy!"
+                )
+
+                break
+
+        except KeyboardInterrupt:
+            print_output(
+                "\n\nExiting application. "
+                "Stay healthy!"
+            )
+
+            if active_case:
+                close_case(active_case)
+
             break
 
-        menu_selection(user_choice)
- 
- 
+        except EOFError:
+            print_output(
+                "\n\nInput stream closed. "
+                "Exiting application."
+            )
+
+            if active_case:
+                close_case(active_case)
+            break
+
+        except Exception as exc:
+            traceback.print_exc()
+            print(f"\n[Error] An unexpected error occurred: {type(exc).__name__}: {exc}")
+            print("The application will return to the main menu.")
+
+
 if __name__ == "__main__":
     main()

@@ -18,9 +18,9 @@ What would you like to do?
 6. Quit
 """
 def welcome_message():
-    print("==============================")
+    print("=" * 30)
     print("HEALTHCARE ASSESSMENT CHATBOT")
-    print("==============================")
+    print("=" * 30)
     print()
 
 def get_menu_input():
@@ -38,11 +38,13 @@ def get_name():
     while True:
         name = input("Enter name: ").strip()
 
-        if name == "":
+        if not name:
             print("Name cannot be empty.")
+            continue
 
-        elif not all(char.isalpha() or char in " -'" for char in name):
+        if not all(char.isalpha() or char in " -'" for char in name):
             print("Name should only contain letters.")
+            continue
 
         else:
             return name
@@ -56,14 +58,15 @@ def get_dob():
         try:
             dob = datetime.strptime(dob_input, "%d/%m/%Y").date()
 
-            if dob > date.today():
-                print("Date of birth cannot be in the future.")
-                continue
-
-            return dob
-
         except ValueError:
             print("Invalid date. Please enter DOB in DD/MM/YYYY format.")
+            continue
+
+        if dob > date.today():
+            print("Date of birth cannot be in the future.")
+            continue
+        
+        return dob
 
 
 # Calculate age automatically using DOB
@@ -81,12 +84,12 @@ def calculate_age(dob):
 
 # Get and validate gender
 def get_gender():
-    valid_genders = [
-        "male",
-        "female",
-        "m",
-        "f"
-    ]
+    valid_genders = {
+        "male": "Male",
+        "female": "Female",
+        "m": "Male",
+        "f": "Female"
+    }
 
     while True:
         gender = input(
@@ -94,11 +97,7 @@ def get_gender():
         ).strip().lower()
 
         if gender in valid_genders:
-            if gender == "m":
-                gender = "male"
-            elif gender == "f":
-                gender = "female"
-            return gender.title()
+            return valid_genders[gender]
 
         print("Please enter a valid option.")
 
@@ -122,22 +121,12 @@ def get_symptoms():
             "Enter symptoms (separate multiple symptoms with commas): "
         ).strip()
 
-        if symptoms == "":
-            print("Please enter at least one symptom.")
-            continue
+        symptoms = [symptom.strip() for symptom in symptoms.split(",") if symptom.strip()]
 
-        symptom_list = []
+        if symptoms:
+            return symptoms
 
-        for symptom in symptoms.split(","):
-            symptom = symptom.strip()
-
-            if symptom:
-                symptom_list.append(symptom)
-
-        if symptom_list:
-            return symptom_list
-
-        print("Please enter at least one valid symptom.")
+        print("Please enter at least one symptom.")
 
 
 # Get symptom duration
@@ -155,10 +144,6 @@ def get_symptom_duration():
         duration = input(
             "Enter how long you have had your symptoms (e.g. 3 days, 2 weeks): "
         ).strip().lower()
-
-        if duration == "":
-            print("Please enter symptom duration.")
-            continue
 
         parts = duration.split()
 
@@ -217,6 +202,8 @@ def get_symptom_duration():
 
 # Main Input Manager
 def input_manager():
+
+    """Collects patient information."""
     print("=== Patient Information ===")
 
     name = get_name()
@@ -231,23 +218,22 @@ def input_manager():
         symptoms = get_symptoms()
         symptom_duration = get_symptom_duration()
     else:
-        symptoms = "Healed"
+        symptoms = []
         symptom_duration = "None"
 
     #drug_allergy = get_drug_allergy()
 
-    timestamp = time.strftime("%d/%m/%Y %H:%M:%S")
-
     patient_data = {
         "name": name,
-        "dob": dob,
+        "dob": dob.isoformat(),
         "age": age,
         "gender": gender,
         "has_symptoms": symptoms_present,
         "symptoms": symptoms,
         "symptom_duration": symptom_duration,
         #"drug_allergy": drug_allergy,
-        "timestamp": timestamp
+        "timestamp": datetime.now().isoformat(
+            timespec="seconds"),
     }
 
     return patient_data
@@ -256,7 +242,16 @@ def input_manager():
 # Convert patient information into a human-style prompt
 def create_prompt(patient_data):
 
-    symptoms = ", ".join(patient_data["symptoms"])
+    symptoms = patient_data.get("symptoms", [])
+
+    if isinstance(symptoms, list):
+        symptom_text = ", ".join(symptoms) 
+
+    else:
+        symptom_text = str(symptoms)
+
+    if not symptom_text:
+        symptom_text = "No current symptoms."
 
     # if patient_data["drug_allergy"]:
         # allergies = ", ".join(patient_data["drug_allergy"])
@@ -266,7 +261,7 @@ def create_prompt(patient_data):
     prompt = f"""
 Hi, my name is {patient_data["name"]}. I am {patient_data["age"]} years old and my gender is {patient_data["gender"]}.
 
-I am currently experiencing the following symptoms: {symptoms}.
+I am currently experiencing the following symptoms: {symptom_text}.
 I have been experiencing these symptoms for {patient_data["symptom_duration"]}.
 
 Based on the information I have provided, how serious could my condition be?
@@ -282,10 +277,10 @@ def get_additional_input(follow_up_question):
 
         additional_input = input("Answer: ").strip()
 
-        if additional_input == "":
-            print("Please provide an answer.")
-        else:
+        if additional_input:
             return additional_input
+
+        print("Please provide the follow up question.")
 
 def ask_yes_no(prompt):
     """Keeps asking until the user answers y or n."""
@@ -309,17 +304,24 @@ def print_cases():
         if not case:
             continue
         status = "ACTIVE" if case["status"] == "open" else "CLOSED"
-        logs = case["logs"]
-        initial = logs[0]["user_input"][:30] if logs else "Empty"
+        logs = case.get("logs", [])
+
+        if logs:
+            initial = str(logs[0].get("user_input", "")).replace("\n", " ")[:50]
+        else:
+            initial = "Empty"
         print(f"- [{case['case_id']}.json] {status:<6} | Logs: {len(logs)} | Initial: {initial}...")
-    print("=" * 58)
+       
+    print("=" * 70)
 
 def print_output(output):
     print(output)
 
 def keyword_input():
-    keyword = input("Enter a keyword to search in conversation history: ").strip()
-    if keyword:
-        return keyword
-    else:
+    while True:
+        keyword = input("Enter a keyword to search in conversation history: ").strip()
+        if keyword:
+         return keyword
+        
         print("Keyword cannot be empty.")
+
