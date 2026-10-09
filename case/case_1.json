@@ -1,0 +1,22 @@
+{
+    "case_id": "case_1",
+    "status": "open",
+    "created": "2026-10-09T19:12:50.969255",
+    "logs": [
+        {
+            "timestamp": "2026-10-09T19:23:17.116604",
+            "user_input": "Hi, my name is Matthew. I am 22 years old and my gender is Male.\n\nI am currently experiencing the following symptoms: Fever.\nI have been experiencing these symptoms for 3 day.\n\nBased on the information I have provided, how serious could my condition be?\nWhat should I do next, and are there any warning signs that I should look out for?",
+            "ai_response": "Urgency classification: insufficient_information\nCertainty: 40%\nFollow-Up Questions:\nAre you experiencing any other symptoms along with the fever, such as a cough, sore throat, severe headache, shortness of breath, or pain when urinating?\n\nNext-Step Guidance:\nNot yet - more information needed"
+        },
+        {
+            "timestamp": "2026-10-09T19:23:17.121151",
+            "user_input": "meow",
+            "ai_response": "Urgency classification: insufficient_information\nCertainty: 40%\nFollow-Up Questions:\nCould you please provide more details about your fever or any other symptoms you might be experiencing?\n\nNext-Step Guidance:\nNot yet - more information needed"
+        },
+        {
+            "timestamp": "2026-10-09T19:23:17.124712",
+            "user_input": "chest pain",
+            "ai_response": "Urgency classification: emergency\nCertainty: 90%\nFollow-Up Questions:\nNone\n\nNext-Step Guidance:\nChest pain combined with a fever is a symptom that requires immediate medical attention. Please call 995 for an emergency ambulance or go to the nearest hospital Emergency Department (ED) immediately. Do not attempt to drive yourself. Monitor for any additional warning signs such as severe shortness of breath, dizziness, confusion, or pain radiating to your arm, neck, or jaw, and inform emergency personnel immediately if these occur."
+        }
+    ]
+}
