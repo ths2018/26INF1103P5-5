@@ -158,7 +158,7 @@ def convert_json_to_xlsx(xlsx_file=XLSX_FILE):
         from openpyxl.formatting.rule import FormulaRule
     except ImportError:
         input_output_manager.print_output("Excel export needs the 'openpyxl' package.")
-        input_output_manager.print_output("Install it with: pip install openpyxl")
+        input_output_manager.print_output("Install it with: python -m pip install openpyxl")
         input_output_manager.print_output("Or use the 'export' command to save a CSV instead, which Excel can also open.")
         return None
 
