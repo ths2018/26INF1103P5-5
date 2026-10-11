@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 from google.genai.types import Content, Part
+from input_output_manager import print_output
  
 load_dotenv()
  
@@ -122,27 +123,25 @@ def create_chat(case=None):
 def ask_ai(chat, user_input):
     """Sends a message and returns the reply text, or None if the call failed."""
     if chat is None:
-        print("[Error] AI chat is not available.")
+        print_output("[Error] AI chat is not available.")
         return None
 
     if not isinstance(user_input, str) or not user_input.strip():
-        print("[Error] Cannot send an empty message to the AI.")
+        print_output("[Error] Cannot send an empty message to the AI.")
         return None
    
     try:
         start_time = time.time()
         response = chat.send_message(message=user_input)
-        print(f"AI responded in {time.time() - start_time:.2f} seconds.")
-
         text = getattr(response, "text", None)
         if not text:
-            print("[Warning] Gemini returned an empty response.")
+            print_output("[Warning] Gemini returned an empty response.")
             return None
         
         return text.strip()
     
     except Exception as exc:
-        print(f"[DEBUG] Gemini error: {type(exc).__name__}: {exc}")
+        print_output(f"[DEBUG] Gemini error: {type(exc).__name__}: {exc}")
         return None
  
  
@@ -195,6 +194,7 @@ Reply with exactly one word: YES or NO.
             contents=prompt,
             config=types.GenerateContentConfig(
                 temperature=0,
+                automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
             ),
         )
 
@@ -203,7 +203,7 @@ Reply with exactly one word: YES or NO.
         return text.strip().upper().startswith("YES")
 
     except Exception as exc:
-        print(
+        print_output(
             f"[Warning] Relevance check failed: {exc}. "
             "Assuming the message belongs to the current case."
         )

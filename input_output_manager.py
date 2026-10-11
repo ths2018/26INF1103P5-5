@@ -1,6 +1,5 @@
 from datetime import datetime, date
 from unittest import result
-from ai_manager import create_chat
 from data_manager import (
     list_case_files,
     load_case
