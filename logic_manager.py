@@ -15,8 +15,8 @@ from data_manager import (
     show_history,
 )
 HEALTH_KEYWORDS = [
-        
-     # General health
+
+        # General health
         "health", "healthy", "sick", "ill", "illness", "unwell",
         "symptom", "symptoms", "condition", "disease", "disorder",
         "medical", "medically", "wellness", "recovered", "healed",
@@ -164,24 +164,24 @@ MAX_FOLLOW_UPS = 5 #Limit on how many questions can be asked
 def _containes_phrase(input_text, phrase):
     """Check for a phrase without matching it inside unrelated words."""
     pattern = r"(?<!\w)" + re.escape(phrase) + r"(?!\w)"
-    return re.search(pattern, input_text, re.IGNORECASE) is not None 
+    return re.search(pattern, input_text, re.IGNORECASE) is not None
 
 def is_health_related(user_input):
     if not isinstance(user_input, str):
         return False
-    
+
     input_lower = user_input.lower()
 
     if not input_lower:
         return False
-    
+
     return any(_containes_phrase(input_lower, keyword) for keyword in HEALTH_KEYWORDS)
 
 def contains_emergency_keywords(user_input):
     """Detect emergency keywords in the user input."""
     if not isinstance(user_input, str):
         return False
-    
+
     return any(_containes_phrase(user_input, keyword) for keyword in EMERGENCY_KEYWORDS)
 
 def is_memory_question(user_input):
@@ -190,7 +190,7 @@ def is_memory_question(user_input):
     """
     if not isinstance(user_input, str):
         return False
-    
+
     input_lower = user_input.lower().strip()
 
     return any(phrase in input_lower for phrase in MEMORY_PHRASES)
@@ -213,13 +213,13 @@ def has_follow_up_question(ai_response):
         is not None
     )
 
-#Age Risk 
+#Age Risk
 def is_high_risk_age(age):
     try:
         age = int(age)
     except (TypeError,ValueError):
         return "Unknown"
-    
+
     if age < 5 or age > 65:
         return "High risk age group"
     else:
@@ -267,7 +267,7 @@ def extract_section(response_text, section_label, stop_labels=None):
 
     if not isinstance(response_text, str):
         return None
-    
+
     if stop_labels is None:
         # Add all possible section labels here
         stop_labels = [
@@ -352,7 +352,7 @@ def is_emergency(ai_response):
     """
     return get_urgency(ai_response) == "emergency"
 
-def process_interaction(user_input, chat, active_case=None):
+def process_interaction(user_input, chat, active_case=None, age=None):
     """
     Processes one healthcare interaction.
 
@@ -361,6 +361,7 @@ def process_interaction(user_input, chat, active_case=None):
     - Memory questions
     - Emergency detection
     - Health-related validation
+    - Age risk (optional `age` is passed to the AI as extra context)
     - AI interaction
     - Follow-up questions
     - AI response validation
@@ -490,6 +491,20 @@ def process_interaction(user_input, chat, active_case=None):
         }
 
     # ---------------------------------
+    # Age risk
+    # ---------------------------------
+
+    age_risk = is_high_risk_age(age) if age is not None else None
+
+    ai_input = parsed_input
+    if age_risk and age_risk != "Unknown":
+        ai_input += (
+            f"\nNote: This patient is in the following age category: "
+            f"{age_risk}. Please take this into account when "
+            f"assessing urgency."
+        )
+
+    # ---------------------------------
     # Ask AI
     # ---------------------------------
 
@@ -497,7 +512,7 @@ def process_interaction(user_input, chat, active_case=None):
 
     current_input = parsed_input
 
-    ai_response = ask_ai(chat, current_input)
+    ai_response = ask_ai(chat, ai_input)
 
     # IMPORTANT:
     # Never process the response before checking for None.
@@ -519,6 +534,7 @@ def process_interaction(user_input, chat, active_case=None):
             "is_health_related": True,
             "is_emergency": False,
             "exchanges": [],
+            "age_risk": age_risk,
         }
 
     exchanges.append({
@@ -617,6 +633,7 @@ def process_interaction(user_input, chat, active_case=None):
                 "is_health_related": True,
                 "is_emergency": False,
                 "exchanges": exchanges,
+                "age_risk": age_risk,
             }
 
         exchanges.append({
@@ -644,6 +661,7 @@ def process_interaction(user_input, chat, active_case=None):
         "is_health_related": True,
         "is_emergency": urgency == "emergency",
         "exchanges": exchanges,
+        "age_risk": age_risk,
     }
 
 def menu_selection(choice, active_case, chat):
@@ -651,10 +669,13 @@ def menu_selection(choice, active_case, chat):
         patient_data = input_manager()
         prompt = create_prompt(patient_data)
 
-        result = process_interaction(prompt, chat, active_case)
+        # Pull the age out of the patient data so the AI can factor it in
+        age = patient_data.get("age") if isinstance(patient_data, dict) else None
+
+        result = process_interaction(prompt, chat, active_case, age)
         if result["ai_response"] is None:
             print_output(
-                "\nUnable to complete the assessment"
+                "\nUnable to complete the assessment "
                 "because the AI service failed."
             )
         else:
@@ -662,6 +683,8 @@ def menu_selection(choice, active_case, chat):
                 add_log(active_case, exchange["user_input"], exchange["ai_response"],)
             print_output(
                 "\n=== Assessment Result ===")
+            if result.get("age_risk"):
+                print_output(f"Age Risk: {result['age_risk']}")
             print_output(result["ai_response"])
         return active_case, chat, False
 
@@ -680,13 +703,14 @@ def menu_selection(choice, active_case, chat):
         convert_json_to_csv()
         return active_case, chat, False
     elif choice == "5":
-        if convert_json_to_xlsx():
-            open_file()
+        if convert_json_to_xlsx():git 
+        open_file()
         return active_case, chat, False
     if choice == "6":
         return active_case, chat, True
     print_output("Invalid menu option.")
     return active_case, chat, False
+
 
 
 
