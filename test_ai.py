@@ -1,3 +1,19 @@
+"""
+Offline tests for ai_manager.py
+
+- No live AI / network calls: Gemini responses and API failures are
+  simulated using unittest.mock, so tests do not consume API credits.
+- Tests cover client creation, chat history preparation, chat creation,
+  AI responses, invalid input, API failures, and case relevance checks.
+- Uses unittest and unittest.mock from the Python standard library.
+  The ai_manager module and its dependencies must still be importable.
+- No valid Gemini API key is required to run the tests because the
+  Gemini client and API calls are mocked where needed.
+
+Run:
+    python -m unittest -v test_ai
+"""
+
 import unittest
 from unittest.mock import Mock, patch
 import ai_manager
