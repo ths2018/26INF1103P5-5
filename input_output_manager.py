@@ -279,7 +279,7 @@ def get_additional_input(follow_up_question):
         if additional_input:
             return additional_input
 
-        print("Please provide the follow up question.")
+        print("Please provide the additional Information.")
 
 def ask_yes_no(prompt):
     """Keeps asking until the user answers y or n."""
