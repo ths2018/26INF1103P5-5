@@ -12,6 +12,14 @@ Offline tests for ai_manager.py
 
 Run:
     python -m unittest -v test_ai
+
+Test cases:
+- AI-01: Checks that a Gemini client is created when an API key exists.
+- AI-02: Checks that a missing API key raises a RuntimeError.
+- AI-03: Checks that saved conversation logs are converted into chat history.
+- AI-04: Checks that a chat is created with the existing case history.
+- AI-05: Checks that a new chat is created with empty history.
+- AI-06: Checks that valid user input returns the AI response.
 """
 
 import unittest
