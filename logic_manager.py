@@ -685,7 +685,7 @@ def menu_selection(choice, active_case, chat):
                 "\n=== Assessment Result ===")
             if result.get("age_risk"):
                 print_output(f"Age Risk: {result['age_risk']}")
-            print_output(extract_section(result["ai_response"]))
+            print_output(extract_section(result["ai_response"], "Next-Step Guidance:"))
         return active_case, chat, False
 
     elif choice == "2":
