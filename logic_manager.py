@@ -703,8 +703,8 @@ def menu_selection(choice, active_case, chat):
         convert_json_to_csv()
         return active_case, chat, False
     elif choice == "5":
-        if convert_json_to_xlsx():git 
-        open_file()
+        if convert_json_to_xlsx():
+            open_file()
         return active_case, chat, False
     if choice == "6":
         return active_case, chat, True
