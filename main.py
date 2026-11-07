@@ -1,5 +1,6 @@
 import traceback
-from ai_manager import create_chat
+from AI.ai_manager import AIManager
+ai_manager = AIManager()
 from input_output_manager import print_output
 from data_manager import (
     close_case,
@@ -21,7 +22,7 @@ def start_new_case(active_case):
  
     new_case = create_new_case()
     print_output(f"[System] Created new active case: {new_case.case_id}\n")
-    return new_case, create_chat(new_case)
+    return new_case, ai_manager.create_chat(new_case)
 
 def main():
     welcome_message()
@@ -37,7 +38,7 @@ def main():
                 f"{active_case.case_id}"
             )
 
-        chat = create_chat(active_case)
+        chat = ai_manager.create_chat(active_case)
 
         print_output(
             f"[System] Active case: "

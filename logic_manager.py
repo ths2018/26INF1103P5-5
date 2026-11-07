@@ -1,5 +1,5 @@
 import re
-from ai_manager import (ask_ai, check_relevance, create_chat)
+from AI.ai_manager import (ask_ai, check_relevance, create_chat)
 from input_output_manager import input_manager, create_prompt, get_additional_input, print_cases, keyword_input, filter_input, print_output, ask_yes_no
 from data_manager import (
     add_log,
@@ -684,8 +684,9 @@ def menu_selection(choice, active_case, chat):
             print_output(
                 "\n=== Assessment Result ===")
             if result.get("age_risk"):
-                print_output(f"Age Risk: {result['age_risk']}")
-            print_output(extract_section(result["ai_response"], "Next-Step Guidance:"))
+                print_output(f"Age Risk: {result["age_risk"]}")
+            print_output(result["ai_response"])
+            
         return active_case, chat, False
 
     elif choice == "2":
