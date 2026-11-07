@@ -3,6 +3,12 @@
 
 import os
 
+try:  # so CASE_BACKEND can live in the same .env file as your API keys
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 from .json_repository import JsonCaseRepository
 from .mongo_repository import MongoCaseRepository
 from .sqlite_repository import SqliteCaseRepository

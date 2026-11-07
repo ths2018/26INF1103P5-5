@@ -5,6 +5,7 @@ from data_manager import (
     close_case,
     create_new_case,
     get_active_case,
+    get_backend_name,
 )
 from input_output_manager import (
     get_menu_input,
@@ -16,10 +17,10 @@ def start_new_case(active_case):
     """Closes the current case (if any), creates a new one and a fresh chat."""
     if active_case:
         close_case(active_case)
-        print_output(f"[System] Closed {active_case['case_id']}.json.")
+        print_output(f"[System] Closed {active_case.case_id}.")
  
     new_case = create_new_case()
-    print_output(f"[System] Created new active case: {new_case['case_id']}.json\n")
+    print_output(f"[System] Created new active case: {new_case.case_id}\n")
     return new_case, create_chat(new_case)
 
 def main():
@@ -27,20 +28,21 @@ def main():
 
     try:
         active_case = get_active_case()
+        print_output(f"[System] Storage backend: {get_backend_name()}")
 
         if active_case is None:
             active_case = create_new_case()
             print_output(
                 f"[System] Created active case: "
-                f"{active_case['case_id']}.json"
+                f"{active_case.case_id}"
             )
 
         chat = create_chat(active_case)
 
         print_output(
             f"[System] Active case: "
-            f"{active_case['case_id']}.json "
-            f"({len(active_case.get('logs', []))} "
+            f"{active_case.case_id} "
+            f"({len(active_case.logs)} "
             f"saved entries)\n"
         )
 
@@ -66,7 +68,7 @@ def main():
 
                 print_output(
                     f"\n[System] Closed "
-                    f"{active_case['case_id']}.json."
+                    f"{active_case.case_id}."
                 )
 
                 print_output(

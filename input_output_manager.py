@@ -1,9 +1,4 @@
 from datetime import datetime, date
-from unittest import result
-from data_manager import (
-    list_case_files,
-    load_case
-)
 import time
 
 HELP_TEXT = """
@@ -14,7 +9,8 @@ What would you like to do?
 3. Browse conversation history
 4. Export all records to CSV
 5. Export all records to Excel
-6. Quit
+6. View urgency statistics
+7. Quit
 """
 def welcome_message():
     print("=" * 30)
@@ -26,11 +22,11 @@ def get_menu_input():
 
     print(HELP_TEXT)
     while True:
-        choice = input("Enter your choice (1-6): ").strip()
+        choice = input("Enter your choice (1-7): ").strip()
 
-        if choice in ["1", "2", "3", "4", "5", "6"]:
+        if choice in ["1", "2", "3", "4", "5", "6", "7"]:
             return choice
-        print("Invalid input. Please enter a number from 1 to 6.")
+        print("Invalid input. Please enter a number from 1 to 7.")
 
 # Get and validate patient's name
 def get_name():
@@ -292,25 +288,26 @@ def ask_yes_no(prompt):
         print("Please enter 'y' or 'n'.")
 
 def print_cases():
-    files = list_case_files()
-    print(f"\n{'=' * 20} Saved Cases ({len(files)}) {'=' * 20}")
-    if not files:
+    # Imported here rather than at the top of the file to avoid a circular
+    # import: data_manager -> casedata -> input_output_manager.
+    from data_manager import list_cases
+
+    cases = list_cases()
+    print(f"\n{'=' * 20} Saved Cases ({len(cases)}) {'=' * 20}")
+    if not cases:
         print("No cases saved yet.")
         return
- 
-    for path in files:
-        case = load_case(path)
-        if not case:
-            continue
-        status = "ACTIVE" if case["status"] == "open" else "CLOSED"
-        logs = case.get("logs", [])
+
+    for case in cases:
+        status = "ACTIVE" if case.is_open() else "CLOSED"
+        logs = case.logs
 
         if logs:
-            initial = str(logs[0].get("user_input", "")).replace("\n", " ")[:50]
+            initial = str(logs[0].user_input).replace("\n", " ")[:50]
         else:
             initial = "Empty"
-        print(f"- [{case['case_id']}.json] {status:<6} | Logs: {len(logs)} | Initial: {initial}...")
-       
+        print(f"- [{case.case_id}] {status:<6} | Logs: {len(logs)} | Initial: {initial}...")
+
     print("=" * 70)
 
 def print_output(output):
@@ -318,9 +315,14 @@ def print_output(output):
 
 def keyword_input():
     while True:
+        print("Tip: you can also filter with date:2026-11-01..2026-11-04, case:3, urgency:urgent")
         keyword = input("Enter a keyword to search in conversation history: ").strip()
         if keyword:
          return keyword
         
         print("Keyword cannot be empty.")
 
+
+def filter_input():
+    print("Filters: keyword, date:YYYY-MM-DD[..YYYY-MM-DD], case:<name or number>, urgency:<label>")
+    return input("Enter filter (or press Enter for all records): ").strip()

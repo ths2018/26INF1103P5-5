@@ -3,7 +3,12 @@
 
 import os
 import re
-import re
+
+try:  # read CASE_MONGO_URI (and CASE_BACKEND) from a .env file if python-dotenv is installed
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 from ..case import Case
 from ..config import case_number
@@ -21,7 +26,7 @@ class MongoCaseRepository(CaseRepository):
             raise RuntimeError(
                 "MongoDB backend needs pymongo: python -m pip install pymongo") from e
 
-        uri = uri or "mongodb+srv://kwokjun_db_user:SnKxHtpwKC2sCuEB@healthcare.mr4w2yd.mongodb.net/healthcare?retryWrites=true&w=majority"
+        uri = uri or os.environ.get("CASE_MONGO_URI", "mongodb://localhost:27017")
         client = None
         try:
             client = MongoClient(uri, serverSelectionTimeoutMS=3000)

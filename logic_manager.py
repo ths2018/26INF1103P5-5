@@ -1,6 +1,6 @@
 import re
 from ai_manager import (ask_ai, check_relevance, create_chat)
-from input_output_manager import input_manager, create_prompt, get_additional_input, print_cases, keyword_input, print_output, ask_yes_no
+from input_output_manager import input_manager, create_prompt, get_additional_input, print_cases, keyword_input, filter_input, print_output, ask_yes_no
 from data_manager import (
     add_log,
     close_case,
@@ -9,10 +9,10 @@ from data_manager import (
     create_new_case,
     filter_records_by_keyword,
     get_active_case,
-    list_case_files,
-    load_case,
     open_file,
+    search_records,
     show_history,
+    show_stats,
 )
 HEALTH_KEYWORDS = [
         
@@ -230,7 +230,7 @@ def is_case_related(user_input, active_case):
    if not active_case:
         return True
 
-   logs = active_case.get("logs", [])
+   logs = active_case.logs
 
    if not logs:
         return True
@@ -531,13 +531,13 @@ def process_interaction(user_input, chat, active_case=None):
     #----------------------------------
     active_case = active_case or get_active_case()
 
-    if active_case and active_case.get("logs", []):
-        first_entry = active_case["logs"][0].get("user_input", "")[:30]
+    if active_case and active_case.logs:
+        first_entry = active_case.logs[0].user_input[:30]
 
         if not check_relevance(user_input, active_case):
             print_output(
                 f"\n[System] This may be unrelated to "
-                f"{active_case['case_id']}.json"
+                f"{active_case.case_id}"
         )
 
             if not ask_yes_no(
@@ -553,7 +553,7 @@ def process_interaction(user_input, chat, active_case=None):
             else:
                 print_output(
                     f"[System] Continuing with "
-                    f"{active_case['case_id']}.json\n"
+                    f"{active_case.case_id}\n"
         )
 
     # ---------------------------------
@@ -670,7 +670,15 @@ def menu_selection(choice, active_case, chat):
         return active_case, chat, False
     elif choice == "3":
         keyword = keyword_input()
-        results = filter_records_by_keyword(keyword)
+        try:
+            if ":" in keyword:
+                # filter syntax: date:, case:, urgency: (see input_output_manager.keyword_input)
+                results = search_records(keyword)
+            else:
+                results = filter_records_by_keyword(keyword)
+        except ValueError as exc:
+            print_output(f"\n[Search] {exc}")
+            return active_case, chat, False
         if not results:
             print_output(f"\nNo matching records found for '{keyword}'.")
         else:
@@ -683,7 +691,16 @@ def menu_selection(choice, active_case, chat):
         if convert_json_to_xlsx():
             open_file()
         return active_case, chat, False
-    if choice == "6":
+    elif choice == "6":
+        query = filter_input()
+        try:
+            show_stats(query)
+            if ask_yes_no("Show per-case breakdown? (y/n): "):
+                show_stats(query, per_case=True)
+        except ValueError as exc:
+            print_output(f"\n[Stats] {exc}")
+        return active_case, chat, False
+    if choice == "7":
         return active_case, chat, True
     print_output("Invalid menu option.")
     return active_case, chat, False
