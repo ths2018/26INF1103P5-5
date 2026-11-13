@@ -1,0 +1,1357 @@
+[
+    {
+        "id": "MOH-ABDOMINAL-001",
+        "record_type": "symptom_guideline",
+        "topic": "Abdominal Pain or Indigestion",
+        "keywords": [
+            "abdominal pain",
+            "stomach ache",
+            "stomach pain",
+            "indigestion",
+            "trapped wind",
+            "heartburn",
+            "belly pain",
+            "vomiting",
+            "stomach discomfort"
+        ],
+        "possible_causes": [
+            "Indigestion",
+            "Trapped wind",
+            "Heartburn",
+            "Overeating",
+            "Drinking too much alcohol",
+            "Smoking",
+            "Viral or bacterial stomach infection",
+            "Appendicitis",
+            "Ulcers",
+            "Gallstones",
+            "Kidney stones"
+        ],
+        "care_guidance": {
+            "self_care": {
+                "conditions": [
+                    "For stomach ache that is suitable for home management and has no concerning warning signs."
+                ],
+                "recommendations": [
+                    "Sip water.",
+                    "Avoid solid food for a few hours.",
+                    "Avoid coffee, carbonated drinks, alcohol, spicy foods, fried foods and fatty foods."
+                ]
+            },
+            "pharmacist": {
+                "conditions": [
+                    "When further advice is needed to manage symptoms.",
+                    "When advice about suitable medication is required.",
+                    "When unsure whether a GP or Emergency Department visit is necessary."
+                ],
+                "recommendations": [
+                    "Consult a pharmacist for advice on managing symptoms.",
+                    "A pharmacist can recommend suitable medication or advise whether medical attention is needed."
+                ]
+            },
+            "gp": {
+                "conditions": [
+                    "Condition gets worse or does not improve within two weeks.",
+                    "Fever of 38°C or higher.",
+                    "Diarrhoea persists for more than two days.",
+                    "Vomiting persists for a few hours.",
+                    "Difficult or painful swallowing.",
+                    "Severe pain."
+                ],
+                "recommendations": [
+                    "Seek medical assessment from a GP."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [
+                    "Sudden and severe abdominal pain.",
+                    "Sweating and breathlessness.",
+                    "Vomiting that does not subside.",
+                    "Blood in vomit.",
+                    "Bloody or black sticky stools."
+                ],
+                "recommendations": [
+                    "Go to the Emergency Department."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Ministry of Health Singapore",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/abdominal-pain-or-indigestion/",
+            "last_updated": "2025-01-02",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-BRUISES-001",
+        "record_type": "symptom_guideline",
+        "topic": "Bruises",
+        "keywords": [
+            "bruise",
+            "bruises",
+            "bruising",
+            "skin discolouration",
+            "swelling after injury",
+            "bruised skin",
+            "blood under skin"
+        ],
+        "description": "Bruises are caused by bleeding from injury to blood vessels beneath the skin.",
+        "care_guidance": {
+            "self_care": {
+                "conditions": [
+                    "For bruises that are suitable for home management and do not have concerning warning signs."
+                ],
+                "recommendations": [
+                    "Apply a cold compress to reduce swelling.",
+                    "Elevate the bruised area above the level of the heart to reduce swelling.",
+                    "Over-the-counter medications such as Paracetamol or Ibuprofen may be used to relieve pain.",
+                    "Speak to a pharmacist if unsure how to take medication, especially if you have allergies, other medical conditions or are taking other medications."
+                ]
+            },
+            "pharmacist": {
+                "conditions": [
+                    "When further advice is needed to manage the bruise.",
+                    "When advice about suitable medication is required.",
+                    "When unsure whether a GP or Emergency Department visit is necessary."
+                ],
+                "recommendations": [
+                    "Consult a pharmacist for advice on managing the bruise.",
+                    "A pharmacist can recommend suitable medication or advise whether medical attention is needed."
+                ]
+            },
+            "gp": {
+                "conditions": [
+                    "Severe pain from the bruise.",
+                    "Pus draining from the bruise.",
+                    "Red painful streaks around the bruise.",
+                    "Fever.",
+                    "Multiple unexplained bruises over the body.",
+                    "Bruised area increases in size."
+                ],
+                "recommendations": [
+                    "Seek medical assessment from a GP."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [
+                    "Painful swelling of the bruised site affecting movement, which may indicate a fracture."
+                ],
+                "recommendations": [
+                    "Go to the Emergency Department."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Ministry of Health Singapore",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/bruises/",
+            "last_updated": "2025-01-02",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-COLD-FLU-001",
+        "record_type": "symptom_guideline",
+        "topic": "Cold and Flu",
+        "keywords": [
+            "cold",
+            "common cold",
+            "flu",
+            "influenza",
+            "runny nose",
+            "blocked nose",
+            "sneezing",
+            "watery eyes",
+            "sore throat",
+            "cough",
+            "fever",
+            "body aches",
+            "headache",
+            "tiredness",
+            "loss of appetite",
+            "nausea"
+        ],
+        "description": "Colds are usually mild and people normally recover on their own with little self-treatment. Influenza or flu can be more severe and contagious than a common cold.",
+        "symptoms": {
+            "common_cold": [
+                "Blocked or runny nose",
+                "Sneezing",
+                "Watery eyes",
+                "Sore throat",
+                "Cough"
+            ],
+            "influenza": [
+                "Fever",
+                "Headaches",
+                "Body aches",
+                "Tiredness",
+                "Sore throat",
+                "Cough",
+                "Loss of appetite",
+                "Nausea"
+            ]
+        },
+        "care_guidance": {
+            "self_care": {
+                "conditions": [
+                    "For cold or flu symptoms that are suitable for home management and do not have concerning warning signs."
+                ],
+                "recommendations": [
+                    "Stay home and get plenty of rest.",
+                    "Take a warm bath to help relax and soothe body aches.",
+                    "Drink plenty of fluids.",
+                    "Apply mentholated or vapour rubs to the chest, neck and back to help with breathing, especially before sleeping.",
+                    "Over-the-counter medications such as Paracetamol, Ibuprofen and antihistamines may be used where appropriate.",
+                    "Speak to a pharmacist if unsure how to take medication, especially if you have allergies, other medical conditions or are currently taking other medications."
+                ]
+            },
+            "pharmacist": {
+                "conditions": [
+                    "When further advice is needed to manage cold or flu symptoms.",
+                    "When advice about suitable medication is required.",
+                    "When unsure whether a GP visit is necessary."
+                ],
+                "recommendations": [
+                    "Consult a pharmacist for advice on managing symptoms.",
+                    "A pharmacist can recommend suitable medication or advise whether medical attention is needed."
+                ]
+            },
+            "gp": {
+                "conditions": [
+                    "Condition gets worse or does not improve within two weeks.",
+                    "Fever of 38°C or higher.",
+                    "Cough with thick yellow or green phlegm.",
+                    "Cough containing blood.",
+                    "Difficulty breathing.",
+                    "Age 65 or above with multiple long-term medical conditions.",
+                    "Pregnancy.",
+                    "Long-term medical conditions such as asthma, lung disease, heart disease, diabetes or kidney disease."
+                ],
+                "recommendations": [
+                    "Seek medical assessment from a GP."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [],
+                "recommendations": [
+                    "MOH states that a cold or flu alone does not normally require an Emergency Department visit unless advised by a GP."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Ministry of Health Singapore",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/cold-and-flu/",
+            "last_updated": "2025-01-02",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-CUTS-WOUNDS-001",
+        "record_type": "symptom_guideline",
+        "topic": "Cuts and Open Wounds",
+        "keywords": [
+            "cut",
+            "cuts",
+            "open wound",
+            "open wounds",
+            "skin injury",
+            "bleeding wound",
+            "laceration",
+            "torn skin",
+            "deep cut",
+            "animal bite",
+            "wound infection",
+            "splinter"
+        ],
+        "description": "Cuts are wounds where the skin is lacerated or torn. Open wounds are caused by injury to the skin and may result in scarring or infection.",
+        "injury_types": {
+            "cuts": {
+                "description": "Cuts occur when the skin is lacerated or torn. Deep cuts may cause bleeding."
+            },
+            "open_wounds": {
+                "description": "Open wounds are injuries to the skin that may result in scarring or infection."
+            }
+        },
+        "care_guidance": {
+            "self_care": {
+                "conditions": [
+                    "For cuts and open wounds that are suitable for home management and do not have concerning warning signs."
+                ],
+                "recommendations": [
+                    "Clean the cut by rinsing it under clean water or normal saline.",
+                    "Apply an appropriate dressing and firm pressure to the wound to stop bleeding if necessary.",
+                    "Use sterile gauze swabs to clean the wound.",
+                    "Swipe gently outward from the wound area, using a new swab for each swipe.",
+                    "Use the corner of the swab to gently lift foreign material out of the wound.",
+                    "Carefully pat the area dry with a clean gauze swab.",
+                    "Apply a plaster or bandage.",
+                    "For open wounds, wash with clean water or normal saline as soon as possible to remove dirt and debris.",
+                    "Apply a non-adherent dressing to open wounds.",
+                    "Keep open wounds clean and review them daily for signs of infection."
+                ]
+            },
+            "pharmacist": {
+                "conditions": [
+                    "When further advice is needed to manage the wound.",
+                    "When advice about suitable medication is required.",
+                    "When unsure whether a GP or Emergency Department visit is necessary."
+                ],
+                "recommendations": [
+                    "Consult a pharmacist for advice on managing the wound.",
+                    "A pharmacist can recommend suitable medication or advise whether medical attention is needed."
+                ]
+            },
+            "gp": {
+                "conditions": [
+                    "Visible dirt or foreign material, such as a splinter, remains inside a cut after washing.",
+                    "The cut is caused by an animal or rusty object.",
+                    "The cut shows no signs of improvement after more than one week.",
+                    "Signs of infection such as fever, persistent redness, pain, swelling or pus.",
+                    "The person was bitten by an animal.",
+                    "The person was cut by a rusty object and has not received a tetanus booster within the last five years.",
+                    "The open wound shows no signs of improvement after more than one week."
+                ],
+                "recommendations": [
+                    "Seek medical assessment from a GP."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [
+                    "A cut is deep and bleeding does not stop.",
+                    "An open wound is deep and bleeding does not stop.",
+                    "Fat or deeper structures such as tendon, muscle or bone are visible in the wound.",
+                    "A foreign body is suspected in the wound.",
+                    "Painful swelling of a limb affects movement, which may indicate a fracture."
+                ],
+                "recommendations": [
+                    "Go to the Emergency Department."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Ministry of Health Singapore",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/cuts-and-open-wounds/",
+            "last_updated": "2025-01-02",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-DIARRHOEA-VOMITING-001",
+        "record_type": "symptom_guideline",
+        "topic": "Diarrhoea and Vomiting",
+        "keywords": [
+            "diarrhoea",
+            "diarrhea",
+            "vomiting",
+            "throwing up",
+            "loose stools",
+            "liquid stools",
+            "stomach infection",
+            "food intolerance",
+            "dehydration",
+            "oral rehydration salts"
+        ],
+        "description": "Vomiting is the forced emptying of the stomach through the mouth. Diarrhoea is the frequent passage of liquid stools. Both commonly occur together due to infections of the gut.",
+        "possible_causes": [
+            "Viral infections of the gut",
+            "Bacterial infections of the gut",
+            "Food intolerance",
+            "Side effects of certain medications, such as antibiotics"
+        ],
+        "care_guidance": {
+            "self_care": {
+                "conditions": [
+                    "Symptoms can be managed at home when there are no warning signs requiring medical attention."
+                ],
+                "recommendations": [
+                    "Drink more water or clear fluids, such as clear soups, to prevent losing too much water.",
+                    "Avoid foods that may worsen diarrhoea, such as coffee, alcohol, spicy foods, fried foods, fatty foods, and dairy products like milk and cheese.",
+                    "Do not take solid food until vomiting has stopped."
+                ]
+            },
+            "pharmacist": {
+                "conditions": [
+                    "Further advice is needed on managing symptoms."
+                ],
+                "recommendations": [
+                    "Ask a pharmacist for advice on managing diarrhoea and vomiting.",
+                    "A pharmacist may recommend over-the-counter medications such as charcoal or oral rehydration salts.",
+                    "Ask the pharmacist how to take medication safely, especially if you have allergies, other medical conditions, or are currently taking other medications.",
+                    "A pharmacist can advise whether you need to see a GP or visit the emergency department."
+                ]
+            },
+            "gp": {
+                "conditions": [
+                    "Condition gets worse or does not improve in a few days.",
+                    "Vomiting affects your ability to eat and drink.",
+                    "High fever of 38°C and above persists for more than 3 days.",
+                    "Recently travelled to countries with poor sanitation."
+                ],
+                "recommendations": [
+                    "Seek assessment from a GP if any of the listed conditions apply."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [
+                    "Severe stomach pain.",
+                    "Severe dehydration, such as feeling very thirsty, giddy, and weak.",
+                    "Blood in vomit.",
+                    "Bloody or black sticky stools."
+                ],
+                "recommendations": [
+                    "Go to the emergency department if any of these warning signs occur."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Singapore Ministry of Health",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/diarrhoea-and-vomiting/",
+            "last_updated": "2025-01-02",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-DIARRHOEA-VOMITING-001",
+        "record_type": "symptom_guideline",
+        "topic": "Diarrhoea and Vomiting",
+        "keywords": [
+            "diarrhoea",
+            "diarrhea",
+            "vomiting",
+            "throwing up",
+            "loose stools",
+            "liquid stools",
+            "stomach infection",
+            "food intolerance",
+            "dehydration",
+            "oral rehydration salts"
+        ],
+        "description": "Vomiting is the forced emptying of the stomach through the mouth. Diarrhoea is the frequent passage of liquid stools. Both commonly occur together due to infections of the gut.",
+        "possible_causes": [
+            "Viral infections of the gut",
+            "Bacterial infections of the gut",
+            "Food intolerance",
+            "Side effects of certain medications, such as antibiotics"
+        ],
+        "care_guidance": {
+            "self_care": {
+                "conditions": [
+                    "Symptoms can be managed at home when there are no warning signs requiring medical attention."
+                ],
+                "recommendations": [
+                    "Drink more water or clear fluids, such as clear soups, to prevent losing too much water.",
+                    "Avoid foods that may worsen diarrhoea, such as coffee, alcohol, spicy foods, fried foods, fatty foods, and dairy products like milk and cheese.",
+                    "Do not take solid food until vomiting has stopped."
+                ]
+            },
+            "pharmacist": {
+                "conditions": [
+                    "Further advice is needed on managing symptoms."
+                ],
+                "recommendations": [
+                    "Ask a pharmacist for advice on managing diarrhoea and vomiting.",
+                    "A pharmacist may recommend over-the-counter medications such as charcoal or oral rehydration salts.",
+                    "Ask the pharmacist how to take medication safely, especially if you have allergies, other medical conditions, or are currently taking other medications.",
+                    "A pharmacist can advise whether you need to see a GP or visit the emergency department."
+                ]
+            },
+            "gp": {
+                "conditions": [
+                    "Condition gets worse or does not improve in a few days.",
+                    "Vomiting affects your ability to eat and drink.",
+                    "High fever of 38°C and above persists for more than 3 days.",
+                    "Recently travelled to countries with poor sanitation."
+                ],
+                "recommendations": [
+                    "Seek assessment from a GP if any of the listed conditions apply."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [
+                    "Severe stomach pain.",
+                    "Severe dehydration, such as feeling very thirsty, giddy, and weak.",
+                    "Blood in vomit.",
+                    "Bloody or black sticky stools."
+                ],
+                "recommendations": [
+                    "Go to the emergency department if any of these warning signs occur."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Singapore Ministry of Health",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/diarrhoea-and-vomiting/",
+            "last_updated": "2025-01-02",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-FEVER-001",
+        "record_type": "symptom_guideline",
+        "topic": "Fever",
+        "keywords": [
+            "fever",
+            "high temperature",
+            "body temperature",
+            "37.5",
+            "38 degrees",
+            "shivering",
+            "sweating",
+            "hot face",
+            "flushed face",
+            "body aches",
+            "weakness"
+        ],
+        "description": "For most adults, a temperature of 37.5°C and above is considered a fever. Fever is usually a symptom of an illness, such as flu, overheating, dehydration, or sometimes an infection.",
+        "symptoms": [
+            "Hot or flushed face",
+            "Headache",
+            "Loss of appetite",
+            "Body aches",
+            "Shivering",
+            "Sweating",
+            "Weakness"
+        ],
+        "possible_causes": [
+            "Flu",
+            "Overheating",
+            "Dehydration",
+            "Infection"
+        ],
+        "care_guidance": {
+            "self_care": {
+                "conditions": [
+                    "Fever without warning signs requiring medical attention."
+                ],
+                "recommendations": [
+                    "Use a thermometer to measure your temperature.",
+                    "Drink plenty of water to stay hydrated.",
+                    "Rest in a cool and airy room whenever possible.",
+                    "Sponge yourself with lukewarm water.",
+                    "Do not use ice water or cold water for sponging.",
+                    "Do not sponge for more than 30 minutes at a time, as this may cause shivering and raise body temperature.",
+                    "Over-the-counter medications such as paracetamol or ibuprofen may be used to treat fever.",
+                    "Speak to a pharmacist if you are unsure how to take medication, especially if you have allergies, other medical conditions, or are currently taking other medications."
+                ]
+            },
+            "pharmacist": {
+                "conditions": [
+                    "Further advice is needed on managing fever symptoms or medication."
+                ],
+                "recommendations": [
+                    "Ask a pharmacist for advice on managing fever.",
+                    "A pharmacist may recommend suitable medications or advise whether you need to see a GP or visit the emergency department."
+                ]
+            },
+            "gp": {
+                "conditions": [
+                    "Fever is 38°C and above even after taking over-the-counter medications.",
+                    "Fever lasts more than 3 days.",
+                    "You are pregnant.",
+                    "You have recently returned from overseas.",
+                    "You are taking medications that suppress the immune system."
+                ],
+                "recommendations": [
+                    "Seek assessment from a GP if any of the listed conditions apply."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [
+                    "Difficulty in breathing, especially in children.",
+                    "Chest pain.",
+                    "Severe headache.",
+                    "Severe back or neck pain.",
+                    "Coughing with blood.",
+                    "Pain when urinating.",
+                    "Itchy skin rashes over the whole body.",
+                    "Fits or seizures, such as the body shaking spasmodically, becoming rigid with the back arched, clenched jaw, or eyes rolling upwards."
+                ],
+                "recommendations": [
+                    "Go to the emergency department if any of these warning signs occur."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Singapore Ministry of Health",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/fever/",
+            "last_updated": "2025-12-03",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-HEADACHES-001",
+        "record_type": "symptom_guideline",
+        "topic": "Headaches",
+        "keywords": [
+            "headache",
+            "head pain",
+            "head pressure",
+            "throbbing head",
+            "migraine",
+            "head injury",
+            "stiff neck",
+            "blurred vision",
+            "nausea",
+            "vomiting",
+            "confusion",
+            "weakness",
+            "numbness"
+        ],
+        "description": "Feeling pain or pressure in the head is very common. Headaches can have various causes, ranging from everyday factors to more serious illnesses.",
+        "possible_causes": [
+            "Stress",
+            "Not enough sleep",
+            "Hunger",
+            "Flu",
+            "Sinus problems",
+            "Too much alcohol",
+            "Allergies",
+            "Head injuries",
+            "Stroke",
+            "Brain tumours"
+        ],
+        "care_guidance": {
+            "self_care": {
+                "conditions": [
+                    "Headache without warning signs requiring medical attention."
+                ],
+                "recommendations": [
+                    "Get more sleep and rest.",
+                    "Over-the-counter painkillers such as paracetamol or ibuprofen may be used to treat headaches.",
+                    "Speak to a pharmacist if you are unsure how to take medication, especially if you have allergies, other medical conditions, or are currently taking other medications."
+                ]
+            },
+            "pharmacist": {
+                "conditions": [
+                    "Further advice is needed on managing headache symptoms."
+                ],
+                "recommendations": [
+                    "Ask a pharmacist for advice on managing headache symptoms.",
+                    "A pharmacist may recommend other medications or advise whether you need to see a GP or visit the emergency department."
+                ]
+            },
+            "gp": {
+                "conditions": [
+                    "Headache lasts for more than one day, even after taking over-the-counter pain relievers.",
+                    "Headaches occur frequently, more than 15 days in a month.",
+                    "Pain or throbbing is so strong that you cannot go about your daily routine.",
+                    "Headache develops after a head injury, such as falling.",
+                    "You are experiencing nausea or vomiting."
+                ],
+                "recommendations": [
+                    "Seek assessment from a GP if any of the listed conditions apply."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [
+                    "Headache accompanied by a stiff neck.",
+                    "Headache accompanied by confusion.",
+                    "Headache accompanied by weakness or numbness in the limbs.",
+                    "Headache accompanied by blurred vision.",
+                    "Headache accompanied by difficulty speaking.",
+                    "Headache accompanied by fits or seizures, such as the body shaking spasmodically, becoming rigid with an arched back, clenched jaw, or eyes rolling upwards."
+                ],
+                "recommendations": [
+                    "Go to the emergency department if a headache occurs with any of these warning signs."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Singapore Ministry of Health",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/headaches/",
+            "last_updated": "2025-01-02",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-HIGH-BLOOD-PRESSURE-001",
+        "record_type": "symptom_guideline",
+        "topic": "High Blood Pressure",
+        "keywords": [
+            "high blood pressure",
+            "hypertension",
+            "blood pressure",
+            "high bp",
+            "elevated blood pressure",
+            "giddiness",
+            "dizziness",
+            "headache",
+            "numbness",
+            "weakness",
+            "chest pain",
+            "shortness of breath"
+        ],
+        "description": "Hypertension is also known as high blood pressure. It is commonly caused by increased salt intake and ageing. Rarely, it may occur due to a stroke.",
+        "possible_causes": [
+            "Increased intake of salt",
+            "Ageing",
+            "Stroke (rarely)"
+        ],
+        "care_guidance": {
+            "self_care": {
+                "conditions": [
+                    "Managing existing high blood pressure without emergency warning signs."
+                ],
+                "recommendations": [
+                    "Continue taking regular antihypertensive medications as prescribed.",
+                    "Avoid excessive salt intake in your diet.",
+                    "Exercise regularly.",
+                    "Get plenty of rest."
+                ]
+            },
+            "pharmacist": {
+                "conditions": [],
+                "recommendations": []
+            },
+            "gp": {
+                "conditions": [
+                    "Blood pressure readings are consistently higher than usual.",
+                    "Giddiness.",
+                    "Headache."
+                ],
+                "recommendations": [
+                    "Seek assessment from a GP if any of the listed conditions apply."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [
+                    "Weakness and/or numbness.",
+                    "Difficulty seeing.",
+                    "Difficulty speaking.",
+                    "Difficulty walking.",
+                    "Chest pain.",
+                    "Shortness of breath.",
+                    "Severe giddiness.",
+                    "Severe headache."
+                ],
+                "recommendations": [
+                    "Go to the emergency department if any of these warning signs occur."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Singapore Ministry of Health",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/high-blood-pressure/",
+            "last_updated": "2025-01-02",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-HIVES-001",
+        "record_type": "symptom_guideline",
+        "topic": "Hives",
+        "keywords": [
+            "hives",
+            "urticaria",
+            "itchy rash",
+            "raised rash",
+            "skin rash",
+            "redness",
+            "itching",
+            "allergic reaction",
+            "swelling",
+            "antihistamines"
+        ],
+        "description": "Hives are raised, itchy rashes that appear on the skin. They can affect one part of the body or cover large areas.",
+        "possible_causes": [
+            "Stress",
+            "Infections",
+            "Insect bites",
+            "Changes in temperature",
+            "Allergic reactions to substances or chemicals",
+            "Alcohol",
+            "Pollen",
+            "Latex",
+            "Caffeine",
+            "Certain foods",
+            "Unknown triggers"
+        ],
+        "care_guidance": {
+            "self_care": {
+                "conditions": [
+                    "Hives without warning signs requiring emergency medical attention."
+                ],
+                "recommendations": [
+                    "Avoid scratching or rubbing the rashes, as this may worsen itching or redness.",
+                    "Move to a cool room to work or sleep.",
+                    "Apply an ice pack wrapped in a towel to the affected areas.",
+                    "Wear light and loose-fitting clothes.",
+                    "Over-the-counter allergy medication such as antihistamines can be used to treat hives.",
+                    "Speak to a pharmacist if you are unsure how to take medication, especially if you have allergies, other medical conditions, or are currently taking other medications."
+                ]
+            },
+            "pharmacist": {
+                "conditions": [
+                    "Further advice is needed on managing hives."
+                ],
+                "recommendations": [
+                    "Ask a pharmacist for advice on managing symptoms.",
+                    "A pharmacist may recommend other medications or advise whether you need to see a GP or visit the emergency department."
+                ]
+            },
+            "gp": {
+                "conditions": [
+                    "Hives persist or worsen after a few days."
+                ],
+                "recommendations": [
+                    "Seek assessment from a GP if hives persist or worsen after a few days."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [
+                    "Swelling of the eyes, lips, tongue, or throat.",
+                    "Difficulty breathing.",
+                    "Difficulty swallowing."
+                ],
+                "recommendations": [
+                    "Go to the emergency department if any of these warning signs occur."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Singapore Ministry of Health",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/hives/",
+            "last_updated": "2025-01-02",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-INSECT-BITES-STINGS-001",
+        "record_type": "symptom_guideline",
+        "topic": "Insect Bites and Stings",
+        "keywords": [
+            "insect bite",
+            "insect bites",
+            "insect sting",
+            "insect stings",
+            "mosquito bite",
+            "bee sting",
+            "wasp sting",
+            "swollen skin",
+            "itchy skin",
+            "red marks",
+            "stinger",
+            "allergic reaction",
+            "facial swelling",
+            "breathing difficulties"
+        ],
+        "description": "Insect bites and stings usually cause minor irritation, such as swollen, itchy, red marks on the skin that last for a few days. Some bites and stings can be painful or trigger more serious allergic reactions.",
+        "possible_causes": [
+            "Insect bites",
+            "Insect stings",
+            "Allergic reactions to insect bites or stings"
+        ],
+        "symptoms": [
+            "Swollen skin",
+            "Itchy skin",
+            "Red marks on the skin",
+            "Pain around the bite or sting",
+            "Nausea",
+            "Facial swelling",
+            "Breathing difficulties",
+            "Stomach pain"
+        ],
+        "care_guidance": {
+            "self_care": {
+                "conditions": [
+                    "Minor insect bites or stings without signs of infection or serious allergic reaction."
+                ],
+                "recommendations": [
+                    "If a stinger is present, gently scrape it off using your fingernail or the edge of a card.",
+                    "Do not pinch the stinger with your fingers or use tweezers, as this may spread the venom.",
+                    "Wash the bite with soap and water, then pat it dry.",
+                    "Place an ice pack wrapped in a towel on the affected area.",
+                    "Avoid scratching the bite, as this may cause an infection.",
+                    "Over-the-counter allergy medication such as antihistamines can help relieve itching and swelling.",
+                    "Paracetamol or ibuprofen can help relieve pain.",
+                    "Speak to a pharmacist if you are unsure how to take medication, especially if you have allergies, other medical conditions, or are currently taking other medications."
+                ]
+            },
+            "pharmacist": {
+                "conditions": [
+                    "Further advice is needed on managing symptoms."
+                ],
+                "recommendations": [
+                    "Ask a pharmacist for advice on managing insect bites and stings.",
+                    "A pharmacist may recommend other medications or advise whether you need to see a GP or visit the emergency department."
+                ]
+            },
+            "gp": {
+                "conditions": [
+                    "Signs of infection, such as fever, persistent redness and pain, swelling, or pus forming in the wound.",
+                    "Previous allergic reaction to an insect bite or sting."
+                ],
+                "recommendations": [
+                    "Seek assessment from a GP if signs of infection develop.",
+                    "Seek assessment from a GP if you have previously experienced an allergic reaction to an insect bite or sting."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [
+                    "Multiple insect stings.",
+                    "Stung in the mouth.",
+                    "Stung in the throat.",
+                    "Stung near the eyes.",
+                    "Difficulty breathing.",
+                    "Pain, itching, or swelling on other parts of the body.",
+                    "Nausea, vomiting, or diarrhoea following a bite or sting.",
+                    "Fast heart rate.",
+                    "Giddiness.",
+                    "Confusion or agitation.",
+                    "Pale skin."
+                ],
+                "recommendations": [
+                    "Go to the emergency department if any of these warning signs occur.",
+                    "Treat symptoms of a serious allergic reaction as an emergency."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Singapore Ministry of Health",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/insect-bites-and-stings/",
+            "last_updated": "2025-01-02",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-BURNS-SCALDS-001",
+        "record_type": "symptom_guideline",
+        "topic": "Mild Burns and Scalds",
+        "keywords": [
+            "burn",
+            "burns",
+            "scald",
+            "scalds",
+            "burnt skin",
+            "burn injury",
+            "hot water burn",
+            "steam burn",
+            "blisters",
+            "charred skin",
+            "first-degree burn",
+            "second-degree burn",
+            "third-degree burn",
+            "chemical burn",
+            "electrical burn"
+        ],
+        "description": "Burns and scalds are injuries to the skin caused by heat. Burns are caused by dry heat, such as fire or a clothes iron. Scalds are caused by liquids, steam, or chemicals. Both can be painful and may cause blisters or red, black, or charred skin.",
+        "possible_causes": [
+            "Dry heat, such as fire",
+            "Contact with a hot clothes iron",
+            "Hot liquids",
+            "Steam",
+            "Chemicals",
+            "Electricity",
+            "Lightning"
+        ],
+        "symptoms": [
+            "Pain",
+            "Blisters",
+            "Red skin",
+            "Black skin",
+            "Charred skin"
+        ],
+        "care_guidance": {
+            "self_care": {
+                "conditions": [
+                    "First-degree burns on a small area.",
+                    "Second-degree burns on a small area."
+                ],
+                "recommendations": [
+                    "Remove clothing or jewellery near the burnt area.",
+                    "If clothing is stuck to the wound, cut around it but do not remove the stuck fabric.",
+                    "Pour cool water over the wound for at least 10 minutes.",
+                    "Do not use ice, iced water, butter, or other greasy substances on the burn.",
+                    "Loosely cover the burn with a sterile gauze bandage or cling wrap.",
+                    "Do not touch the burn or burst any blisters."
+                ]
+            },
+            "pharmacist": {
+                "conditions": [
+                    "Further advice is needed on managing the burn or wound."
+                ],
+                "recommendations": [
+                    "Ask a pharmacist for advice on managing the wound.",
+                    "A pharmacist may recommend medications or advise whether you need to see a GP or visit the emergency department."
+                ]
+            },
+            "gp": {
+                "conditions": [
+                    "The wound shows no signs of improvement after more than one week.",
+                    "Signs of infection, such as fever, persistent redness and pain, swelling, or pus forming in the wound."
+                ],
+                "recommendations": [
+                    "Seek assessment from a GP if the wound does not improve after more than one week.",
+                    "Seek assessment from a GP if signs of infection develop."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [
+                    "Burns in the mouth.",
+                    "Burns in the throat.",
+                    "Burns involving the eyes.",
+                    "Burns involving the ears.",
+                    "Burns involving the genital area.",
+                    "Burns covering a large area of the body, larger than the person's hand.",
+                    "Burns caused by chemicals.",
+                    "Burns caused by electricity.",
+                    "Burns caused by lightning.",
+                    "Third-degree burns, where the burnt skin is white, leathery, or charred."
+                ],
+                "recommendations": [
+                    "Go to the emergency department if any of these warning signs occur."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Singapore Ministry of Health",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/mild-burns-and-scalds/",
+            "last_updated": "2025-01-02",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-NOSEBLEEDS-001",
+        "record_type": "symptom_guideline",
+        "topic": "Nosebleeds",
+        "keywords": [
+            "nosebleed",
+            "nosebleeds",
+            "nose bleeding",
+            "bleeding nose",
+            "blood from nose",
+            "nostril bleeding",
+            "nasal bleeding",
+            "nose injury"
+        ],
+        "description": "Nosebleeds occur when tiny blood vessels in the nose burst. Bleeding can come from one or both nostrils, may be heavy or light, and can last from a few seconds to over 10 minutes.",
+        "possible_causes": [
+            "Digging the nose",
+            "Blowing the nose too hard",
+            "Dry climates",
+            "Irritation from foreign objects in the nose",
+            "Being hit in the face",
+            "Allergies",
+            "Infections",
+            "Alcohol use",
+            "Drug use"
+        ],
+        "care_guidance": {
+            "self_care": {
+                "conditions": [
+                    "Nosebleed without emergency warning signs."
+                ],
+                "recommendations": [
+                    "Sit down and lean forward.",
+                    "Using your thumb and index finger, pinch the nose just above the nostrils.",
+                    "Breathe through your mouth.",
+                    "Continue pinching until the bleeding stops, usually after 10 minutes.",
+                    "If the bleeding continues, hold for another 10 minutes and suck on some ice cubes.",
+                    "If your nose is injured, place an ice pack wrapped in a towel on the bridge of your nose."
+                ]
+            },
+            "pharmacist": {
+                "conditions": [
+                    "Further advice is needed on managing nosebleeds."
+                ],
+                "recommendations": [
+                    "Ask a pharmacist for advice on managing symptoms.",
+                    "A pharmacist may recommend other medications or advise whether you need to see a GP or visit the emergency department."
+                ]
+            },
+            "gp": {
+                "conditions": [
+                    "Nosebleeds recur for no apparent reason."
+                ],
+                "recommendations": [
+                    "Seek assessment from a GP if nosebleeds repeatedly occur without an obvious cause."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [
+                    "Nosebleed does not stop after 20 minutes.",
+                    "Nosebleed is caused by an injury to the nose, such as being hit in the face by a fist or object."
+                ],
+                "recommendations": [
+                    "Go to the emergency department if the nosebleed does not stop after 20 minutes.",
+                    "Seek emergency assessment if the nosebleed is caused by an injury to the nose."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Singapore Ministry of Health",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/nosebleeds/",
+            "last_updated": "2025-01-02",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-SKIN-INFECTIONS-001",
+        "record_type": "symptom_guideline",
+        "topic": "Skin Infections",
+        "keywords": [
+            "skin infection",
+            "skin infections",
+            "cellulitis",
+            "red skin",
+            "swollen skin",
+            "warm skin",
+            "painful skin",
+            "bacterial infection",
+            "painful swelling",
+            "skin blisters",
+            "fever",
+            "chills"
+        ],
+        "description": "Cellulitis or skin infections are caused by bacterial infections and can result in painful, red, warm, and swollen skin.",
+        "possible_causes": [
+            "Bacterial infection entering the body through broken skin."
+        ],
+        "symptoms": [
+            "Painful skin",
+            "Red skin",
+            "Warm skin",
+            "Swollen skin"
+        ],
+        "care_guidance": {
+            "self_care": {
+                "conditions": [
+                    "Preventing skin infections and reducing the risk of cellulitis."
+                ],
+                "recommendations": [
+                    "Keep your skin clean.",
+                    "Avoid scratching your skin, as broken skin allows bacteria to enter the body.",
+                    "Control diabetes, as people with diabetes have a higher risk of infections.",
+                    "Wear proper footwear, as ill-fitting footwear increases the risk of abrasions and ulcer formation."
+                ]
+            },
+            "pharmacist": {
+                "conditions": [],
+                "recommendations": []
+            },
+            "gp": {
+                "conditions": [
+                    "Painful, red, warm, and swollen skin.",
+                    "You have diabetes."
+                ],
+                "recommendations": [
+                    "Seek assessment from a GP if you have painful, red, warm, and swollen skin.",
+                    "People with diabetes should seek assessment from a GP according to the MOH guidance."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [
+                    "High fever and chills.",
+                    "Severe pain.",
+                    "Painful blisters.",
+                    "Rapid progression of swelling.",
+                    "Painful swelling of joints that affects movement."
+                ],
+                "recommendations": [
+                    "Go to the emergency department if any of these warning signs occur."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Singapore Ministry of Health",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/skin-infections/",
+            "last_updated": "2025-01-02",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-SORE-EYES-001",
+        "record_type": "symptom_guideline",
+        "topic": "Sore Eyes",
+        "keywords": [
+            "sore eyes",
+            "conjunctivitis",
+            "red eyes",
+            "itchy eyes",
+            "eye pain",
+            "watery eyes",
+            "sticky eyes",
+            "eye discharge",
+            "pus discharge",
+            "blurred vision",
+            "light sensitivity",
+            "chemical exposure"
+        ],
+        "description": "Sore eyes, commonly known as conjunctivitis, is the inflammation of the thin layer of tissue covering the front of the eye, called the conjunctiva.",
+        "possible_causes": [
+            "Bacterial infections",
+            "Viral infections",
+            "Allergic reactions to smoke",
+            "Allergic reactions to pollen",
+            "Allergic reactions to dust",
+            "Chemicals in makeup",
+            "Chemicals in contact lenses"
+        ],
+        "symptoms": [
+            "Redness of the eyes",
+            "Itchiness",
+            "Slight eye pain",
+            "Watering of the eyes",
+            "Feeling like there is sand in the eye",
+            "Sticky coating on the eyelashes, usually when waking up"
+        ],
+        "care_guidance": {
+            "self_care": {
+                "conditions": [
+                    "Sore eyes without warning signs requiring medical attention."
+                ],
+                "recommendations": [
+                    "Avoid touching or rubbing the affected eye.",
+                    "Wash your hands frequently with soap and water.",
+                    "Do not share towels or pillows with others.",
+                    "Remove eye discharge using clean tissue paper or cotton wool soaked in water.",
+                    "Do not wear eye makeup or contact lenses until symptoms clear up.",
+                    "Hold a warm, damp cloth over your eyelids to relieve discomfort."
+                ]
+            },
+            "pharmacist": {
+                "conditions": [
+                    "Further advice is needed on managing sore eye symptoms."
+                ],
+                "recommendations": [
+                    "Ask a pharmacist for advice on managing symptoms.",
+                    "A pharmacist may recommend other medications or advise whether you need to see a GP or visit the emergency department."
+                ]
+            },
+            "gp": {
+                "conditions": [
+                    "Condition gets worse or does not improve in 3 days.",
+                    "Pain in the eye.",
+                    "Pus discharge from the eye."
+                ],
+                "recommendations": [
+                    "Seek assessment from a GP if symptoms worsen or do not improve within 3 days.",
+                    "Seek assessment from a GP if there is eye pain or pus discharge."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [
+                    "Sore eyes caused by chemical exposure.",
+                    "Affected vision, such as blurred vision.",
+                    "Sensitivity to light."
+                ],
+                "recommendations": [
+                    "Go to the emergency department if sore eyes are caused by chemicals.",
+                    "Seek emergency assessment if vision is affected or there is sensitivity to light."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Singapore Ministry of Health",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/sore-eyes/",
+            "last_updated": "2025-01-02",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-STRAINS-SPRAINS-001",
+        "record_type": "symptom_guideline",
+        "topic": "Strains and Sprains",
+        "keywords": [
+            "strain",
+            "sprain",
+            "muscle injury",
+            "ligament injury",
+            "tendon injury",
+            "muscle pain",
+            "joint pain",
+            "swelling",
+            "bruising",
+            "restricted movement",
+            "sports injury",
+            "ankle injury",
+            "knee injury",
+            "wrist injury"
+        ],
+        "description": "A strain is the stretching or tearing of muscles or tendons, while a sprain is the stretching or tearing of ligaments. Both injuries commonly occur during physical activities or accidents involving movement.",
+        "possible_causes": [
+            "Accidents while moving",
+            "Sports activities",
+            "Physical activities that stretch or tear muscles, tendons or ligaments"
+        ],
+        "symptoms": [
+            "Pain",
+            "Swelling",
+            "Bruising",
+            "Soreness",
+            "Restricted movement"
+        ],
+        "injury_types": {
+            "strain": "Stretching or tearing of muscles or tendons. Commonly affects the legs and back.",
+            "sprain": "Stretching or tearing of ligaments around joints. Commonly affects the knees, ankles and wrists."
+        },
+        "care_guidance": {
+            "self_care": {
+                "conditions": [
+                    "Strain or sprain symptoms that can be managed with home treatment"
+                ],
+                "recommendations": [
+                    "Stop the activity that caused the injury immediately.",
+                    "Follow PRICE therapy:",
+                    "Protect the injured area.",
+                    "Rest the injured area.",
+                    "Apply an ice pack wrapped in a towel for 15 to 20 minutes.",
+                    "Compress the injured area with an elastic bandage until the swelling stops.",
+                    "Elevate the injured area above heart level, especially at night.",
+                    "Over-the-counter oral pain medications such as paracetamol or ibuprofen, or pain relief creams or patches, may be used to relieve pain.",
+                    "Speak to a pharmacist if unsure how to use medication, especially if you have allergies, other medical conditions or are taking other medications."
+                ]
+            },
+            "pharmacist": {
+                "conditions": [
+                    "Further advice is needed on managing strain or sprain symptoms"
+                ],
+                "recommendations": [
+                    "Seek advice on managing symptoms.",
+                    "The pharmacist may recommend other medications.",
+                    "The pharmacist can advise whether a GP visit or emergency department visit is needed."
+                ]
+            },
+            "gp": {
+                "conditions": [
+                    "Severe pain or swelling",
+                    "Numbness or coldness in the injured area",
+                    "The injured limb looks crooked or has unusual lumps",
+                    "Unable to move the injured joint or muscle",
+                    "Unable to put weight on the injured limb",
+                    "Symptoms have not improved after 3 days of home treatment"
+                ],
+                "recommendations": [
+                    "Visit a GP for medical assessment if any of these conditions occur."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [],
+                "recommendations": [
+                    "The MOH advises that there is no need to visit the A&E for a strain or sprain unless a GP advises it."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Singapore Ministry of Health",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/strains-and-sprains/",
+            "last_updated": "2025-01-02",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    }
+]
