@@ -1,109 +1,78 @@
-
-from datetime import datetime, date
+import re
+from datetime import date, datetime
 
 
 class PatientValidator:
 
-    def validate_name(self, name):
-        name = name.strip()
+    def validate_name(self, value: str) -> str:
+        name = value.strip()
 
-        if not name:
-            raise ValueError("Name cannot be empty.")
-
-        if not all(
-            char.isalpha() or char in " -'"
-            for char in name
+        if not name or not re.fullmatch(
+            r"[A-Za-z][A-Za-z '\-]*", name
         ):
             raise ValueError(
-                "Name should only contain letters."
+                "Enter a valid full name using letters, "
+                "spaces, hyphens or apostrophes."
             )
 
         return name
 
-    def validate_dob(self, dob_input):
+    def validate_dob(self, value: str) -> date:
         try:
             dob = datetime.strptime(
-                dob_input, "%d/%m/%Y"
+                value.strip(), "%d/%m/%Y"
             ).date()
 
-        except ValueError:
+        except ValueError as exc:
             raise ValueError(
-                "Invalid date. Please enter DOB "
-                "in DD/MM/YYYY format."
-            )
+                "Enter DOB in DD/MM/YYYY format."
+            ) from exc
 
         if dob > date.today():
             raise ValueError(
-                "Date of birth cannot be in the future."
+                "DOB cannot be in the future."
             )
 
         return dob
 
-    def validate_gender(self, gender):
-        valid_genders = {
-            "male": "Male",
-            "female": "Female",
-            "m": "Male",
-            "f": "Female"
-        }
+    def validate_gender(self, value: str) -> str:
+        gender = value.strip().lower()
 
-        gender = gender.strip().lower()
+        if gender in ("male", "m"):
+            return "Male"
 
-        if gender not in valid_genders:
-            raise ValueError(
-                "Please enter a valid option."
-            )
+        if gender in ("female", "f"):
+            return "Female"
 
-        return valid_genders[gender]
+        raise ValueError(
+            "Enter Male or Female (M/F)."
+        )
 
-    def validate_symptoms(self, symptoms_input):
+    def validate_symptoms(self, value: str) -> list[str]:
         symptoms = [
-            symptom.strip()
-            for symptom in symptoms_input.split(",")
-            if symptom.strip()
+            item.strip()
+            for item in value.split(",")
+            if item.strip()
         ]
 
         if not symptoms:
             raise ValueError(
-                "Please enter at least one symptom."
+                "Enter at least one symptom."
             )
 
         return symptoms
 
-    def validate_duration(self, duration):
-        valid_units = [
-            "minute", "minutes",
-            "hour", "hours",
-            "day", "days",
-            "week", "weeks",
-            "month", "months",
-            "year", "years"
-        ]
+    def validate_duration(self, value: str) -> str:
+        duration = " ".join(value.strip().split())
 
-        duration = duration.strip().lower()
-        parts = duration.split()
-
-        if len(parts) != 2:
+        if not re.fullmatch(
+            r"[1-9]\d*\s*(?:minutes?|hours?|days?|weeks?|months?|years?)",
+            duration,
+            re.I
+        ):
             raise ValueError(
-                "Please enter duration in the format: 3 days"
-            )
-
-        number, unit = parts
-
-        if not number.isdigit():
-            raise ValueError(
-                "Duration must start with a number."
-            )
-
-        if int(number) <= 0:
-            raise ValueError(
-                "Duration must be greater than 0."
-            )
-
-        if unit not in valid_units:
-            raise ValueError(
-                "Please use minutes, hours, days, "
-                "weeks, months, or years."
+                "Enter a duration such as "
+                "'2 days' or '3 hours'."
             )
 
         return duration
