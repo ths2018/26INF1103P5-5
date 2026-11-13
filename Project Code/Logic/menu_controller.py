@@ -1,5 +1,7 @@
 from input_output_manager import (
+    ask_yes_no,
     create_prompt,
+    filter_input,
     input_manager,
     keyword_input,
     print_cases,
@@ -23,7 +25,8 @@ class MenuController:
             "3": self._search_records,
             "4": self._export_csv,
             "5": self._export_xlsx,
-            "6": self._exit,
+            "6": self._show_statistics,
+            "7": self._exit,
         }
 
     @property
@@ -77,6 +80,15 @@ class MenuController:
 
     def _export_xlsx(self):
         self._repository.export_xlsx_and_open()
+
+    def _show_statistics(self):
+            query = filter_input()
+            try:
+                self._repository.show_stats(query)
+                if ask_yes_no("Show per-case breakdown? (y/n): "):
+                    self._repository.show_stats(query, per_case=True)
+            except ValueError as exc:
+                print_output(f"\n[Stats] {exc}")
 
     def _exit(self):
         return True

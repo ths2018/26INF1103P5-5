@@ -1,78 +1,83 @@
+from datetime import date
 
-from .patient import Patient
-from .patient_validator import PatientValidator
-
-
-HELP_TEXT = """
-What would you like to do?
-
-1. Start a conversation
-2. View all saved cases
-3. Browse conversation history
-4. Export all records to CSV
-5. Export all records to Excel
-6. View urgency statistics
-7. Quit
-"""
+from IO.patient import Patient
+from IO.patient_validator import PatientValidator
 
 
 class InputManager:
 
-    def __init__(self, validator=None,
-                 input_func=input, output_func=print):
+    def __init__(
+        self,
+        validator=None,
+        input_func=None,
+        output_func=None
+    ):
         self.validator = (
-            validator if validator is not None
+            validator
+            if validator is not None
             else PatientValidator()
         )
-        self.input_func = input_func
-        self.output_func = output_func
 
-    def get_valid_input(self, prompt, validation_method):
+        self._input = (
+            input_func if input_func is not None else input
+        )
+
+        self._print = (
+            output_func if output_func is not None else print
+        )
+
+    def get_valid_input(self, prompt, validator):
         while True:
-            value = self.input_func(prompt).strip()
-
             try:
-                return validation_method(value)
+                return validator(self._input(prompt))
 
-            except ValueError as error:
-                self.output_func(str(error))
+            except ValueError as exc:
+                self._print(str(exc))
 
     def get_menu_input(self):
-        self.output_func(HELP_TEXT)
+        return self.get_valid_input(
+            "Choose an option (1-7): ",
+            self._validate_menu
+        )
 
-        while True:
-            choice = self.input_func(
-                "Enter your choice (1-7): "
-            ).strip()
+    @staticmethod
+    def _validate_menu(value):
+        choice = value.strip()
 
-            if choice in ("1", "2", "3", "4", "5", "6", "7"):
-                return choice
-
-            self.output_func(
-                "Invalid input. Please enter a number from 1 to 7."
+        if choice not in {
+            "1", "2", "3", "4", "5", "6", "7"
+        }:
+            raise ValueError(
+                "Invalid option. Enter a number from 1 to 7."
             )
+
+        return choice
 
     def get_name(self):
         return self.get_valid_input(
-            "Enter name: ",
+            "Full name: ",
             self.validator.validate_name
         )
 
     def get_dob(self):
         return self.get_valid_input(
-            "Enter date of birth (DD/MM/YYYY): ",
+            "Date of birth (DD/MM/YYYY): ",
             self.validator.validate_dob
         )
 
+    @staticmethod
+    def calculate_age(dob):
+        return Patient.calculate_age(dob)
+
     def get_gender(self):
         return self.get_valid_input(
-            "Enter gender (Male/Female): ",
+            "Gender (Male/Female): ",
             self.validator.validate_gender
         )
 
     def ask_yes_no(self, prompt):
         while True:
-            answer = self.input_func(prompt).strip().lower()
+            answer = self._input(prompt).strip().lower()
 
             if answer in ("y", "yes"):
                 return True
@@ -80,95 +85,104 @@ class InputManager:
             if answer in ("n", "no"):
                 return False
 
-            self.output_func("Please enter 'y' or 'n'.")
+            self._print("Please enter yes or no.")
 
     def has_symptoms(self):
         return self.ask_yes_no(
-            "Do you currently have any symptoms? (Yes/No): "
+            "Are you experiencing symptoms? (yes/no): "
         )
 
     def get_symptoms(self):
         return self.get_valid_input(
-            "Enter symptoms (separate multiple symptoms "
-            "with commas): ",
+            "Enter symptoms (comma-separated): ",
             self.validator.validate_symptoms
         )
 
     def get_symptom_duration(self):
         return self.get_valid_input(
-            "Enter how long you have had your symptoms "
-            "(e.g. 3 days, 2 weeks): ",
+            "How long have you had these symptoms? "
+            "(e.g. 2 days): ",
             self.validator.validate_duration
         )
 
-    def input_manager(self):
-        self.output_func("=== Patient Information ===")
+    def input_manager(self, user_profile):
+        """
+        Collect symptoms and symptom duration only.
 
-        name = self.get_name()
-        dob = self.get_dob()
-        gender = self.get_gender()
+        The authenticated user profile must be supplied
+        by the authentication layer.
 
-        symptoms_present = self.has_symptoms()
+        Required profile fields:
+        - full_name (or name)
+        - dob
+        - gender
+        """
 
-        if symptoms_present:
-            symptoms = self.get_symptoms()
-            duration = self.get_symptom_duration()
+        if not isinstance(user_profile, dict):
+            raise TypeError(
+                "An authenticated user profile "
+                "dictionary is required."
+            )
+
+        name = (
+            user_profile.get("full_name")
+            or user_profile.get("name")
+        )
+
+        dob = user_profile.get("dob")
+        gender = user_profile.get("gender")
+
+        if not name or not dob or not gender:
+            raise ValueError(
+                "Authenticated profile is missing "
+                "name, DOB or gender."
+            )
+
+        if isinstance(dob, date):
+            dob_iso = dob.isoformat()
+
+        elif isinstance(dob, str):
+            try:
+                dob_iso = date.fromisoformat(
+                    dob
+                ).isoformat()
+
+            except ValueError:
+                dob_iso = self.validator.validate_dob(
+                    dob
+                ).isoformat()
+
         else:
-            symptoms = []
-            duration = "None"
+            raise ValueError(
+                "Unsupported DOB format "
+                "in authenticated profile."
+            )
+
+        # Only collect these two inputs
+        symptoms = self.get_symptoms()
+        duration = self.get_symptom_duration()
 
         patient = Patient(
-            name=name,
-            dob=dob,
-            gender=gender,
-            has_symptoms=symptoms_present,
+            name=str(name),
+            dob=dob_iso,
+            gender=str(gender),
             symptoms=symptoms,
             symptom_duration=duration
         )
 
         return patient.to_dict()
 
-    def get_additional_input(self, follow_up_question):
-        while True:
-            self.output_func(
-                "\nAdditional information is required."
-            )
-            self.output_func(follow_up_question)
-
-            answer = self.input_func("Answer: ").strip()
-
-            if answer:
-                return answer
-
-            self.output_func(
-                "Please provide the additional Information."
-            )
+    def get_additional_input(self, question):
+        return self._input(
+            f"{question.strip()} "
+        ).strip()
 
     def keyword_input(self):
-        while True:
-            self.output_func(
-                "Tip: you can also filter with "
-                "date:2026-11-01..2026-11-04, "
-                "case:3, urgency:urgent"
-            )
-
-            keyword = self.input_func(
-                "Enter a keyword to search in "
-                "conversation history: "
-            ).strip()
-
-            if keyword:
-                return keyword
-
-            self.output_func("Keyword cannot be empty.")
+        return self._input(
+            "Enter keyword: "
+        ).strip()
 
     def filter_input(self):
-        self.output_func(
-            "Filters: keyword, "
-            "date:YYYY-MM-DD[..YYYY-MM-DD], "
-            "case:<name or number>, urgency:<label>"
-        )
-
-        return self.input_func(
-            "Enter filter (or press Enter for all records): "
+        return self._input(
+            "Enter filter: "
         ).strip()

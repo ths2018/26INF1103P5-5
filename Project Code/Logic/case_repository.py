@@ -8,6 +8,7 @@ from data_manager import (
     get_active_case,
     open_file,
     show_history,
+    show_stats
 )
 
 
@@ -38,3 +39,7 @@ class CaseRepository:
     def export_xlsx_and_open(self):
         if convert_json_to_xlsx():
             open_file()
+
+    def show_stats(self, query, per_case=False):
+        """Print statistics for `query`. Raises ValueError if the query is invalid."""
+        show_stats(query, per_case=per_case)

@@ -1,53 +1,47 @@
-
 class OutputManager:
 
-    def __init__(self, case_loader=None, output_func=print):
+    HELP_TEXT = (
+        "\n===== HEALTHCARE ASSESSMENT CHATBOT =====\n"
+        "1. Start a conversation\n"
+        "2. View all saved cases\n"
+        "3. Browse conversation history\n"
+        "4. Export all records to CSV\n"
+        "5. Export all records to Excel\n"
+        "6. View urgency statistics\n"
+        "7. Quit\n"
+    )
+
+    def __init__(
+        self,
+        case_loader=None,
+        output_func=None
+    ):
         self.case_loader = case_loader
-        self.output_func = output_func
+
+        self._print = (
+            output_func
+            if output_func is not None
+            else print
+        )
 
     def welcome_message(self):
-        self.output_func("=" * 30)
-        self.output_func("HEALTHCARE ASSESSMENT CHATBOT")
-        self.output_func("=" * 30)
-        self.output_func()
+        self._print(self.HELP_TEXT)
 
     def print_output(self, output):
-        self.output_func(output)
+        self._print(output)
 
     def print_cases(self):
         if self.case_loader is None:
             raise RuntimeError(
-                "Case loader has not been configured."
+                "A user-scoped case loader must "
+                "be provided by the data layer."
             )
 
         cases = self.case_loader()
 
-        self.output_func(
-            f"\n{'=' * 20} Saved Cases ({len(cases)}) "
-            f"{'=' * 20}"
-        )
-
         if not cases:
-            self.output_func("No cases saved yet.")
+            self._print("No saved cases found.")
             return
 
-        for case in cases:
-            status = (
-                "ACTIVE" if case.is_open() else "CLOSED"
-            )
-
-            logs = case.logs
-
-            if logs:
-                initial = str(
-                    logs[0].user_input
-                ).replace("\n", " ")[:50]
-            else:
-                initial = "Empty"
-
-            self.output_func(
-                f"- [{case.case_id}] {status:<6} | "
-                f"Logs: {len(logs)} | Initial: {initial}..."
-            )
-
-        self.output_func("=" * 70)
+        for i, case in enumerate(cases, start=1):
+            self._print(f"\nCase {i}: {case}")

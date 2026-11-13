@@ -1,40 +1,41 @@
+from dataclasses import dataclass, field
+from datetime import date, datetime
 
-from datetime import datetime, date
 
-
+@dataclass
 class Patient:
-    def __init__(self, name, dob, gender,
-                 has_symptoms, symptoms, symptom_duration):
-
-        self.name = name
-        self.dob = dob
-        self.gender = gender
-        self.has_symptoms = has_symptoms
-        self.symptoms = symptoms
-        self.symptom_duration = symptom_duration
-        self.timestamp = datetime.now().isoformat(
+    name: str
+    dob: str
+    gender: str
+    symptoms: list[str]
+    symptom_duration: str
+    timestamp: str = field(
+        default_factory=lambda: datetime.now().isoformat(
             timespec="seconds"
         )
+    )
 
     @staticmethod
-    def calculate_age(dob):
+    def calculate_age(dob: date | str) -> int:
+        if isinstance(dob, str):
+            dob = date.fromisoformat(dob)
+
         today = date.today()
 
-        age = today.year - dob.year
+        return (
+            today.year
+            - dob.year
+            - ((today.month, today.day) < (dob.month, dob.day))
+        )
 
-        if (today.month, today.day) < (dob.month, dob.day):
-            age -= 1
-
-        return age
-
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return {
             "name": self.name,
-            "dob": self.dob.isoformat(),
+            "dob": self.dob,
             "age": self.calculate_age(self.dob),
             "gender": self.gender,
-            "has_symptoms": self.has_symptoms,
+            "has_symptoms": bool(self.symptoms),
             "symptoms": self.symptoms.copy(),
             "symptom_duration": self.symptom_duration,
-            "timestamp": self.timestamp
+            "timestamp": self.timestamp,
         }
