@@ -1,0 +1,101 @@
+[
+    {
+        "id": "MOH-PHARMACIST-001",
+        "topic": "Visiting a Pharmacist",
+        "keywords": [
+            "pharmacist",
+            "pharmacy",
+            "medication advice",
+            "medicine side effects",
+            "medication usage",
+            "common health conditions"
+        ],
+        "urgency_level": "non-emergency",
+        "recommendation": [
+            "Visit a pharmacist for advice about medication usage, dosage instructions, possible side effects and medication storage.",
+            "Ask a pharmacist about possible interactions between medications, vitamins, supplements and traditional medicines.",
+            "Pharmacists can advise on managing common health conditions and recommend suitable medications when needed.",
+            "Inform the pharmacist about any allergies, existing medical conditions and medications currently being taken."
+        ],
+        "conditions_pharmacists_can_help_with": [
+            "Abdominal pain or indigestion",
+            "Bruises",
+            "Cold and flu",
+            "Cuts and open wounds",
+            "Diarrhoea and vomiting",
+            "Fever",
+            "Headaches",
+            "Hives",
+            "Insect bites and stings",
+            "Mild burns and scalds",
+            "Nosebleeds",
+            "Sore eyes",
+            "Strains and sprains"
+        ],
+        "warning_signs": [],
+        "source": {
+            "source_name": "Ministry of Health Singapore",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/visiting-a-pharmacist/",
+            "last_updated": "2024-10-26",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-GP-001",
+        "record_type": "healthcare_service",
+        "topic": "Seeking a Doctor",
+        "keywords": [
+            "see a doctor",
+            "GP",
+            "general practitioner",
+            "GP clinic",
+            "emergency department",
+            "ED",
+            "mild illness",
+            "moderate illness",
+            "GPFirst"
+        ],
+        "urgency_level": "context_dependent",
+        "recommendation": [
+            "General Practitioners (GPs) can treat many common health conditions.",
+            "People with mild to moderate health problems are encouraged to visit a GP first instead of going directly to the Emergency Department.",
+            "A GP can assess the patient's condition and refer them to an acute hospital or Urgent Care Centre if necessary.",
+            "Patients with emergency symptoms should seek emergency medical attention rather than delaying care to visit a GP."
+        ],
+        "conditions_gps_can_help_with": [
+            "Abdominal pain or indigestion",
+            "Bruises",
+            "Cold and flu",
+            "Cuts and open wounds",
+            "Diarrhoea and vomiting",
+            "Fever",
+            "Headaches",
+            "High blood pressure",
+            "Hives",
+            "Insect bites and stings",
+            "Mild burns and scalds",
+            "Nosebleeds",
+            "Skin infection",
+            "Sore eyes",
+            "Strains and sprains"
+        ],
+        "gpfirst_programme": {
+            "description": "Encourages people with mild to moderate health problems to visit participating GP clinics before going to the Emergency Department.",
+            "benefits": [
+                "Timely medical treatment at a GP clinic.",
+                "Referral to an acute hospital or Urgent Care Centre when necessary.",
+                "A $50 subsidy on the prevailing ED attendance fee when referred through the GPFirst Programme, subject to programme terms and conditions.",
+                "Priority over non-emergency cases at the Emergency Department."
+            ]
+        },
+        "warning_signs": [],
+        "source": {
+            "source_name": "Ministry of Health Singapore",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/seeking-a-doctor/",
+            "last_updated": "2026-02-03",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    }
+]
