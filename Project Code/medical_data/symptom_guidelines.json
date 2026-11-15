@@ -1353,5 +1353,316 @@
             "last_verified": "2026-11-13"
         },
         "review_status": "needs_professional_review"
+    },
+    {
+        "id": "SCDF-EMERGENCY-SYMPTOMS-001",
+        "record_type": "symptom_guideline",
+        "topic": "Emergency and Non-Emergency Symptoms (995 Ambulance)",
+        "keywords": [
+            "emergency",
+            "995",
+            "ambulance",
+            "cardiac arrest",
+            "seizure",
+            "breathlessness",
+            "loss of consciousness",
+            "excessive bleeding",
+            "major trauma",
+            "stroke",
+            "toothache",
+            "constipation",
+            "medical check-up",
+            "non-emergency"
+        ],
+        "description": "SCDF separates life-threatening emergencies that need a 995 ambulance from non-emergency conditions that should be seen at a clinic. Calls to 995 are triaged by severity.",
+        "care_guidance": {
+            "self_care": {
+                "conditions": [],
+                "recommendations": []
+            },
+            "pharmacist": {
+                "conditions": [],
+                "recommendations": []
+            },
+            "gp": {
+                "conditions": [
+                    "Toothaches.",
+                    "Diarrhoea.",
+                    "Coughs.",
+                    "Headaches.",
+                    "Slight burns or scalds.",
+                    "Constipation.",
+                    "Medical check-ups."
+                ],
+                "recommendations": [
+                    "These are non-emergencies. Visit the nearest GP or polyclinic, or a 24-hour Urgent Care Centre.",
+                    "Call the NurseFirst helpline at 6262 6262 for advice on where to seek medical help.",
+                    "SCDF does not convey non-emergency cases to hospital; a $274 charge applies for each non-emergency case it conveys."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [
+                    "Cardiac arrest.",
+                    "Seizures.",
+                    "Breathlessness.",
+                    "Loss of consciousness.",
+                    "Excessive bleeding.",
+                    "Major traumas.",
+                    "Stroke."
+                ],
+                "recommendations": [
+                    "Call 995 for these life-threatening emergencies.",
+                    "People who are deaf, hard-of-hearing or have a speech impairment can send an emergency SMS to 70995."
+                ]
+            }
+        },
+        "source": {
+            "source_name": "Singapore Civil Defence Force",
+            "source_url": "https://www.scdf.gov.sg/home/about-scdf/emergency-medical-services",
+            "last_updated": "2026-07-01",
+            "last_verified": "2026-11-15"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "ACE-URTI-001",
+        "record_type": "symptom_guideline",
+        "topic": "Upper Respiratory Tract Infections (URTI)",
+        "keywords": [
+            "upper respiratory tract infection",
+            "URTI",
+            "acute rhinosinusitis",
+            "pharyngotonsillitis",
+            "acute otitis media",
+            "antibiotics",
+            "antimicrobial",
+            "antivirals",
+            "sore throat",
+            "ear infection"
+        ],
+        "description": "ACE Clinical Guideline for healthcare professionals on appropriate antimicrobial use for upper respiratory tract infections in primary and generalist care. It highlights situations where antimicrobial therapy can be safely withheld and others where timely therapy may be beneficial.",
+        "care_guidance": {
+            "self_care": {
+                "conditions": [],
+                "recommendations": []
+            },
+            "pharmacist": {
+                "conditions": [],
+                "recommendations": []
+            },
+            "gp": {
+                "conditions": [
+                    "Assessment of a suspected URTI, such as uncomplicated URTI, acute rhinosinusitis, pharyngotonsillitis or acute otitis media."
+                ],
+                "recommendations": [
+                    "Assess clinical signs and symptoms and establish a working diagnosis.",
+                    "Do not prescribe antibiotics for patients with uncomplicated URTI.",
+                    "For acute rhinosinusitis, pharyngotonsillitis or acute otitis media, when a bacterial infection is clinically suspected, consider whether an antibiotic is needed based on clinical features and individual risk factors for severe disease outcome.",
+                    "Do not routinely prescribe antivirals for otherwise healthy patients with uncomplicated URTI."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [],
+                "recommendations": []
+            }
+        },
+        "source": {
+            "source_name": "Agency for Care Effectiveness Singapore",
+            "source_url": "https://www.ace-hta.gov.sg/healthcare-professionals/ace-repository-for-clinical-guidelines/upper-respiratory-tract-infections--urtis---rational-antimicrobial-use/",
+            "last_updated": "2026-05-25",
+            "last_verified": "2026-11-15"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "ACE-SSTI-001",
+        "record_type": "symptom_guideline",
+        "topic": "Bacterial Skin and Soft Tissue Infections",
+        "keywords": [
+            "skin and soft tissue infection",
+            "SSTI",
+            "cellulitis",
+            "erysipelas",
+            "impetigo",
+            "folliculitis",
+            "furuncle",
+            "boil",
+            "carbuncle",
+            "skin abscess",
+            "antibiotics"
+        ],
+        "description": "ACE Clinical Guideline for healthcare professionals on the diagnosis, assessment and management of bacterial skin and soft tissue infections, especially in primary or generalist care. It covers severity assessment and antibiotic prescribing.",
+        "care_guidance": {
+            "self_care": {
+                "conditions": [],
+                "recommendations": []
+            },
+            "pharmacist": {
+                "conditions": [],
+                "recommendations": []
+            },
+            "gp": {
+                "conditions": [
+                    "Suspected bacterial skin and soft tissue infection, including impetigo, bacterial folliculitis, furuncles, carbuncles, skin abscess, cellulitis or erysipelas."
+                ],
+                "recommendations": [
+                    "Diagnose bacterial skin and soft tissue infections clinically, based on history taking and physical examination findings.",
+                    "Assess the severity of infection and risk of complications to determine the management approach, including referral urgency.",
+                    "Impetigo or bacterial folliculitis: prescribe topical antibiotic monotherapy for localised mild infections, and oral antibiotic monotherapy for severe infections.",
+                    "Bacterial furuncles, carbuncles or skin abscess: consider surgical intervention based on clinical presentation, and reserve oral antibiotic monotherapy for severe infections.",
+                    "Bacterial cellulitis or erysipelas: prescribe oral antibiotic monotherapy for mild infections, and reserve intravenous antibiotic monotherapy for severe infections."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [],
+                "recommendations": []
+            }
+        },
+        "source": {
+            "source_name": "Agency for Care Effectiveness Singapore",
+            "source_url": "https://www.ace-hta.gov.sg/healthcare-professionals/ace-repository-for-clinical-guidelines/bacterial-skin-and-soft-tissue-infections----diagnosis-and-antibiotic-prescribing/",
+            "last_updated": "2026-09-21",
+            "last_verified": "2026-11-15"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "ACE-ALLERGIC-RHINITIS-001",
+        "record_type": "symptom_guideline",
+        "topic": "Allergic Rhinitis",
+        "keywords": [
+            "allergic rhinitis",
+            "perennial allergic rhinitis",
+            "allergy testing",
+            "intranasal corticosteroid",
+            "oral antihistamine",
+            "allergen avoidance",
+            "runny nose",
+            "blocked nose",
+            "sneezing"
+        ],
+        "description": "ACE Clinical Guideline for healthcare professionals on the diagnosis and management of perennial allergic rhinitis, covering diagnostic criteria, when to do allergy testing, choice of medication and allergen avoidance.",
+        "care_guidance": {
+            "self_care": {
+                "conditions": [],
+                "recommendations": []
+            },
+            "pharmacist": {
+                "conditions": [],
+                "recommendations": []
+            },
+            "gp": {
+                "conditions": [
+                    "Suspected or diagnosed allergic rhinitis."
+                ],
+                "recommendations": [
+                    "Diagnose allergic rhinitis based on the patient's history, particularly symptoms, combined with a physical examination.",
+                    "Conduct allergy testing only when clinically warranted, for example when the diagnosis is unclear or when optimised medication gives inadequate symptom control.",
+                    "Prescribe an intranasal corticosteroid, an oral antihistamine (2nd generation or later), or a combination of intranasal corticosteroid and intranasal antihistamine.",
+                    "Offer allergen avoidance advice to all patients as an addition to medication, focusing on accessible and practical strategies."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [],
+                "recommendations": []
+            }
+        },
+        "source": {
+            "source_name": "Agency for Care Effectiveness Singapore",
+            "source_url": "https://www.ace-hta.gov.sg/healthcare-professionals/ace-repository-for-clinical-guidelines/allergic-rhinitis-acg---diagnosis-and-management/",
+            "last_updated": "2026-05-15",
+            "last_verified": "2026-11-15"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "ACE-LBP-MRI-001",
+        "record_type": "symptom_guideline",
+        "topic": "Low Back Pain (When to Order MRI)",
+        "keywords": [
+            "low back pain",
+            "back pain",
+            "MRI",
+            "lumbar spine",
+            "non-specific low back pain",
+            "radicular symptoms",
+            "cauda equina syndrome",
+            "progressive neurological symptoms"
+        ],
+        "description": "ACE Clinical Guideline for healthcare professionals on the role of lumbar spine MRI in investigating low back pain that is non-specific or linked to a specific spinal pathology. First published on 1 October 2020 and updated on 2 June 2026, with no changes to recommendations 1 to 6.",
+        "care_guidance": {
+            "self_care": {
+                "conditions": [],
+                "recommendations": []
+            },
+            "pharmacist": {
+                "conditions": [],
+                "recommendations": []
+            },
+            "gp": {
+                "conditions": [
+                    "Low back pain assessed by a doctor to decide whether an MRI of the lumbar spine is needed."
+                ],
+                "recommendations": [
+                    "Non-specific low back pain, with or without radicular symptoms: MRI is not indicated.",
+                    "Non-specific low back pain despite 4 to 6 weeks of conservative management: MRI may be indicated.",
+                    "Low back pain with progressive neurological symptoms or signs: MRI is indicated.",
+                    "Low back pain with suspected cauda equina syndrome: MRI is indicated.",
+                    "Low back pain with suspected or known cancer or infection: MRI is indicated.",
+                    "New or progressive low back pain following an invasive procedure on the lumbar spine: MRI is indicated."
+                ]
+            },
+            "emergency_department": {
+                "conditions": [],
+                "recommendations": []
+            }
+        },
+        "source": {
+            "source_name": "Agency for Care Effectiveness Singapore",
+            "source_url": "https://www.ace-hta.gov.sg/healthcare-professionals/ace-repository-for-clinical-guidelines/when-to-order-mri-for-low-back-pain/",
+            "last_updated": "2026-06-02",
+            "last_verified": "2026-11-15"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "ACE-FOOD-ALLERGY-001",
+        "record_type": "symptom_guideline",
+        "topic": "Food Allergy",
+        "keywords": [
+            "food allergy",
+            "food-induced allergic reaction",
+            "allergic reaction",
+            "children",
+            "breastfeeding mothers",
+            "school",
+            "caregivers"
+        ],
+        "description": "Clinical practice guideline developed by the College of Paediatrics and Child Health, Singapore, and methodologically validated by ACE. It supports the diagnosis and management of food allergies and food-induced allergic reactions in patients of all ages, with a focus on children and breastfeeding mothers. It also covers working with parents, caregivers, teachers and school personnel. Only the guideline's overview page was reviewed, so specific recommendations are not included here. ACE's validation is not an endorsement of the recommendations.",
+        "care_guidance": {
+            "self_care": {
+                "conditions": [],
+                "recommendations": []
+            },
+            "pharmacist": {
+                "conditions": [],
+                "recommendations": []
+            },
+            "gp": {
+                "conditions": [],
+                "recommendations": []
+            },
+            "emergency_department": {
+                "conditions": [],
+                "recommendations": []
+            }
+        },
+        "source": {
+            "source_name": "Agency for Care Effectiveness Singapore",
+            "source_url": "https://www.ace-hta.gov.sg/healthcare-professionals/ace-repository-for-clinical-guidelines/food-allergy---diagnosis-and-management/",
+            "last_updated": "2026-09-23",
+            "last_verified": "2026-11-15"
+        },
+        "review_status": "needs_professional_review"
     }
 ]
