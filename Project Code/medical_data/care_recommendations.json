@@ -1,6 +1,8 @@
 [
     {
         "id": "MOH-PHARMACIST-001",
+        "record_type": "healthcare_service",
+        "intended_audience": "general_public",
         "topic": "Visiting a Pharmacist",
         "keywords": [
             "pharmacist",
@@ -44,6 +46,7 @@
     {
         "id": "MOH-GP-001",
         "record_type": "healthcare_service",
+        "intended_audience": "general_public",
         "topic": "Seeking a Doctor",
         "keywords": [
             "see a doctor",
@@ -101,6 +104,7 @@
     {
         "id": "SCDF-EMS-001",
         "record_type": "healthcare_service",
+        "intended_audience": "general_public",
         "topic": "Calling 995 for an Emergency Ambulance",
         "keywords": [
             "995",
@@ -162,6 +166,7 @@
     {
         "id": "SCDF-NON-EMERGENCY-001",
         "record_type": "healthcare_service",
+        "intended_audience": "general_public",
         "topic": "Non-Emergency Care Options Instead of Calling 995",
         "keywords": [
             "non-emergency",
@@ -180,7 +185,7 @@
             "Do not call 995 for non-emergency conditions, as non-emergency calls can delay the response to life-threatening emergencies.",
             "For cases that do not need an emergency response, visit the nearest General Practitioner (GP) or polyclinic, visit a 24-hour Urgent Care Centre, or call the NurseFirst helpline at 6262 6262 for advice on where to seek medical help.",
             "SCDF does not convey non-emergency cases to hospital. Such patients are advised to see their family doctor or a GP at a nearby clinic, or to make their own transport arrangements.",
-            "A charge of $274 applies for each non-emergency case that SCDF conveys to hospital.",
+            "A charge of $274 applies when a case conveyed by SCDF is assessed as non-emergency by the doctor at the receiving hospital's Emergency Department.",
             "The SCDF 995 Operations Centre sends ambulances only when calls are assessed to be actual emergencies.",
             "The SCDF 1777 non-emergency ambulance hotline will cease from 1 January 2027. The SCDF page still mentions 1777 in some sections, so check the SCDF website for the latest information.",
             "From 1 January 2027, call the NurseFirst helpline at 6262 6262 for advice on appropriate care options, including nearby GP clinics and teleconsultation services.",
@@ -196,6 +201,14 @@
             "Constipation",
             "Medical check-ups"
         ],
+        "effective_changes": [
+            {
+                "effective_date": "2027-01-01",
+                "description": "The SCDF 1777 non-emergency ambulance hotline will cease operation.",
+                "replacement_service": "NurseFirst",
+                "replacement_contact": "6262 6262"
+            }
+        ],
         "warning_signs": [],
         "source": {
             "source_name": "Singapore Civil Defence Force",
@@ -207,7 +220,8 @@
     },
     {
         "id": "ACE-ARCG-001",
-        "record_type": "healthcare_service",
+        "record_type": "clinical_reference",
+        "intended_audience": "healthcare_professionals",
         "topic": "ACE Repository for Clinical Guidelines",
         "keywords": [
             "ACE",
@@ -246,6 +260,4 @@
         },
         "review_status": "needs_professional_review"
     }
-
-    
 ]

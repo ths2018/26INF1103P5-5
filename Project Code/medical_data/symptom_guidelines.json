@@ -2,6 +2,7 @@
     {
         "id": "MOH-ABDOMINAL-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "general_public",
         "topic": "Abdominal Pain or Indigestion",
         "keywords": [
             "abdominal pain",
@@ -86,6 +87,7 @@
     {
         "id": "MOH-BRUISES-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "general_public",
         "topic": "Bruises",
         "keywords": [
             "bruise",
@@ -153,6 +155,7 @@
     {
         "id": "MOH-COLD-FLU-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "general_public",
         "topic": "Cold and Flu",
         "keywords": [
             "cold",
@@ -250,6 +253,7 @@
     {
         "id": "MOH-CUTS-WOUNDS-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "general_public",
         "topic": "Cuts and Open Wounds",
         "keywords": [
             "cut",
@@ -341,82 +345,7 @@
     {
         "id": "MOH-DIARRHOEA-VOMITING-001",
         "record_type": "symptom_guideline",
-        "topic": "Diarrhoea and Vomiting",
-        "keywords": [
-            "diarrhoea",
-            "diarrhea",
-            "vomiting",
-            "throwing up",
-            "loose stools",
-            "liquid stools",
-            "stomach infection",
-            "food intolerance",
-            "dehydration",
-            "oral rehydration salts"
-        ],
-        "description": "Vomiting is the forced emptying of the stomach through the mouth. Diarrhoea is the frequent passage of liquid stools. Both commonly occur together due to infections of the gut.",
-        "possible_causes": [
-            "Viral infections of the gut",
-            "Bacterial infections of the gut",
-            "Food intolerance",
-            "Side effects of certain medications, such as antibiotics"
-        ],
-        "care_guidance": {
-            "self_care": {
-                "conditions": [
-                    "Symptoms can be managed at home when there are no warning signs requiring medical attention."
-                ],
-                "recommendations": [
-                    "Drink more water or clear fluids, such as clear soups, to prevent losing too much water.",
-                    "Avoid foods that may worsen diarrhoea, such as coffee, alcohol, spicy foods, fried foods, fatty foods, and dairy products like milk and cheese.",
-                    "Do not take solid food until vomiting has stopped."
-                ]
-            },
-            "pharmacist": {
-                "conditions": [
-                    "Further advice is needed on managing symptoms."
-                ],
-                "recommendations": [
-                    "Ask a pharmacist for advice on managing diarrhoea and vomiting.",
-                    "A pharmacist may recommend over-the-counter medications such as charcoal or oral rehydration salts.",
-                    "Ask the pharmacist how to take medication safely, especially if you have allergies, other medical conditions, or are currently taking other medications.",
-                    "A pharmacist can advise whether you need to see a GP or visit the emergency department."
-                ]
-            },
-            "gp": {
-                "conditions": [
-                    "Condition gets worse or does not improve in a few days.",
-                    "Vomiting affects your ability to eat and drink.",
-                    "High fever of 38°C and above persists for more than 3 days.",
-                    "Recently travelled to countries with poor sanitation."
-                ],
-                "recommendations": [
-                    "Seek assessment from a GP if any of the listed conditions apply."
-                ]
-            },
-            "emergency_department": {
-                "conditions": [
-                    "Severe stomach pain.",
-                    "Severe dehydration, such as feeling very thirsty, giddy, and weak.",
-                    "Blood in vomit.",
-                    "Bloody or black sticky stools."
-                ],
-                "recommendations": [
-                    "Go to the emergency department if any of these warning signs occur."
-                ]
-            }
-        },
-        "source": {
-            "source_name": "Singapore Ministry of Health",
-            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/conditions/diarrhoea-and-vomiting/",
-            "last_updated": "2025-01-02",
-            "last_verified": "2026-11-13"
-        },
-        "review_status": "needs_professional_review"
-    },
-    {
-        "id": "MOH-DIARRHOEA-VOMITING-001",
-        "record_type": "symptom_guideline",
+        "intended_audience": "general_public",
         "topic": "Diarrhoea and Vomiting",
         "keywords": [
             "diarrhoea",
@@ -493,6 +422,7 @@
     {
         "id": "MOH-FEVER-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "general_public",
         "topic": "Fever",
         "keywords": [
             "fever",
@@ -587,6 +517,7 @@
     {
         "id": "MOH-HEADACHES-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "general_public",
         "topic": "Headaches",
         "keywords": [
             "headache",
@@ -673,6 +604,7 @@
     {
         "id": "MOH-HIGH-BLOOD-PRESSURE-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "general_public",
         "topic": "High Blood Pressure",
         "keywords": [
             "high blood pressure",
@@ -747,6 +679,7 @@
     {
         "id": "MOH-HIVES-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "general_public",
         "topic": "Hives",
         "keywords": [
             "hives",
@@ -827,6 +760,7 @@
     {
         "id": "MOH-INSECT-BITES-STINGS-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "general_public",
         "topic": "Insect Bites and Stings",
         "keywords": [
             "insect bite",
@@ -926,6 +860,7 @@
     {
         "id": "MOH-BURNS-SCALDS-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "general_public",
         "topic": "Mild Burns and Scalds",
         "keywords": [
             "burn",
@@ -1024,6 +959,7 @@
     {
         "id": "MOH-NOSEBLEEDS-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "general_public",
         "topic": "Nosebleeds",
         "keywords": [
             "nosebleed",
@@ -1100,6 +1036,7 @@
     {
         "id": "MOH-SKIN-INFECTIONS-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "general_public",
         "topic": "Skin Infections",
         "keywords": [
             "skin infection",
@@ -1175,6 +1112,7 @@
     {
         "id": "MOH-SORE-EYES-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "general_public",
         "topic": "Sore Eyes",
         "keywords": [
             "sore eyes",
@@ -1265,6 +1203,7 @@
     {
         "id": "MOH-STRAINS-SPRAINS-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "general_public",
         "topic": "Strains and Sprains",
         "keywords": [
             "strain",
@@ -1357,6 +1296,7 @@
     {
         "id": "SCDF-EMERGENCY-SYMPTOMS-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "general_public",
         "topic": "Emergency and Non-Emergency Symptoms (995 Ambulance)",
         "keywords": [
             "emergency",
@@ -1400,7 +1340,7 @@
                     "SCDF does not convey non-emergency cases to hospital; a $274 charge applies for each non-emergency case it conveys."
                 ]
             },
-            "emergency_department": {
+            "emergency_response": {
                 "conditions": [
                     "Cardiac arrest.",
                     "Seizures.",
@@ -1427,6 +1367,7 @@
     {
         "id": "ACE-URTI-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "healthcare_professionals",
         "topic": "Upper Respiratory Tract Infections (URTI)",
         "keywords": [
             "upper respiratory tract infection",
@@ -1477,6 +1418,7 @@
     {
         "id": "ACE-SSTI-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "healthcare_professionals",
         "topic": "Bacterial Skin and Soft Tissue Infections",
         "keywords": [
             "skin and soft tissue infection",
@@ -1529,6 +1471,7 @@
     {
         "id": "ACE-ALLERGIC-RHINITIS-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "healthcare_professionals",
         "topic": "Allergic Rhinitis",
         "keywords": [
             "allergic rhinitis",
@@ -1578,6 +1521,7 @@
     {
         "id": "ACE-LBP-MRI-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "healthcare_professionals",
         "topic": "Low Back Pain (When to Order MRI)",
         "keywords": [
             "low back pain",
@@ -1628,6 +1572,7 @@
     {
         "id": "ACE-FOOD-ALLERGY-001",
         "record_type": "symptom_guideline",
+        "intended_audience": "healthcare_professionals",
         "topic": "Food Allergy",
         "keywords": [
             "food allergy",
