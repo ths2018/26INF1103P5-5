@@ -1,0 +1,263 @@
+[
+    {
+        "id": "MOH-PHARMACIST-001",
+        "record_type": "healthcare_service",
+        "intended_audience": "general_public",
+        "topic": "Visiting a Pharmacist",
+        "keywords": [
+            "pharmacist",
+            "pharmacy",
+            "medication advice",
+            "medicine side effects",
+            "medication usage",
+            "common health conditions"
+        ],
+        "urgency_level": "non-emergency",
+        "recommendation": [
+            "Visit a pharmacist for advice about medication usage, dosage instructions, possible side effects and medication storage.",
+            "Ask a pharmacist about possible interactions between medications, vitamins, supplements and traditional medicines.",
+            "Pharmacists can advise on managing common health conditions and recommend suitable medications when needed.",
+            "Inform the pharmacist about any allergies, existing medical conditions and medications currently being taken."
+        ],
+        "conditions_pharmacists_can_help_with": [
+            "Abdominal pain or indigestion",
+            "Bruises",
+            "Cold and flu",
+            "Cuts and open wounds",
+            "Diarrhoea and vomiting",
+            "Fever",
+            "Headaches",
+            "Hives",
+            "Insect bites and stings",
+            "Mild burns and scalds",
+            "Nosebleeds",
+            "Sore eyes",
+            "Strains and sprains"
+        ],
+        "warning_signs": [],
+        "source": {
+            "source_name": "Ministry of Health Singapore",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/visiting-a-pharmacist/",
+            "last_updated": "2024-10-26",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "MOH-GP-001",
+        "record_type": "healthcare_service",
+        "intended_audience": "general_public",
+        "topic": "Seeking a Doctor",
+        "keywords": [
+            "see a doctor",
+            "GP",
+            "general practitioner",
+            "GP clinic",
+            "emergency department",
+            "ED",
+            "mild illness",
+            "moderate illness",
+            "GPFirst"
+        ],
+        "urgency_level": "context_dependent",
+        "recommendation": [
+            "General Practitioners (GPs) can treat many common health conditions.",
+            "People with mild to moderate health problems are encouraged to visit a GP first instead of going directly to the Emergency Department.",
+            "A GP can assess the patient's condition and refer them to an acute hospital or Urgent Care Centre if necessary.",
+            "Patients with emergency symptoms should seek emergency medical attention rather than delaying care to visit a GP."
+        ],
+        "conditions_gps_can_help_with": [
+            "Abdominal pain or indigestion",
+            "Bruises",
+            "Cold and flu",
+            "Cuts and open wounds",
+            "Diarrhoea and vomiting",
+            "Fever",
+            "Headaches",
+            "High blood pressure",
+            "Hives",
+            "Insect bites and stings",
+            "Mild burns and scalds",
+            "Nosebleeds",
+            "Skin infection",
+            "Sore eyes",
+            "Strains and sprains"
+        ],
+        "gpfirst_programme": {
+            "description": "Encourages people with mild to moderate health problems to visit participating GP clinics before going to the Emergency Department.",
+            "benefits": [
+                "Timely medical treatment at a GP clinic.",
+                "Referral to an acute hospital or Urgent Care Centre when necessary.",
+                "A $50 subsidy on the prevailing ED attendance fee when referred through the GPFirst Programme, subject to programme terms and conditions.",
+                "Priority over non-emergency cases at the Emergency Department."
+            ]
+        },
+        "warning_signs": [],
+        "source": {
+            "source_name": "Ministry of Health Singapore",
+            "source_url": "https://www.moh.gov.sg/seeking-healthcare/getting-medical-help/seeking-a-doctor/",
+            "last_updated": "2026-02-03",
+            "last_verified": "2026-11-13"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "SCDF-EMS-001",
+        "record_type": "healthcare_service",
+        "intended_audience": "general_public",
+        "topic": "Calling 995 for an Emergency Ambulance",
+        "keywords": [
+            "995",
+            "emergency ambulance",
+            "SCDF",
+            "ambulance",
+            "life-threatening emergency",
+            "cardiac arrest",
+            "seizures",
+            "breathlessness",
+            "loss of consciousness",
+            "excessive bleeding",
+            "major trauma",
+            "stroke",
+            "myResponder",
+            "CPR",
+            "SMS 70995"
+        ],
+        "urgency_level": "emergency",
+        "recommendation": [
+            "Call 995 only for life-threatening emergencies. SCDF operates a 24-hour Emergency Medical Services.",
+            "Identify yourself, provide a telephone number and give the location, including the address or postal code, or the nearest landmark such as a lamp post or bus stop number.",
+            "If calling from an open area with no landmarks or buildings, use the myResponder app to contact 995 so that your location is registered.",
+            "Briefly describe the patient's signs and symptoms, answering the call taker's guided questions.",
+            "Stay calm, follow the call taker's instructions and do not hang up unless told to do so.",
+            "Send someone to wait for the ambulance crew, for example by opening the door or going to the lift lobby to direct the crew to the patient.",
+            "If the patient's condition gets worse, call 995 again immediately for further instructions.",
+            "The 995 operator may guide the caller through CPR for a person in cardiac arrest before responders arrive.",
+            "Emergency ambulances take patients to the nearest appropriate Ministry of Health-designated hospital by travel time; patients cannot choose the hospital.",
+            "SCDF does not charge for emergency cases it conveys to hospital. The final emergency or non-emergency status is based on the assessment of the doctor at the receiving hospital's Emergency Department.",
+            "People who are deaf, hard-of-hearing or have a speech impairment can send an emergency SMS to 70995, stating the service required (Fire Engine or Ambulance), the address or landmark, and the nature of the emergency. Normal telco SMS charges apply. Others are encouraged to call 995."
+        ],
+        "conditions_requiring_995": [
+            "Cardiac arrest",
+            "Seizures",
+            "Breathlessness",
+            "Loss of consciousness",
+            "Excessive bleeding",
+            "Major traumas",
+            "Stroke"
+        ],
+        "warning_signs": [
+            "Cardiac arrest",
+            "Seizures",
+            "Breathlessness",
+            "Loss of consciousness",
+            "Excessive bleeding",
+            "Major traumas",
+            "Stroke"
+        ],
+        "source": {
+            "source_name": "Singapore Civil Defence Force",
+            "source_url": "https://www.scdf.gov.sg/home/about-scdf/emergency-medical-services",
+            "last_updated": "2026-07-01",
+            "last_verified": "2026-11-15"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "SCDF-NON-EMERGENCY-001",
+        "record_type": "healthcare_service",
+        "intended_audience": "general_public",
+        "topic": "Non-Emergency Care Options Instead of Calling 995",
+        "keywords": [
+            "non-emergency",
+            "995",
+            "1777",
+            "NurseFirst",
+            "Urgent Care Centre",
+            "polyclinic",
+            "GP",
+            "non-emergency ambulance",
+            "private ambulance",
+            "ambulance charges"
+        ],
+        "urgency_level": "non-emergency",
+        "recommendation": [
+            "Do not call 995 for non-emergency conditions, as non-emergency calls can delay the response to life-threatening emergencies.",
+            "For cases that do not need an emergency response, visit the nearest General Practitioner (GP) or polyclinic, visit a 24-hour Urgent Care Centre, or call the NurseFirst helpline at 6262 6262 for advice on where to seek medical help.",
+            "SCDF does not convey non-emergency cases to hospital. Such patients are advised to see their family doctor or a GP at a nearby clinic, or to make their own transport arrangements.",
+            "A charge of $274 applies when a case conveyed by SCDF is assessed as non-emergency by the doctor at the receiving hospital's Emergency Department.",
+            "The SCDF 995 Operations Centre sends ambulances only when calls are assessed to be actual emergencies.",
+            "The SCDF 1777 non-emergency ambulance hotline will cease from 1 January 2027. The SCDF page still mentions 1777 in some sections, so check the SCDF website for the latest information.",
+            "From 1 January 2027, call the NurseFirst helpline at 6262 6262 for advice on appropriate care options, including nearby GP clinics and teleconsultation services.",
+            "For non-emergency ambulance conveyance, contact a Private Ambulance Operator (contact details and fees at go.gov.sg/pao). Taxis and ride-hailing services can also be used for non-emergency trips to hospital.",
+            "The 995 emergency service is not affected by the end of the 1777 hotline."
+        ],
+        "conditions_not_requiring_995": [
+            "Toothaches",
+            "Diarrhoea",
+            "Coughs",
+            "Headaches",
+            "Slight burns or scalds",
+            "Constipation",
+            "Medical check-ups"
+        ],
+        "effective_changes": [
+            {
+                "effective_date": "2027-01-01",
+                "description": "The SCDF 1777 non-emergency ambulance hotline will cease operation.",
+                "replacement_service": "NurseFirst",
+                "replacement_contact": "6262 6262"
+            }
+        ],
+        "warning_signs": [],
+        "source": {
+            "source_name": "Singapore Civil Defence Force",
+            "source_url": "https://www.scdf.gov.sg/home/about-scdf/emergency-medical-services",
+            "last_updated": "2026-07-01",
+            "last_verified": "2026-11-15"
+        },
+        "review_status": "needs_professional_review"
+    },
+    {
+        "id": "ACE-ARCG-001",
+        "record_type": "clinical_reference",
+        "intended_audience": "healthcare_professionals",
+        "topic": "ACE Repository for Clinical Guidelines",
+        "keywords": [
+            "ACE",
+            "Agency for Care Effectiveness",
+            "clinical guidelines",
+            "ACG",
+            "ACR",
+            "clinical practice guideline",
+            "healthcare professionals",
+            "guideline repository"
+        ],
+        "urgency_level": "non-emergency",
+        "recommendation": [
+            "The ACE Repository for Clinical Guidelines lists ACE Clinical Guidelines (ACGs), ACE Clinical Recommendations (ACRs) and other local guidelines validated by ACE.",
+            "The guidelines are intended for healthcare professionals, so they are not self-care advice for the public.",
+            "The repository lists 34 published items: 30 ACGs, 3 external clinical practice guidelines and 1 ACR. Only the first page (10 items) is listed below."
+        ],
+        "guidelines_listed": [
+            "Managing hereditary breast and ovarian cancer (HBOC) syndrome: genetic testing and risk-reducing interventions (ACR, 5 November 2026)",
+            "Food Allergy – Diagnosis and Management Clinical Practice Guideline (External CPG, 23 September 2026)",
+            "Bacterial skin and soft tissue infections — diagnosis and antibiotic prescribing (ACG, 21 September 2026)",
+            "Community-acquired pneumonia — assessment, diagnosis and antibiotic prescribing (ACG, 21 September 2026)",
+            "Management of mild and moderate dementia in older adults (ACG, 17 September 2026)",
+            "When to order MRI for low back pain (ACG, 2 June 2026)",
+            "Upper respiratory tract infections — rational antimicrobial use (ACG, 25 May 2026)",
+            "Allergic Rhinitis – Diagnosis and management (ACG, 15 May 2026)",
+            "Singapore stroke rehabilitation guideline (External CPG, 27 April 2026)",
+            "Management of knee osteoarthritis – a joint effort with patients (ACG, 24 April 2026)"
+        ],
+        "warning_signs": [],
+        "source": {
+            "source_name": "Agency for Care Effectiveness Singapore",
+            "source_url": "https://www.ace-hta.gov.sg/healthcare-professionals/ace-repository-for-clinical-guidelines/",
+            "last_updated": "2026-11-13",
+            "last_verified": "2026-11-15"
+        },
+        "review_status": "needs_professional_review"
+    }
+]
