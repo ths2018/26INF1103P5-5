@@ -101,7 +101,7 @@ class MenuController:
         if result.get("certainty"):
             line += f" - certainty {result['certainty']:.0%}"
         validation = result.get("validation")
-        if validation and validation["escalated"]:
+        if validation and validation.get("escalated"):
             line += " - raised after the guideline check"
         print_output(line)
 
@@ -111,7 +111,7 @@ class MenuController:
         if not validation or not validation["findings"]:
             return
         print_output("\n=== Guideline Check ===")
-        if validation["escalated"]:
+        if validation.get("escalated"):
             print_output(
                 f"Urgency raised from '{validation['urgency_before']}' to "
                 f"'{validation['urgency_after']}' based on the guideline data below."

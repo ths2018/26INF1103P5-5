@@ -49,6 +49,9 @@ class AIResponse:
             stripped = line.strip()
             if stripped.startswith(label):
                 inside = True
+                content = stripped[len(label):].strip()
+                if content:
+                    captured.append(content)
                 continue  # skip the label line itself
             if not inside:
                 continue
