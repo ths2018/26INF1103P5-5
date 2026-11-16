@@ -122,6 +122,19 @@ def print_cases(case_loader=None):
 # New Authentication Input/Output Functions
 # ==========================================
 
+def get_auth_menu_choice():
+    """Menu shown before sign-in. Returns '1' (log in), '2' (sign up) or '3' (exit)."""
+    print_output("\n=== Sign in required ===")
+    print_output("1. Log in")
+    print_output("2. Sign up")
+    print_output("3. Exit")
+    while True:
+        choice = input("Choose an option (1-3): ").strip()
+        if choice in ("1", "2", "3"):
+            return choice
+        print_output("Invalid option. Please enter 1, 2 or 3.")
+
+
 def get_email():
     return _AUTH.get_email()
 

@@ -5,6 +5,8 @@ Wires the objects from the `logic` package together (build_menu) and keeps the
 old function-based API so main.py and existing tests keep working.
 """
 
+import os
+
 from AI.ai_manager import check_relevance
 
 from Logic.ai_response import AIResponse
@@ -12,6 +14,7 @@ from Logic.assessment_engine import AssessmentEngine
 from Logic.case_repository import CaseRepository
 from Logic.emergency_detector import EmergencyDetector
 from Logic.gemini_ai_service import GeminiAIService
+from Logic.guideline_repository import GuidelineRepository
 from Logic.health_detector import HealthDetector
 from Logic.keywords import (  # noqa: F401  (re-exported for old imports)
     EMERGENCY_KEYWORDS,
@@ -23,12 +26,38 @@ from Logic.memory_question_detector import MemoryQuestionDetector
 from Logic.menu_controller import MenuController
 
 
-def build_menu(ai_service=None, repository=None, case=None, chat=None):
-    """Factory that wires the default objects together."""
+_guidelines_cache = {}
+
+
+def get_guidelines():
+    """Loads the medical guideline JSON files once. Looks in GUIDELINES_DIR if set,
+    otherwise next to this file. Returns None (and warns) if they can't be loaded."""
+    if "repo" not in _guidelines_cache:
+        data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "medical_data")
+        try:
+            _guidelines_cache["repo"] = GuidelineRepository(data_dir)
+        except (OSError, ValueError) as exc:  # missing file or invalid JSON
+            from input_output_manager import print_output
+            print_output(
+                f"[Warning] Medical guideline data could not be loaded ({exc}). "
+                "AI answers will not be cross-checked."
+            )
+            _guidelines_cache["repo"] = None
+    return _guidelines_cache["repo"]
+
+
+def build_menu(ai_service=None, repository=None, case=None, chat=None,
+               user_profile=None, guidelines=None):
+    """Factory that wires the default objects together.
+    guidelines: a GuidelineRepository, None to load the default files,
+    or False to switch the cross-check off."""
     ai_service = ai_service or GeminiAIService()
     repository = repository or CaseRepository()
-    engine = AssessmentEngine(ai_service, repository, case, chat)
-    return MenuController(engine, repository)
+    if guidelines is None:
+        guidelines = get_guidelines()
+    engine = AssessmentEngine(ai_service, repository, case, chat,
+                              guidelines=guidelines or None)
+    return MenuController(engine, repository, user_profile)
 
 
 # ---------------------------------------------------------------------------
@@ -102,12 +131,13 @@ def is_case_related(user_input, active_case):
 
 def process_interaction(user_input, chat, active_case=None, age=None):
     """Old entry point. Returns the result as a dict."""
-    engine = AssessmentEngine(GeminiAIService(), CaseRepository(), active_case, chat)
+    engine = AssessmentEngine(GeminiAIService(), CaseRepository(), active_case, chat,
+                              guidelines=get_guidelines())
     return engine.process(user_input, age)
 
 
-def menu_selection(choice, active_case, chat):
+def menu_selection(choice, active_case, chat, user_profile=None):
     """Old entry point. Returns (active_case, chat, should_exit)."""
-    menu = build_menu(case=active_case, chat=chat)
+    menu = build_menu(case=active_case, chat=chat, user_profile=user_profile)
     should_exit = menu.handle(choice)
     return menu.engine.case, menu.engine.chat, should_exit

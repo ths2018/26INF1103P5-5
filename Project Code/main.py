@@ -1,3 +1,4 @@
+import os
 import traceback
 from AI.ai_manager import AIManager
 ai_manager = AIManager()
@@ -13,6 +14,46 @@ from input_output_manager import (
     welcome_message,
 )
 from logic_manager_oop import menu_selection
+import input_output_manager as io_manager
+from Logic.argon2_password_hasher import Argon2PasswordHasher
+from Logic.auth_controller import AuthController
+from Logic.auth_service import AuthService
+from Logic.in_memory_user_repository import InMemoryUserRepository
+
+
+def build_user_repository():
+    """Where user accounts are stored (the ONE place to change when the user
+    database is ready).
+
+    Set USER_DB_URI in your .env to use MongoDB (optionally USER_DB_NAME and
+    USER_DB_COLLECTION). Until then, accounts are kept in memory only.
+    """
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+    except ImportError:
+        pass
+
+    uri = os.getenv("USER_DB_URL")
+    if not uri:
+        print_output(
+            "[Warning] No user database configured (USER_DB_URI is not set). "
+            "Accounts are kept in memory only and are lost when the program closes."
+        )
+        return InMemoryUserRepository()
+
+    from pymongo import MongoClient
+    from Logic.mongo_user_repository import MongoUserRepository
+
+    database = MongoClient(uri)[os.getenv("USER_DB_NAME", "case_assessments")]
+    return MongoUserRepository(database[os.getenv("USER_DB_COLLECTION", "users")])
+
+
+def authenticate():
+    """Sign-in gate. Returns the signed-in user's profile (a dict with 'email'),
+    or None if the user chose to exit."""
+    auth_service = AuthService(Argon2PasswordHasher(), build_user_repository())
+    return AuthController(auth_service, io_manager).run()
  
 def start_new_case(active_case):
     """Closes the current case (if any), creates a new one and a fresh chat."""
@@ -25,7 +66,17 @@ def start_new_case(active_case):
     return new_case, ai_manager.create_chat(new_case)
 
 def main():
-    welcome_message()
+    # The user must sign in (or sign up, then sign in) before anything else runs.
+    try:
+        user = authenticate()
+    except (KeyboardInterrupt, EOFError):
+        user = None
+    if user is None:
+        print_output("\nExiting application. Stay healthy!")
+        return
+    print_output(f"[System] Signed in as {user['email']}\n")
+
+    welcome_message()  # the main menu is only shown after signing in
 
     try:
         active_case = get_active_case()
@@ -62,6 +113,7 @@ def main():
                 choice,
                 active_case,
                 chat,
+                user,
             )
 
             if should_quit:
