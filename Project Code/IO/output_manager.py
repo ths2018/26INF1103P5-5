@@ -6,9 +6,8 @@ class OutputManager:
         "2. View all saved cases\n"
         "3. Browse conversation history\n"
         "4. Export records to CSV\n"
-        "5. Export all records to Excel\n"
-        "6. View urgency statistics\n"
-        "7. Quit\n"
+        "5. View urgency statistics\n"
+        "6. Quit\n"
     )
 
     def __init__(

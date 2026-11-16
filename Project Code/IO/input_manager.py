@@ -45,10 +45,10 @@ class InputManager:
         choice = value.strip()
 
         if choice not in {
-            "1", "2", "3", "4", "5", "6", "7"
+            "1", "2", "3", "4", "5", "6"
         }:
             raise ValueError(
-                "Invalid option. Enter a number from 1 to 7."
+                "Invalid option. Enter a number from 1 to 6."
             )
 
         return choice

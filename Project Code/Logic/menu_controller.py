@@ -26,9 +26,8 @@ class MenuController:
             "2": self._list_cases,
             "3": self._search_records,
             "4": self._export_csv,
-            "5": self._export_xlsx,
-            "6": self._show_statistics,
-            "7": self._exit,
+            "5": self._show_statistics,
+            "6": self._exit,
         }
 
     @property
@@ -162,9 +161,6 @@ class MenuController:
             return
 
         self._repository.export_csv(case_ids)
-
-    def _export_xlsx(self):
-        self._repository.export_xlsx_and_open()
 
     def _show_statistics(self):
         query = filter_input()
