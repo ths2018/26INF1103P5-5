@@ -1,0 +1,63 @@
+﻿case_id,timestamp,user_input,ai_response
+case_1,2026-11-07T11:15:49.003256,"Hi, my name is Matthew. I am 22 years old and my gender is Male.
+
+I am currently experiencing the following symptoms: Fever.
+I have been experiencing these symptoms for 3 days.
+
+Based on the information I have provided, how serious could my condition be?
+What should I do next, and are there any warning signs that I should look out for?","Urgency classification: insufficient_information
+Certainty: 50%
+Follow-Up Questions:
+What is your highest recorded temperature, and are you experiencing any other symptoms such as a cough, sore throat, headache, or pain when urinating?
+
+Next-Step Guidance:
+Not yet - more information needed"
+case_1,2026-11-07T11:15:49.018078,"i got muscle weakness, dry cough, runny nose, sore throat","Urgency classification: non-urgent
+Certainty: 95%
+Follow-Up Questions:
+None
+
+Next-Step Guidance:
+As you are experiencing symptoms consistent with a common viral illness such as a cold or flu, you should rest, stay hydrated, and monitor your symptoms. You can visit a General Practitioner (GP) in Singapore if your symptoms persist or worsen over-the-counter medication may help manage symptoms like fever and sore throat. Warning signs to look out for include difficulty breathing, chest pain, persistent high fever, confusion, or severe dizziness—if you experience any of these, seek immediate medical attention at a hospital Emergency Department (A&E)."
+case_1,2026-11-07T11:32:58.291356,"Hi, my name is Matthew. I am 22 years old and my gender is Male.
+
+I am currently experiencing the following symptoms: Fever, diahhrea, runny nose, dry cough, sore throat.
+I have been experiencing these symptoms for 2 weeks.
+
+Based on the information I have provided, how serious could my condition be?
+What should I do next, and are there any warning signs that I should look out for?","Urgency classification: urgent
+Certainty: 95%
+Follow-Up Questions:
+None
+
+Next-Step Guidance:
+Since your symptoms of fever, diarrhea, runny nose, dry cough, and sore throat have lasted for 2 weeks, you should schedule an appointment to see a General Practitioner (GP) in Singapore promptly for a proper evaluation. Persistent symptoms lasting this long may require medical investigation. Warning signs to look out for include severe dehydration, persistent high fever, shortness of breath, chest pain, or confusion. If you develop any of these warning signs, please visit a hospital Emergency Department (A&E) immediately."
+case_3,2026-11-07T16:24:57.841419,"
+Hi, my name is Mordy. I am 22 years old and my gender is Male.
+
+I am currently experiencing the following symptoms: diahhrea.
+I have been experiencing these symptoms for 3 days.
+
+Based on the information I have provided, how serious could my condition be?
+What should I do next, and are there any warning signs that I should look out for?
+",
+case_3,2026-11-07T16:33:40.002890,"Hi, my name is Mordy. I am 22 years old and my gender is Male.
+
+I am currently experiencing the following symptoms: Stubbed my toe.
+I have been experiencing these symptoms for 1 day.
+
+Based on the information I have provided, how serious could my condition be?
+What should I do next, and are there any warning signs that I should look out for?","Urgency classification: insufficient_information
+Certainty: 50%
+Follow-Up Questions:
+Are you experiencing any other symptoms, such as severe pain, swelling, or inability to bear weight on the toe?
+
+Next-Step Guidance:
+Not yet - more information needed"
+case_3,2026-11-07T16:33:40.008184,"yes, limping rn, swallon","Urgency classification: emergency
+Certainty: 98%
+Follow-Up Questions:
+None
+
+Next-Step Guidance:
+Call 995 for an ambulance immediately or go to the nearest hospital emergency department as soon as possible, especially if you are experiencing difficulty breathing, facial swelling, or severe pain."
