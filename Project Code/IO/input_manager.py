@@ -36,7 +36,7 @@ class InputManager:
 
     def get_menu_input(self):
         return self.get_valid_input(
-            "Choose an option (1-7): ",
+            "Choose an option (1-6): ",
             self._validate_menu
         )
 
