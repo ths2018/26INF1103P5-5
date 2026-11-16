@@ -30,6 +30,18 @@ def get_manager():
     return _manager
 
 
+def set_current_user(user_id):
+    """Bind this application run's case manager to the signed-in account."""
+    global _manager
+    _manager = CaseManager(create_repository(), user_id=user_id)
+    if not isinstance(_manager.repository, JsonCaseRepository) \
+            and not _manager.repository.list_all():
+        migrated = _manager.import_from(JsonCaseRepository())
+        if migrated:
+            input_output_manager.print_output(
+                f"Imported {migrated} existing JSON case(s) into the database.")
+
+
 def get_backend_name():
     """Name of the storage backend in use, e.g. 'MongoCaseRepository'."""
     return type(get_manager().repository).__name__
@@ -62,6 +74,16 @@ def show_stats(query="", per_case=False):
 # --- CRUD helpers ---
 def get_case(case_id):                      return get_manager().get_case(case_id)
 def list_cases():                           return get_manager().list_cases()
+
+
+def list_current_user_cases():
+    """List cases only when the manager is bound to an authenticated user."""
+    manager = get_manager()
+    if manager.user_id is None:
+        raise RuntimeError("Cannot list cases without an authenticated user.")
+    return manager.list_cases()
+
+
 def delete_case(case_id):                   return get_manager().delete_case(case_id)
 def update_log(case, index, user_input=None, ai_response=None):
     return get_manager().update_log(case, index, user_input, ai_response)

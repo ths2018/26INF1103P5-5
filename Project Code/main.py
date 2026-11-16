@@ -8,6 +8,7 @@ from data_manager import (
     create_new_case,
     get_active_case,
     get_backend_name,
+    set_current_user,
 )
 from input_output_manager import (
     get_menu_input,
@@ -74,6 +75,7 @@ def main():
     if user is None:
         print_output("\nExiting application. Stay healthy!")
         return
+    set_current_user(user["user_id"])
     print_output(f"[System] Signed in as {user['email']}\n")
 
     welcome_message()  # the main menu is only shown after signing in

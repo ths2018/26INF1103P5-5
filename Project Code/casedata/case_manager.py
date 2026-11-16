@@ -17,29 +17,37 @@ class CaseManager:
     POLYMORPHISM: only talks to the CaseRepository / BaseExporter interfaces.
     """
 
-    def __init__(self, repository):
+    def __init__(self, repository, user_id=None):
         self._repo = repository
+        self._user_id = user_id
 
     @property
     def repository(self):
         return self._repo
 
+    @property
+    def user_id(self):
+        return self._user_id
+
     # ---- Create ----
     def create_new_case(self):
-        case = Case(self._repo.next_case_id(), Case.OPEN, created=datetime.now().isoformat())
+        case = Case(self._repo.next_case_id(), Case.OPEN,
+                    created=datetime.now().isoformat(), user_id=self._user_id)
         self._repo.create(case)
         return case
 
     # ---- Read ----
     def get_case(self, case_id):
-        return self._repo.read(case_id)
+        case = self._repo.read(case_id)
+        return case if self._owns(case) else None
 
     def list_cases(self):
-        return self._repo.list_all()
+        cases = self._repo.list_all()
+        return [case for case in cases if self._owns(case)]
 
     def get_active_case(self):
         """Returns the newest case if it is still open, otherwise None."""
-        cases = self._repo.list_all()
+        cases = self.list_cases()
         if cases and cases[-1].is_open():
             return cases[-1]
         return None
@@ -63,7 +71,12 @@ class CaseManager:
 
     # ---- Delete ----
     def delete_case(self, case_id):
-        return self._repo.delete(case_id)
+        return self._repo.delete(case_id) if self.get_case(case_id) else False
+
+    def _owns(self, case):
+        return case is not None and (
+            self._user_id is None or case.user_id == self._user_id
+        )
 
     # ---- Querying across all cases ----
     def load_all_logs(self, case_ids=None):

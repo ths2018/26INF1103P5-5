@@ -23,7 +23,8 @@ class SqliteCaseRepository(CaseRepository):
         case_number INTEGER NOT NULL,
         status      TEXT NOT NULL,
         created     TEXT,
-        closed      TEXT
+        closed      TEXT,
+        user_id     TEXT
     );
     CREATE TABLE IF NOT EXISTS logs (
         id          INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -40,6 +41,9 @@ class SqliteCaseRepository(CaseRepository):
         os.makedirs(os.path.dirname(os.path.abspath(db_path)), exist_ok=True)
         with closing(self._connect()) as conn, conn:
             conn.executescript(self._SCHEMA)
+            columns = {row["name"] for row in conn.execute("PRAGMA table_info(cases)")}
+            if "user_id" not in columns:
+                conn.execute("ALTER TABLE cases ADD COLUMN user_id TEXT")
 
     def _connect(self):
         conn = sqlite3.connect(self._db_path)
@@ -49,14 +53,15 @@ class SqliteCaseRepository(CaseRepository):
 
     def _save(self, conn, case):
         conn.execute(
-            """INSERT INTO cases (case_id, case_number, status, created, closed)
-               VALUES (?, ?, ?, ?, ?)
+            """INSERT INTO cases (case_id, case_number, status, created, closed, user_id)
+               VALUES (?, ?, ?, ?, ?, ?)
                ON CONFLICT(case_id) DO UPDATE SET
                    status = excluded.status,
                    created = excluded.created,
-                   closed = excluded.closed""",
+                   closed = excluded.closed,
+                   user_id = excluded.user_id""",
             (case.case_id, case_number(case.case_id), case.status,
-             case.created, case.closed),
+             case.created, case.closed, case.user_id),
         )
         conn.execute("DELETE FROM logs WHERE case_id = ?", (case.case_id,))
         conn.executemany(
@@ -70,7 +75,7 @@ class SqliteCaseRepository(CaseRepository):
             (row["case_id"],),
         ).fetchall()
         return Case(row["case_id"], row["status"], row["created"], row["closed"],
-                    [dict(l) for l in logs])
+                    [dict(l) for l in logs], row["user_id"])
 
     def create(self, case):
         try:

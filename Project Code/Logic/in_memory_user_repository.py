@@ -1,3 +1,5 @@
+import uuid
+
 from Logic.user_repository import UserRepository
 
 
@@ -15,7 +17,7 @@ class InMemoryUserRepository(UserRepository):
             return False
         self.__users[username] = {
             "password_hash": password_hash,
-            "profile": dict(profile or {}),
+            "profile": {**dict(profile or {}), "user_id": uuid.uuid4().hex},
         }
         return True
 

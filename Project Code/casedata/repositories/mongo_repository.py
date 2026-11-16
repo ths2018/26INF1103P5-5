@@ -59,7 +59,7 @@ class MongoCaseRepository(CaseRepository):
     @staticmethod
     def _from_doc(doc):
         return Case(doc["_id"], doc.get("status", Case.CLOSED), doc.get("created"),
-                    doc.get("closed"), doc.get("logs", []))
+                    doc.get("closed"), doc.get("logs", []), doc.get("user_id"))
 
     def create(self, case):
         from pymongo.errors import DuplicateKeyError

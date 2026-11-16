@@ -17,11 +17,13 @@ class Case:
     OPEN = "open"
     CLOSED = "closed"
 
-    def __init__(self, case_id, status=OPEN, created=None, closed=None, logs=None):
+    def __init__(self, case_id, status=OPEN, created=None, closed=None, logs=None,
+                 user_id=None):
         self._case_id = case_id
         self._status = status
         self._created = created
         self._closed = closed
+        self._user_id = user_id
         self._logs = [LogEntry.from_dict(l) if isinstance(l, dict) else l
                       for l in (logs or [])]
 
@@ -41,6 +43,10 @@ class Case:
     @property
     def closed(self):
         return self._closed
+
+    @property
+    def user_id(self):
+        return self._user_id
 
     @property
     def logs(self):
@@ -77,6 +83,7 @@ class Case:
             "case_id": self._case_id,
             "status": self._status,
             "created": self._created,
+            "user_id": self._user_id,
             "logs": [l.to_dict() for l in self._logs],
         }
         if self._closed:
@@ -94,13 +101,14 @@ class Case:
             data.get("created"),
             data.get("closed"),
             data.get("logs", []),
+            data.get("user_id"),
         )
 
     # Dict-style access so older code like case["logs"] keeps working
     def __getitem__(self, key):
         if key == "logs":
             return [l.to_dict() for l in self._logs]  # old format: list of dicts
-        if key in ("case_id", "status", "created", "closed"):
+        if key in ("case_id", "status", "created", "closed", "user_id"):
             return getattr(self, key)
         raise KeyError(key)
 

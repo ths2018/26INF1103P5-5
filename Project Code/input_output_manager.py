@@ -111,9 +111,12 @@ def filter_input():
 
 def print_cases(case_loader=None):
     """
-    Pass a case loader already restricted
-    to the authenticated user.
+    Print cases belonging to the authenticated user unless a loader is supplied.
     """
+    if case_loader is None:
+        from data_manager import list_current_user_cases
+
+        case_loader = list_current_user_cases
 
     return OutputManager(
         case_loader=case_loader

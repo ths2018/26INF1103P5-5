@@ -21,7 +21,7 @@ class MongoUserRepository(UserRepository):
     """
 
     _PROFILE_EXCLUDED = ("_id", "password_hash")
-    _RESERVED = ("_id", "email", "created", "directory", "password_hash")
+    _RESERVED = ("_id", "user_id", "email", "created", "directory", "password_hash")
 
     def __init__(self, collection):
         self._users = collection
@@ -54,7 +54,9 @@ class MongoUserRepository(UserRepository):
         document = self._users.find_one({"email": username})
         if not document:
             return {}
-        return {k: v for k, v in document.items() if k not in self._PROFILE_EXCLUDED}
+        profile = {k: v for k, v in document.items() if k not in self._PROFILE_EXCLUDED}
+        profile["user_id"] = document["_id"]
+        return profile
 
     def update_password_hash(self, username, password_hash):
         self._users.update_one({"email": username}, {"$set": {"password_hash": password_hash}})
