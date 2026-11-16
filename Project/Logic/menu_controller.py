@@ -1,0 +1,110 @@
+from input_output_manager import (
+    ask_yes_no,
+    choose_cases,
+    create_prompt,
+    filter_input,
+    input_manager,
+    keyword_input,
+    print_cases,
+    print_output,
+)
+from Logic.ai_response import AIResponse
+
+
+class MenuController:
+    """Handles every menu option. Options are looked up in a dictionary of
+    handler methods, so there is no if/elif chain per choice."""
+
+    def __init__(self, engine, repository, user_profile=None):
+        # ASSOCIATION: the controller collaborates with these objects (calls them)
+        # but is not made of them and does not control their lifecycle.
+        self._engine = engine
+        self._repository = repository
+        self._user_profile = user_profile
+        self.__handlers = {
+            "1": self._start_assessment,
+            "2": self._list_cases,
+            "3": self._search_records,
+            "4": self._export_csv,
+            "5": self._show_statistics,
+            "6": self._exit,
+        }
+
+    @property
+    def engine(self):
+        return self._engine
+
+    def handle(self, choice):
+        """Run the chosen option. Returns True if the program should exit."""
+        handler = self.__handlers.get(choice)
+        if handler is None:
+            print_output("Invalid menu option.")
+            return False
+        return handler() is True
+
+    # ---- menu options (protected) ----------------------------------------
+
+    def _start_assessment(self):
+        if not self._user_profile:
+            print_output("\nYou must be logged in to start an assessment.")
+            return
+
+        patient_data = input_manager(self._user_profile)
+        prompt = create_prompt(patient_data)
+
+        # Pull the age out of the patient data so the AI can factor it in
+        age = patient_data.get("age") if isinstance(patient_data, dict) else None
+
+        result = self._engine.process(prompt, age)
+        if result["ai_response"] is None:
+            print_output(
+                "\nUnable to complete the assessment "
+                "because the AI service failed."
+            )
+            return
+
+        self._engine.save_exchanges(result["exchanges"])
+        print_output("\n=== Assessment Result ===")
+        if result.get("age_risk"):
+            print_output(f"Age Risk: {result['age_risk']}")
+        print_output(AIResponse(result["ai_response"]).section("Next-Step Guidance:"))
+
+    def _list_cases(self):
+        print_cases()
+
+    def _search_records(self):
+        keyword = keyword_input()
+        results = self._repository.search(keyword)
+        if not results:
+            print_output(f"\nNo matching records found for '{keyword}'.")
+        else:
+            self._repository.show_history(results)
+
+    def _export_csv(self):
+        cases = self._repository.export_choices()
+
+        # Zero or one case: nothing to choose, so export straight away
+        # (with no records the exporter prints "No records to export yet.").
+        if len(cases) <= 1:
+            self._repository.export_csv()
+            return
+
+        case_ids = choose_cases(cases)
+        if not case_ids:
+            print_output("Export cancelled.")
+            return
+
+        self._repository.export_csv(case_ids)
+
+
+    def _show_statistics(self):
+            query = filter_input()
+            try:
+                self._repository.show_stats(query)
+                if ask_yes_no("Show per-case breakdown? (y/n): "):
+                    self._repository.show_stats(query, per_case=True)
+            except ValueError as exc:
+                print_output(f"\n[Stats] {exc}")
+
+    def _exit(self):
+        return True

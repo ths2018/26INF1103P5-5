@@ -66,10 +66,16 @@ class CaseManager:
         return self._repo.delete(case_id)
 
     # ---- Querying across all cases ----
-    def load_all_logs(self):
-        """Every log from every case, as dicts tagged with their case_id."""
+    def load_all_logs(self, case_ids=None):
+        """
+        Every log from every case, as dicts tagged with their case_id.
+        Pass `case_ids` to limit it to those cases (None means all cases).
+        """
+        wanted = None if case_ids is None else set(case_ids)
         records = []
         for case in self._repo.list_all():
+            if wanted is not None and case.case_id not in wanted:
+                continue
             for log in case.logs:
                 records.append({**log.to_dict(), "case_id": case.case_id})
         return records
@@ -94,8 +100,25 @@ class CaseManager:
         return stats_report.generate(records)
 
     # ---- Exporting (polymorphic: any BaseExporter works) ----
-    def export(self, exporter, path=None):
-        return exporter.export(self.load_all_logs(), path)
+    def export(self, exporter, path=None, case_ids=None):
+        """Export every case, or only the cases listed in `case_ids`."""
+        return exporter.export(self.load_all_logs(case_ids), path)
+
+    def export_choices(self):
+        """
+        One summary dict per case that has at least one log (so an empty,
+        freshly opened case is not offered), for the 'which case?' prompt.
+        """
+        return [
+            {
+                "case_id": case.case_id,
+                "status": case.status,
+                "entries": len(case.logs),
+                "created": case.created,
+            }
+            for case in self._repo.list_all()
+            if case.logs
+        ]
 
     # ---- Migration between backends ----
     def import_from(self, source_repo, overwrite=False):

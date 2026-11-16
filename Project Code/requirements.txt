@@ -1,5 +1,4 @@
 google-genai
 python-dotenv
-openpyxl
 pymongo
 argon2-cffi

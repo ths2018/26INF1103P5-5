@@ -1,0 +1,45 @@
+from data_manager import (
+    add_log,
+    close_case,
+    convert_json_to_csv,
+    create_new_case,
+    filter_records_by_keyword,
+    get_active_case,
+    list_export_choices,
+    show_history,
+    show_stats
+)
+
+
+class CaseRepository:
+    """Everything that reads/writes patient cases and records (wraps data_manager)."""
+
+    def get_active_case(self):
+        return get_active_case()
+
+    def create_case(self):
+        return create_new_case()
+
+    def close_case(self, case):
+        close_case(case)
+
+    def add_log(self, case, user_input, ai_response):
+        add_log(case, user_input, ai_response)
+
+    def search(self, keyword):
+        return filter_records_by_keyword(keyword)
+
+    def show_history(self, records):
+        show_history(records)
+
+    def export_choices(self):
+        """Summaries of the cases that have records and can be exported."""
+        return list_export_choices()
+
+    def export_csv(self, case_ids=None):
+        """Export all cases to CSV, or only the cases listed in `case_ids`."""
+        convert_json_to_csv(case_ids=case_ids)
+
+    def show_stats(self, query, per_case=False):
+        """Print statistics for `query`. Raises ValueError if the query is invalid."""
+        show_stats(query, per_case=per_case)

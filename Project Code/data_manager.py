@@ -8,9 +8,9 @@ and re-exports the classes for anyone who wants to use them directly.
 """
 import input_output_manager
 from casedata import *  # noqa: F401,F403  (re-export all classes and constants)
-from casedata import (CSV_FILE, XLSX_FILE, CaseManager, CsvExporter,
-                      HistoryViewer, JsonCaseRepository, PerCaseReport,
-                      UrgencySummaryReport, XlsxExporter, create_repository)
+from casedata import (CSV_FILE, CaseManager, CsvExporter, HistoryViewer,
+                      JsonCaseRepository, PerCaseReport,
+                      UrgencySummaryReport, create_repository)
 
 _manager = None
 
@@ -42,9 +42,9 @@ def close_case(case):                       return get_manager().close_case(case
 def add_log(case, user_input, response_text): return get_manager().add_log(case, user_input, response_text)
 def load_all_logs():                        return get_manager().load_all_logs()
 def filter_records_by_keyword(keyword, records=None): return get_manager().filter_records_by_keyword(keyword, records)
-def convert_json_to_csv(csv_file=CSV_FILE): return get_manager().export(CsvExporter(), csv_file)
-def convert_json_to_xlsx(xlsx_file=XLSX_FILE): return get_manager().export(XlsxExporter(), xlsx_file)
+def convert_json_to_csv(csv_file=CSV_FILE, case_ids=None): return get_manager().export(CsvExporter(), csv_file, case_ids)
 def show_history(results, page_size=2):     return HistoryViewer(results, page_size).show()
+def list_export_choices():                  return get_manager().export_choices()
 
 
 # --- Search / statistics ---
