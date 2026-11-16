@@ -42,11 +42,13 @@ from unittest import mock
 def _find_project_root():
     folder = os.path.dirname(os.path.abspath(__file__))
     for _ in range(4):
-        if os.path.isfile(os.path.join(folder, "logic_manager_oop.py")):
-            return folder
+        candidates = (folder, os.path.join(folder, "Project Code"))
+        for candidate in candidates:
+            if os.path.isfile(os.path.join(candidate, "logic_manager_oop.py")):
+                return candidate
         folder = os.path.dirname(folder)
     raise RuntimeError("Could not find logic_manager_oop.py. Keep this test file in "
-                       "'Project Code' or in a folder directly inside it.")
+                       "'Project Code' or in a folder alongside it.")
 
 
 ROOT = _find_project_root()
