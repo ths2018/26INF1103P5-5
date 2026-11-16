@@ -7,3 +7,5 @@
 # python cache
 __pycache__/
 *.pyc
+# user accounts (personal data + password hashes)
+users/

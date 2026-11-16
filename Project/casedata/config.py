@@ -10,6 +10,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CASE_DIR = os.path.join(BASE_DIR, "case")
 
 CSV_FILE = os.path.join(CASE_DIR, "case.csv")
+XLSX_FILE = os.path.join(CASE_DIR, "case.xlsx")
 DB_FILE = os.path.join(CASE_DIR, "cases.db")
 
 EXPORT_FIELDS = ["case_id", "timestamp", "user_input", "ai_response"]

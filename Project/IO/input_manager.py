@@ -36,7 +36,7 @@ class InputManager:
 
     def get_menu_input(self):
         return self.get_valid_input(
-            "Choose an option (1-6): ",
+            "Choose an option (1-7): ",
             self._validate_menu
         )
 
@@ -45,10 +45,10 @@ class InputManager:
         choice = value.strip()
 
         if choice not in {
-            "1", "2", "3", "4", "5", "6"
+            "1", "2", "3", "4", "5", "6", "7"
         }:
             raise ValueError(
-                "Invalid option. Enter a number from 1 to 6."
+                "Invalid option. Enter a number from 1 to 7."
             )
 
         return choice
@@ -176,68 +176,6 @@ class InputManager:
         return self._input(
             f"{question.strip()} "
         ).strip()
-
-    def select_cases(self, cases):
-        """
-        List `cases` (summary dicts from CaseManager.export_choices) and ask
-        which ones to use. Returns a list of case ids, or None if the user
-        cancels by pressing Enter.
-        """
-        self._print("\nWhich case(s) do you want to export?")
-
-        for i, case in enumerate(cases, start=1):
-            created = (
-                (case.get("created") or "unknown date")[:16]
-                .replace("T", " ")
-            )
-            noun = "entry" if case["entries"] == 1 else "entries"
-
-            self._print(
-                f"  {i}. {case['case_id']} - {case['status']}, "
-                f"{case['entries']} {noun}, created {created}"
-            )
-
-        return self.get_valid_input(
-            "Enter numbers (e.g. 1,3 or 1-3), 'all', "
-            "or press Enter to cancel: ",
-            lambda value: self._validate_case_selection(value, cases)
-        )
-
-    @staticmethod
-    def _validate_case_selection(value, cases):
-        """Turn '1,3', '2-4' or 'all' into case ids. Blank returns None."""
-        text = value.strip().lower()
-
-        if not text:
-            return None
-
-        if text == "all":
-            return [case["case_id"] for case in cases]
-
-        total = len(cases)
-        chosen = set()
-
-        for part in text.replace(" ", "").split(","):
-            start, dash, end = part.partition("-")
-
-            if not start.isdigit() or (dash and not end.isdigit()):
-                raise ValueError(
-                    f"'{part}' is not a valid choice. "
-                    f"Enter numbers from 1 to {total}."
-                )
-
-            first = int(start)
-            last = int(end) if dash else first
-
-            if first < 1 or last > total or first > last:
-                raise ValueError(
-                    f"'{part}' is out of range. "
-                    f"Enter numbers from 1 to {total}."
-                )
-
-            chosen.update(range(first, last + 1))
-
-        return [cases[i - 1]["case_id"] for i in sorted(chosen)]
 
     def keyword_input(self):
         return self._input(

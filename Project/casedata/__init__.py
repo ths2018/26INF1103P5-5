@@ -4,8 +4,9 @@
 from .case import Case
 from .case_manager import CaseManager
 from .config import (BASE_DIR, CASE_DIR, CSV_FILE, DB_FILE, EXPORT_FIELDS,
-                     case_number)
-from .exporters import BaseExporter, CsvExporter
+                     XLSX_FILE, case_number)
+from .exporters import BaseExporter, CsvExporter, XlsxExporter
+from .file_opener import open_file
 from .filters import (AllOf, CaseNameFilter, DateRangeFilter, KeywordFilter,
                       RecordFilter, UrgencyFilter, build_filter)
 from .history_viewer import HistoryViewer

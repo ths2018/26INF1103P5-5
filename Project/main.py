@@ -13,6 +13,7 @@ from input_output_manager import (
     welcome_message,
 )
 from logic_manager_oop import menu_selection
+from user_manager import authenticate_flow
  
 def start_new_case(active_case):
     """Closes the current case (if any), creates a new one and a fresh chat."""
@@ -26,6 +27,12 @@ def start_new_case(active_case):
 
 def main():
     welcome_message()
+
+    user_profile = authenticate_flow()
+    if user_profile is None:
+        print_output("Exiting application. Stay healthy!")
+        return
+    print_output(f"[System] Logged in as {user_profile['full_name']}")
 
     try:
         active_case = get_active_case()
@@ -62,6 +69,7 @@ def main():
                 choice,
                 active_case,
                 chat,
+                user_profile,
             )
 
             if should_quit:
