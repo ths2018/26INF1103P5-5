@@ -283,6 +283,24 @@ class TestLoadAllLogs(DataManagerTestCase):
     def test_empty_when_no_cases(self):
         self.assertEqual(dm.load_all_logs(), [])
 
+    def test_authenticated_user_only_searches_their_own_case_history(self):
+        own_case = dm.Case("case_1", user_id="alice")
+        own_case.add_log("headache symptoms", "own response")
+        another_users_case = dm.Case("case_2", user_id="bob")
+        another_users_case.add_log("private symptoms", "private response")
+
+        class InMemoryRepository:
+            def list_all(self):
+                return [own_case, another_users_case]
+
+        manager = dm.CaseManager(InMemoryRepository(), user_id="alice")
+
+        self.assertEqual(
+            [record["user_input"] for record in manager.search("headache")],
+            ["headache symptoms"],
+        )
+        self.assertEqual(manager.search("private"), [])
+
     def test_logs_tagged_with_case_id_across_cases(self):
         self.make_case([(Q_HEADACHE, R_NON_URGENT), (Q_ANKLE, R_URGENT)], close=True)
         self.make_case([(Q_CHEST, R_EMERGENCY)])

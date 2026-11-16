@@ -86,7 +86,7 @@ class CaseManager:
         """
         wanted = None if case_ids is None else set(case_ids)
         records = []
-        for case in self._repo.list_all():
+        for case in self.list_cases():
             if wanted is not None and case.case_id not in wanted:
                 continue
             for log in case.logs:
