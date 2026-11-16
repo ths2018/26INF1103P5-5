@@ -98,6 +98,8 @@ def ask_yes_no(prompt):
 def print_output(output):
     return _OUTPUT.print_output(output)
 
+def choose_cases(cases):
+    return _INPUT.select_cases(cases)
 
 def keyword_input():
     return _INPUT.keyword_input()
