@@ -4,6 +4,8 @@ from Logic.emergency_detector import EmergencyDetector
 from Logic.health_detector import HealthDetector
 from Logic.keywords import MAX_FOLLOW_UPS
 from Logic.memory_question_detector import MemoryQuestionDetector
+from Logic.service_advice_validator import ServiceAdviceValidator
+from Logic.urgency_validator import UrgencyValidator
 
 
 class AssessmentEngine:
@@ -29,16 +31,18 @@ class AssessmentEngine:
         "to be health-related. Please ask about a "
         "health issue or symptom."
     )
+    _URGENCY_RANK = {"insufficient information": 0, "non-urgent": 1, "urgent": 2, "emergency": 3}
     _LOWER_AGE_LIMIT = 5
     _UPPER_AGE_LIMIT = 65
 
     def __init__(self, ai_service, repository, case=None, chat=None,
-                 max_follow_ups=MAX_FOLLOW_UPS):
+                 max_follow_ups=MAX_FOLLOW_UPS, guidelines=None):
         # AGGREGATION: injected from outside; they exist independently of the engine
         # and could be shared with other objects.
         self._ai_service = ai_service
         self._repository = repository
         self._max_follow_ups = max_follow_ups
+        self.__guidelines = guidelines
 
         # ENCAPSULATION: private state, exposed read-only through properties
         self.__case = case
@@ -49,6 +53,15 @@ class AssessmentEngine:
         self.__emergency = EmergencyDetector()
         self.__memory = MemoryQuestionDetector()
 
+        # Cross-check of AI answers against the medical guideline data. The
+        # GuidelineRepository is injected (aggregation); the validators that use it
+        # are created and owned here (composition). No guidelines -> no cross-check.
+        self.__validators = (
+            [UrgencyValidator(guidelines), ServiceAdviceValidator(guidelines)]
+            if guidelines is not None
+            else []
+        )
+
     # ---- public API -------------------------------------------------------
 
     @property
@@ -58,6 +71,20 @@ class AssessmentEngine:
     @property
     def chat(self):
         return self.__chat
+
+    def emergency_service_guidance(self):
+        """Return public emergency-service advice from the loaded care data."""
+        if self.__guidelines is None:
+            return None
+        record = self.__guidelines.get_service_record("SCDF-EMS-001")
+        if not record:
+            return None
+        source = record.get("source", {})
+        return {
+            "recommendations": list(record.get("recommendation", [])),
+            "source_url": source.get("source_url"),
+            "needs_review": self.__guidelines.needs_review(record),
+        }
 
     @staticmethod
     def assess_age_risk(age):
@@ -139,19 +166,46 @@ class AssessmentEngine:
             response = AIResponse(reply)
             exchanges.append(self._exchange(answer, reply))
 
+        validation = self._cross_check(response, exchanges)
+        urgency = validation["urgency_after"] if validation else response.urgency
+
         return self._result(
             response.text,
-            urgency=response.urgency,
+            urgency=urgency,
             certainty=response.certainty,
             is_relevant=True,
             has_follow_up=response.has_follow_up,
             is_health_related=True,
-            is_emergency=response.is_emergency,
+            is_emergency=(urgency == "emergency"),
             exchanges=exchanges,
             age_risk=age_risk,
+            validation=validation,
         )
 
     # ---- protected helpers ------------------------------------------------
+
+    def _cross_check(self, response, exchanges):
+        """Run every validator. Urgency can only go UP, never down."""
+        if not self.__validators:
+            return None
+        patient_text = "\n".join(e["user_input"] for e in exchanges)
+        findings = []
+        for validator in self.__validators:  # polymorphic: any ResponseValidator
+            findings.extend(validator.validate(response, patient_text))
+
+        before = response.urgency
+        after = before
+        for finding in findings:
+            minimum = finding.get("min_urgency")
+            if minimum and self._URGENCY_RANK[minimum] > self._URGENCY_RANK[after]:
+                after = minimum
+        return {
+            "urgency_before": before,
+            "urgency_after": after,
+            "escalated": after != before,
+            "findings": findings,
+            "needs_review": any(f["needs_review"] for f in findings),
+        }
 
     @staticmethod
     def _result(ai_response=None, **overrides):
@@ -164,9 +218,20 @@ class AssessmentEngine:
             "is_health_related": False,
             "is_emergency": False,
             "exchanges": [],
+            "validation": None,
         }
         result.update(overrides)
+        # Same value as "urgency": the FINAL urgency classification, after the
+        # guideline cross-check (emergency / urgent / non-urgent / insufficient information).
+        result["urgency_classification"] = result["urgency"]
         return result
+
+    @staticmethod
+    def _read(item, name, default=None):
+        """Read a field from a dict OR an object (cases/log entries may be either)."""
+        if isinstance(item, dict):
+            return item.get(name, default)
+        return getattr(item, name, default)
 
     @staticmethod
     def _exchange(user_input, ai_response):
@@ -201,17 +266,19 @@ class AssessmentEngine:
     def _check_case_relevance(self, user_input):
         """If the input looks unrelated to the open case, offer to start a new one."""
         case = self.__case or self._repository.get_active_case()
-        if not (case and case.get("logs", [])):
+        logs = self._read(case, "logs", []) if case else []
+        if not (case and logs):
             return
         if self._ai_service.is_relevant(user_input, case):
             return
 
-        first_entry = case["logs"][0].get("user_input", "")[:30]
-        print_output(f"\n[System] This may be unrelated to {case['case_id']}.json")
+        case_id = self._read(case, "case_id", "")
+        first_entry = str(self._read(logs[0], "user_input", ""))[:30]
+        print_output(f"\n[System] This may be unrelated to {case_id}")
         if ask_yes_no(
             f"Is it related to your earlier entry ({first_entry}...)? (y/n): "
         ):
-            print_output(f"[System] Continuing with {case['case_id']}.json\n")
+            print_output(f"[System] Continuing with {case_id}\n")
             return
 
         self._repository.close_case(case)
