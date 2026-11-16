@@ -6,6 +6,7 @@ from data_manager import (
     create_new_case,
     filter_records_by_keyword,
     get_active_case,
+    list_export_choices,
     open_file,
     show_history,
     show_stats
@@ -33,8 +34,13 @@ class CaseRepository:
     def show_history(self, records):
         show_history(records)
 
-    def export_csv(self):
-        convert_json_to_csv()
+    def export_choices(self):
+        """Summaries of the cases that have records and can be exported."""
+        return list_export_choices()
+
+    def export_csv(self, case_ids=None):
+        """Export all cases to CSV, or only the cases listed in `case_ids`."""
+        convert_json_to_csv(case_ids=case_ids)
 
     def export_xlsx_and_open(self):
         if convert_json_to_xlsx():
