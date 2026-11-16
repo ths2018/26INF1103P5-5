@@ -33,9 +33,9 @@ _STUBS = {
         "keyword_input", "print_output", "ask_yes_no",
     ],
     "data_manager": [
-        "add_log", "close_case", "convert_json_to_csv", "convert_json_to_xlsx",
+        "add_log", "close_case", "convert_json_to_csv",
         "create_new_case", "filter_records_by_keyword", "get_active_case",
-        "list_case_files", "load_case", "open_file", "show_history",
+        "list_case_files", "load_case", "show_history",
     ],
 }
 
@@ -645,15 +645,6 @@ def test_menu_option_4_converts_to_csv():
         case, chat = {"case_id": "c", "logs": []}, object()
         assert lm.menu_selection("4", case, chat) == (case, chat, False)
         m["convert_json_to_csv"].assert_called_once()
-
-
-def test_menu_option_5_returns_normally_when_conversion_fails():
-    with patched() as m:
-        case, chat = {"case_id": "c", "logs": []}, object()
-        m["convert_json_to_xlsx"].return_value = False
-        assert lm.menu_selection("5", case, chat) == (case, chat, False)
-        m["convert_json_to_xlsx"].assert_called_once()
-
 
 def test_menu_option_6_exits():
     with patched():

@@ -6,8 +6,7 @@ Offline tests for data_manager.py
 - No dependency on input_output_manager being importable: a lightweight stub
   module is registered in sys.modules BEFORE data_manager is imported.
 - Standard library only (unittest + unittest.mock), so it also runs under
-  pytest. The XLSX tests additionally need 'openpyxl' and are skipped if it
-  is not installed.
+  pytest. 
 
 Run:
     python -m unittest -v test_data
@@ -44,13 +43,6 @@ sys.modules.pop("data_manager", None)
 
 import data_manager as dm  # noqa: E402  (must come after the stub)
 
-try:
-    import openpyxl  # noqa: F401
-    HAS_OPENPYXL = True
-except ImportError:
-    HAS_OPENPYXL = False
-
-
 # ---------------------------------------------------------------------------
 # Hardcoded exchanges (same layout the real AI is prompted to produce)
 # ---------------------------------------------------------------------------
@@ -80,7 +72,6 @@ class DataManagerTestCase(unittest.TestCase):
         self.tmp = tempfile.mkdtemp()
         self.case_dir = os.path.join(self.tmp, "case")
         self.csv_file = os.path.join(self.case_dir, "case.csv")
-        self.xlsx_file = os.path.join(self.case_dir, "case.xlsx")
 
         patcher = mock.patch.object(dm, "CASE_DIR", self.case_dir)
         patcher.start()
@@ -386,109 +377,6 @@ class TestCsvExport(DataManagerTestCase):
              mock.patch("builtins.open", side_effect=OSError("denied")):
             self.assertIsNone(dm.convert_json_to_csv(self.csv_file))
         self.assertIn("Error: could not write", self.printed())
-
-
-# ---------------------------------------------------------------------------
-# Exporting: XLSX
-# ---------------------------------------------------------------------------
-class TestXlsxExport(DataManagerTestCase):
-    def test_missing_openpyxl_prints_help_and_returns_none(self):
-        self.make_case([(Q_HEADACHE, R_NON_URGENT)])
-        real_import = __import__
-
-        def fake_import(name, *args, **kwargs):
-            if name.startswith("openpyxl"):
-                raise ImportError("no openpyxl")
-            return real_import(name, *args, **kwargs)
-
-        with mock.patch("builtins.__import__", side_effect=fake_import):
-            self.assertIsNone(dm.convert_json_to_xlsx(self.xlsx_file))
-        self.assertIn("python -m pip install openpyxl", self.printed())
-
-    @unittest.skipUnless(HAS_OPENPYXL, "openpyxl not installed")
-    def test_no_records_returns_none(self):
-        self.assertIsNone(dm.convert_json_to_xlsx(self.xlsx_file))
-        self.assertFalse(os.path.exists(self.xlsx_file))
-
-    @unittest.skipUnless(HAS_OPENPYXL, "openpyxl not installed")
-    def test_workbook_contents_and_formatting(self):
-        from openpyxl import load_workbook
-
-        self.make_case(
-            [(Q_CHEST, R_EMERGENCY), (Q_HEADACHE, R_NON_URGENT)], close=True
-        )
-        self.make_case([(Q_ANKLE, R_URGENT)])
-
-        self.assertEqual(dm.convert_json_to_xlsx(self.xlsx_file), 3)
-        ws = load_workbook(self.xlsx_file).active
-
-        self.assertEqual(ws.title, "Assessments")
-        self.assertEqual([c.value for c in ws[1]], dm.EXPORT_FIELDS)
-        self.assertEqual(ws.max_row, 4)
-        self.assertEqual(ws["C2"].value, Q_CHEST)
-        self.assertEqual(ws["A4"].value, "case_2")
-
-        # Text wrapping applied
-        self.assertTrue(ws["D2"].alignment.wrap_text)
-
-        # Thick border only under the last row of case_1 (row 3)
-        self.assertEqual(ws["A3"].border.bottom.style, "medium")
-        self.assertIsNone(ws["A2"].border.bottom.style)
-        self.assertIsNone(ws["A4"].border.bottom.style)
-
-        # One range with four urgency colour rules
-        rules = [r for cf in ws.conditional_formatting for r in cf.rules]
-        self.assertEqual(len(rules), 4)
-
-    @unittest.skipUnless(HAS_OPENPYXL, "openpyxl not installed")
-    def test_save_error_returns_none(self):
-        self.make_case([(Q_HEADACHE, R_NON_URGENT)])
-        with mock.patch("openpyxl.Workbook.save", side_effect=OSError("locked")):
-            self.assertIsNone(dm.convert_json_to_xlsx(self.xlsx_file))
-        self.assertIn("Error: could not write", self.printed())
-
-
-# ---------------------------------------------------------------------------
-# open_file
-# ---------------------------------------------------------------------------
-class TestOpenFile(DataManagerTestCase):
-    def existing_file(self):
-        path = os.path.join(self.tmp, "export.xlsx")
-        open(path, "w").close()
-        return path
-
-    def test_missing_file_returns_false(self):
-        self.assertFalse(dm.open_file(os.path.join(self.tmp, "nope.xlsx")))
-        self.assertIn("not found", self.printed())
-
-    def test_linux_uses_xdg_open(self):
-        path = self.existing_file()
-        with mock.patch.object(dm.sys, "platform", "linux"), \
-             mock.patch.object(dm.subprocess, "run") as run:
-            self.assertTrue(dm.open_file(path))
-        run.assert_called_once_with(["xdg-open", path], check=True)
-
-    def test_macos_uses_open(self):
-        path = self.existing_file()
-        with mock.patch.object(dm.sys, "platform", "darwin"), \
-             mock.patch.object(dm.subprocess, "run") as run:
-            self.assertTrue(dm.open_file(path))
-        run.assert_called_once_with(["open", path], check=True)
-
-    def test_windows_uses_startfile(self):
-        path = self.existing_file()
-        with mock.patch.object(dm.sys, "platform", "win32"), \
-             mock.patch.object(dm.os, "startfile", create=True) as startfile:
-            self.assertTrue(dm.open_file(path))
-        startfile.assert_called_once_with(path)
-
-    def test_launcher_failure_returns_false(self):
-        path = self.existing_file()
-        error = dm.subprocess.CalledProcessError(1, "xdg-open")
-        with mock.patch.object(dm.sys, "platform", "linux"), \
-             mock.patch.object(dm.subprocess, "run", side_effect=error):
-            self.assertFalse(dm.open_file(path))
-        self.assertIn("Could not open", self.printed())
 
 
 # ---------------------------------------------------------------------------
