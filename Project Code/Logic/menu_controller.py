@@ -1,5 +1,6 @@
 from input_output_manager import (
     ask_yes_no,
+    choose_cases,
     create_prompt,
     filter_input,
     input_manager,
@@ -147,7 +148,20 @@ class MenuController:
             self._repository.show_history(results)
 
     def _export_csv(self):
-        self._repository.export_csv()
+        cases = self._repository.export_choices()
+
+        # Zero or one case: nothing to choose, so export straight away
+        # (with no records the exporter prints "No records to export yet.").
+        if len(cases) <= 1:
+            self._repository.export_csv()
+            return
+
+        case_ids = choose_cases(cases)
+        if not case_ids:
+            print_output("Export cancelled.")
+            return
+
+        self._repository.export_csv(case_ids)
 
     def _export_xlsx(self):
         self._repository.export_xlsx_and_open()
