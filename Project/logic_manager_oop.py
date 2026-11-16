@@ -23,12 +23,12 @@ from Logic.memory_question_detector import MemoryQuestionDetector
 from Logic.menu_controller import MenuController
 
 
-def build_menu(ai_service=None, repository=None, case=None, chat=None, user_profile=None):
+def build_menu(ai_service=None, repository=None, case=None, chat=None):
     """Factory that wires the default objects together."""
     ai_service = ai_service or GeminiAIService()
     repository = repository or CaseRepository()
     engine = AssessmentEngine(ai_service, repository, case, chat)
-    return MenuController(engine, repository, user_profile)
+    return MenuController(engine, repository)
 
 
 # ---------------------------------------------------------------------------
@@ -106,8 +106,8 @@ def process_interaction(user_input, chat, active_case=None, age=None):
     return engine.process(user_input, age)
 
 
-def menu_selection(choice, active_case, chat, user_profile=None):
+def menu_selection(choice, active_case, chat):
     """Old entry point. Returns (active_case, chat, should_exit)."""
-    menu = build_menu(case=active_case, chat=chat, user_profile=user_profile)
+    menu = build_menu(case=active_case, chat=chat)
     should_exit = menu.handle(choice)
     return menu.engine.case, menu.engine.chat, should_exit
