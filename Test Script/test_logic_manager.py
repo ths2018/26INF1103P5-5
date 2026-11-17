@@ -1438,7 +1438,12 @@ class TestAuthService(BaseTest):
 
     def test_profile(self):
         self.auth.register("ann@example.com", "Pw12345!", {"full_name": "Ann", "dob": "2000-01-01"})
-        self.assertEqual(self.auth.get_profile("ANN@example.com"), {"full_name": "Ann", "dob": "2000-01-01"})
+        profile = self.auth.get_profile("ANN@example.com")
+        self.assertEqual(
+            {key: profile[key] for key in ("full_name", "dob")},
+            {"full_name": "Ann", "dob": "2000-01-01"},
+        )
+        self.assertRegex(profile["user_id"], r"^[0-9a-f]{32}$")
         self.assertEqual(self.auth.get_profile("nobody@example.com"), {})
 
     def test_old_hashes_are_upgraded_after_a_good_sign_in(self):
@@ -1472,8 +1477,10 @@ class TestUserRepositories(BaseTest):
         repo.update_password_hash("a@b.com", "hash3")
         self.assertEqual(repo.get_password_hash("a@b.com"), "hash3")
         profile = repo.get_profile("a@b.com")
+        user_id = profile["user_id"]
+        self.assertRegex(user_id, r"^[0-9a-f]{32}$")
         profile["full_name"] = "changed"                                         # a copy: cannot change the stored one
-        self.assertEqual(repo.get_profile("a@b.com"), {"full_name": "A"})
+        self.assertEqual(repo.get_profile("a@b.com"), {"full_name": "A", "user_id": user_id})
         self.assertEqual(repo.get_profile("none@b.com"), {})
         repo.update_password_hash("none@b.com", "x")                             # unknown user: no error
 
@@ -1518,6 +1525,7 @@ class TestUserRepositories(BaseTest):
         profile = repo.get_profile("ann@example.com")
         self.assertNotIn("_id", profile)
         self.assertNotIn("password_hash", profile)
+        self.assertEqual(profile["user_id"], stored["_id"])
         self.assertEqual(profile["full_name"], "Ann Lee")
         repo.update_password_hash("ann@example.com", "hash9")
         self.assertEqual(repo.get_password_hash("ann@example.com"), "hash9")
@@ -1574,13 +1582,20 @@ class TestAuthController(BaseTest):
         view = FakeAuthView(["2", "1"], emails=["Ann@Example.com", "ann@example.com"], passwords=["Pw12345!"],
                             details=[{"password": "Pw12345!", "full_name": "Ann", "dob": "2000-01-01"}])
         user = self.controller(view).run()
-        self.assertEqual(user, {"full_name": "Ann", "dob": "2000-01-01", "email": "ann@example.com"})
+        self.assertEqual(
+            {key: user[key] for key in ("full_name", "dob", "email")},
+            {"full_name": "Ann", "dob": "2000-01-01", "email": "ann@example.com"},
+        )
+        self.assertEqual(set(user), {"full_name", "dob", "email", "user_id"})
+        self.assertRegex(user["user_id"], r"^[0-9a-f]{32}$")
         self.assertEqual(view.messages, ["SIGNUP_OK", "LOGIN_OK"])
         self.assertNotIn("password", user)
 
     def test_sign_up_with_a_plain_password_string(self):
         view = FakeAuthView(["2", "1"], emails=["a@b.com", "a@b.com"], passwords=["Pw12345!"], details=["Pw12345!"])
-        self.assertEqual(self.controller(view).run(), {"email": "a@b.com"})
+        user = self.controller(view).run()
+        self.assertEqual(user["email"], "a@b.com")
+        self.assertRegex(user["user_id"], r"^[0-9a-f]{32}$")
 
     def test_duplicate_sign_up_shows_a_message(self):
         view = FakeAuthView(["2", "2", "3"], emails=["a@b.com", "a@b.com"], details=["pw-one", "pw-two"])
@@ -1601,7 +1616,9 @@ class TestAuthController(BaseTest):
 
     def test_a_correct_password_on_the_second_try_works(self):
         view = FakeAuthView(["2", "1"], emails=["a@b.com"] * 3, passwords=["wrong", "right-pw"], details=["right-pw"])
-        self.assertEqual(self.controller(view).run(), {"email": "a@b.com"})
+        user = self.controller(view).run()
+        self.assertEqual(user["email"], "a@b.com")
+        self.assertRegex(user["user_id"], r"^[0-9a-f]{32}$")
         self.assertEqual(view.messages, ["SIGNUP_OK", "LOGIN_ERROR", "LOGIN_OK"])
 
     def test_unknown_email_cannot_log_in(self):
