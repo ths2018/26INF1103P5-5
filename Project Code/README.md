@@ -51,3 +51,17 @@ __pycache__/
 #python cache
 __pycache__/
 *.pyc
+
+## Run with Docker
+
+From the repository root, build the image:
+
+```powershell
+docker build -t symptom-app .
+```
+
+Create `Project Code/.env` with the `GENAI_API_KEY` described above, then run:
+
+```powershell
+docker run --rm -it --env-file "Project Code/.env" symptom-app
+```

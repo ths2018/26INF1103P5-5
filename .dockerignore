@@ -1,0 +1,13 @@
+.git/
+.gitignore
+Docker Images/
+Engineering Report/
+Git Repository History/
+Test Script/
+case/
+Project Code/.env
+Project Code/.venv/
+Project Code/.vscode/
+Project Code/__pycache__/
+Project Code/**/__pycache__/
+Project Code/**/*.py[cod]
