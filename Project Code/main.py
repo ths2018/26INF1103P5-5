@@ -155,8 +155,8 @@ def main():
 
         except Exception as exc:
             traceback.print_exc()
-            print(f"\n[Error] An unexpected error occurred: {type(exc).__name__}: {exc}")
-            print("The application will return to the main menu.")
+            print_output(f"\n[Error] An unexpected error occurred: {type(exc).__name__}: {exc}")
+            print_output("The application will return to the main menu.")
 
 
 if __name__ == "__main__":

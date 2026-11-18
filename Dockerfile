@@ -8,4 +8,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ["Project Code/", "."]
 
+COPY ["Test Script/", "Test Script/"]
+
 CMD ["python", "main.py"]

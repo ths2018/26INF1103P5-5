@@ -1,205 +1,248 @@
-
-"""
-Offline tests for main.py
-
-- Tests the application's startup, menu loop, shutdown, and error handling.
-- Uses unittest.mock to simulate other modules without making real AI calls
-  or creating actual case files.
-
-Test cases:
-- MAIN-01: Checks startup when an active case already exists.
-- MAIN-02: Checks that a new case is created when none exists.
-- MAIN-03: Checks that an initialisation error is handled safely.
-- MAIN-04: Checks that selecting Quit closes the active case.
-- MAIN-05: Checks that KeyboardInterrupt closes the case and exits.
-- MAIN-06: Checks that EOFError closes the case and exits.
-- MAIN-07: Checks that unexpected errors return to the menu.
-- MAIN-08: Checks that starting a new case closes the previous case.
-
-Run:
-    python -m unittest -v test_main
-"""
-
+import importlib
+import os
+import sys
 import unittest
-from unittest.mock import patch
+from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import Mock, patch
 
-import main
+# This test file is stored outside Project Code.
+# Add Project Code so its application modules can be imported.
+PROJECT_CODE = Path(__file__).resolve().parents[1] / "Project Code"
+if str(PROJECT_CODE) not in sys.path:
+    sys.path.insert(0, str(PROJECT_CODE))
+
+# main.py creates AIManager() when it is imported. Replace that class before
+# importing main so tests never need a Gemini API key or a live API connection.
+from AI import ai_manager as ai_manager_module
+
+with patch.object(ai_manager_module, "AIManager", return_value=Mock()):
+    main_module = importlib.import_module("main")
 
 
-class TestMain(unittest.TestCase):
+class TestMainApplication(unittest.TestCase):
 
     def setUp(self):
-        self.case = {
-            "case_id": "CASE001",
-            "logs": []
+        self.user = {
+            "user_id": "test-user-001",
+            "email": "patient@example.com"
         }
+        self.case = SimpleNamespace(
+            case_id="case_test_001",
+            logs=[]
+        )
+        self.chat = Mock()
 
-    @patch("main.create_chat")
-    @patch("main.get_active_case")
-    @patch("main.welcome_message")
-    @patch("main.print_output")
-    def test_startup_with_existing_case(
-        self, mock_print, mock_welcome,
-        mock_get_active, mock_create_chat
-    ):
-        """MAIN-01: Startup uses the existing active case."""
-        mock_get_active.return_value = self.case
-        mock_create_chat.return_value = "mock_chat"
+        # Replace external/application dependencies for each test.
+        self.patches = [
+            patch.object(main_module, "authenticate", return_value=self.user),
+            patch.object(main_module, "set_current_user"),
+            patch.object(main_module, "welcome_message"),
+            patch.object(main_module, "get_active_case", return_value=self.case),
+            patch.object(main_module, "get_backend_name", return_value="test"),
+            patch.object(main_module, "create_new_case", return_value=self.case),
+            patch.object(main_module, "close_case"),
+            patch.object(main_module, "get_menu_input", return_value=1),
+            patch.object(
+                main_module,
+                "print_output"
+            ),
+            patch.object(
+                main_module,
+                "ai_manager",
+                Mock()
+            ),
+            patch.object(
+                main_module,
+                "menu_selection",
+                return_value=(self.case, self.chat, True)
+            )
+        ]
 
-        with patch("main.get_menu_input", return_value="quit"), \
-             patch("main.menu_selection",
-                   return_value=(self.case, "mock_chat", True)), \
-             patch("main.close_case") as mock_close:
-            main.main()
+        self.mocks = [p.start() for p in self.patches]
+        self.addCleanup(self.stop_patches)
 
-        mock_welcome.assert_called_once()
-        mock_create_chat.assert_called_once_with(self.case)
-        mock_close.assert_called_once_with(self.case)
+        (
+            self.authenticate,
+            self.set_current_user,
+            self.welcome_message,
+            self.get_active_case,
+            self.get_backend_name,
+            self.create_new_case,
+            self.close_case,
+            self.get_menu_input,
+            self.print_output,
+            self.ai_manager,
+            self.menu_selection
+        ) = self.mocks
 
-    @patch("main.create_chat")
-    @patch("main.create_new_case")
-    @patch("main.get_active_case", return_value=None)
-    @patch("main.welcome_message")
-    @patch("main.print_output")
-    def test_startup_without_active_case(
-        self, mock_print, mock_welcome,
-        mock_get_active, mock_new_case, mock_create_chat
-    ):
-        """MAIN-02: A new case is created if none exists."""
-        mock_new_case.return_value = self.case
-        mock_create_chat.return_value = "mock_chat"
+        self.ai_manager.create_chat.return_value = self.chat
 
-        with patch("main.get_menu_input", return_value="quit"), \
-             patch("main.menu_selection",
-                   return_value=(self.case, "mock_chat", True)), \
-             patch("main.close_case"):
-            main.main()
+    def stop_patches(self):
+        for patcher in reversed(self.patches):
+            patcher.stop()
 
-        mock_new_case.assert_called_once()
-        mock_create_chat.assert_called_once_with(self.case)
+    def test_main_exits_when_authentication_returns_none(self):
+        self.authenticate.return_value = None
 
-    @patch("main.get_active_case", side_effect=RuntimeError("Initialisation failed"))
-    @patch("main.welcome_message")
-    @patch("main.print_output")
-    def test_initialisation_error(
-        self, mock_print, mock_welcome, mock_get_active
-    ):
-        """MAIN-03: Startup errors are reported without crashing."""
-        main.main()
+        main_module.main()
 
+        self.set_current_user.assert_not_called()
+        self.welcome_message.assert_not_called()
+        self.ai_manager.create_chat.assert_not_called()
+        self.close_case.assert_not_called()
+        self.print_output.assert_any_call(
+            "\nExiting application. Stay healthy!"
+        )
+
+    def test_main_exits_when_authentication_is_interrupted(self):
+        self.authenticate.side_effect = KeyboardInterrupt
+
+        main_module.main()
+
+        self.set_current_user.assert_not_called()
+        self.welcome_message.assert_not_called()
+
+    def test_main_exits_when_authentication_input_ends(self):
+        self.authenticate.side_effect = EOFError
+
+        main_module.main()
+
+        self.set_current_user.assert_not_called()
+        self.welcome_message.assert_not_called()
+
+    def test_main_sets_current_user_after_successful_authentication(self):
+        main_module.main()
+
+        self.set_current_user.assert_called_once_with("test-user-001")
+
+    def test_main_shows_welcome_message_after_sign_in(self):
+        main_module.main()
+
+        self.welcome_message.assert_called_once()
+
+    def test_main_creates_chat_for_active_case(self):
+        main_module.main()
+
+        self.ai_manager.create_chat.assert_called_once_with(self.case)
+
+    def test_main_displays_storage_backend(self):
+        main_module.main()
+
+        self.print_output.assert_any_call(
+            "[System] Storage backend: test"
+        )
+
+    def test_main_creates_case_when_no_active_case_exists(self):
+        self.get_active_case.return_value = None
+
+        main_module.main()
+
+        self.create_new_case.assert_called_once()
+        self.ai_manager.create_chat.assert_called_once_with(self.case)
+
+    def test_main_stops_if_application_initialisation_fails(self):
+        self.get_active_case.side_effect = RuntimeError("storage unavailable")
+
+        main_module.main()
+
+        self.print_output.assert_any_call(
+            "[Fatal Error] Could not initialise the application: storage unavailable"
+        )
+        self.get_menu_input.assert_not_called()
+        self.menu_selection.assert_not_called()
+
+    def test_main_routes_menu_choice_to_menu_selection(self):
+        main_module.main()
+
+        self.menu_selection.assert_called_once_with(
+            1,
+            self.case,
+            self.chat,
+            self.user
+        )
+
+    def test_main_closes_case_when_menu_requests_quit(self):
+        main_module.main()
+
+        self.close_case.assert_called_once_with(self.case)
+        self.print_output.assert_any_call(
+            "Exiting application. Stay healthy!"
+        )
+
+    def test_main_handles_keyboard_interrupt_in_main_loop(self):
+        self.get_menu_input.side_effect = KeyboardInterrupt
+
+        main_module.main()
+
+        self.close_case.assert_called_once_with(self.case)
+        self.print_output.assert_any_call(
+            "\n\nExiting application. Stay healthy!"
+        )
+
+    def test_main_handles_eof_in_main_loop(self):
+        self.get_menu_input.side_effect = EOFError
+
+        main_module.main()
+
+        self.close_case.assert_called_once_with(self.case)
+        self.print_output.assert_any_call(
+            "\n\nInput stream closed. Exiting application."
+        )
+
+    def test_main_returns_to_menu_after_unexpected_loop_error(self):
+        self.get_menu_input.side_effect = [
+            RuntimeError("temporary menu error"),
+            1
+        ]
+
+        main_module.main()
+
+        self.menu_selection.assert_called_once()
         self.assertTrue(
             any(
-                "[Fatal Error]" in str(call)
-                for call in mock_print.call_args_list
+                call.args and "[Error] An unexpected error occurred:" in str(call.args[0])
+                for call in self.print_output.call_args_list
             )
         )
 
-    @patch("main.create_chat", return_value="mock_chat")
-    @patch("main.get_active_case")
-    @patch("main.welcome_message")
-    @patch("main.print_output")
-    def test_quit_closes_active_case(
-        self, mock_print, mock_welcome,
-        mock_get_active, mock_create_chat
-    ):
-        """MAIN-04: Choosing Quit closes the active case."""
-        mock_get_active.return_value = self.case
+    def test_start_new_case_closes_existing_case_and_creates_new_chat(self):
+        old_case = SimpleNamespace(case_id="case_old")
+        new_case = SimpleNamespace(case_id="case_new", logs=[])
+        self.create_new_case.return_value = new_case
+        self.ai_manager.create_chat.return_value = self.chat
 
-        with patch("main.get_menu_input", return_value="quit"), \
-             patch("main.menu_selection",
-                   return_value=(self.case, "mock_chat", True)), \
-             patch("main.close_case") as mock_close:
-            main.main()
+        result_case, result_chat = main_module.start_new_case(old_case)
 
-        mock_close.assert_called_once_with(self.case)
+        self.close_case.assert_called_once_with(old_case)
+        self.create_new_case.assert_called_once()
+        self.ai_manager.create_chat.assert_called_once_with(new_case)
+        self.assertIs(result_case, new_case)
+        self.assertIs(result_chat, self.chat)
 
-    @patch("main.create_chat", return_value="mock_chat")
-    @patch("main.get_active_case")
-    @patch("main.welcome_message")
-    @patch("main.print_output")
-    def test_keyboard_interrupt(
-        self, mock_print, mock_welcome,
-        mock_get_active, mock_create_chat
-    ):
-        """MAIN-05: Ctrl+C closes the case and exits."""
-        mock_get_active.return_value = self.case
+    def test_start_new_case_works_without_an_existing_case(self):
+        new_case = SimpleNamespace(case_id="case_new", logs=[])
+        self.create_new_case.return_value = new_case
 
-        with patch("main.get_menu_input", side_effect=KeyboardInterrupt), \
-             patch("main.close_case") as mock_close:
-            main.main()
+        result_case, result_chat = main_module.start_new_case(None)
 
-        mock_close.assert_called_once_with(self.case)
+        self.close_case.assert_not_called()
+        self.create_new_case.assert_called_once()
+        self.assertIs(result_case, new_case)
+        self.assertIs(result_chat, self.chat)
 
-    @patch("main.create_chat", return_value="mock_chat")
-    @patch("main.get_active_case")
-    @patch("main.welcome_message")
-    @patch("main.print_output")
-    def test_eof_error(
-        self, mock_print, mock_welcome,
-        mock_get_active, mock_create_chat
-    ):
-        """MAIN-06: Closed input stream closes the case."""
-        mock_get_active.return_value = self.case
 
-        with patch("main.get_menu_input", side_effect=EOFError), \
-             patch("main.close_case") as mock_close:
-            main.main()
+class TestBuildUserRepository(unittest.TestCase):
 
-        mock_close.assert_called_once_with(self.case)
+    def test_build_user_repository_uses_in_memory_when_database_url_missing(self):
+        with patch.dict(os.environ, {}, clear=True):
+            with patch.object(main_module, "print_output") as output:
+                repository = main_module.build_user_repository()
 
-    @patch("main.create_chat", return_value="mock_chat")
-    @patch("main.get_active_case")
-    @patch("main.welcome_message")
-    @patch("main.print_output")
-    def test_unexpected_error_returns_to_menu(
-        self, mock_print, mock_welcome,
-        mock_get_active, mock_create_chat
-    ):
-        """MAIN-07: Unexpected errors are handled and the loop continues."""
-        mock_get_active.return_value = self.case
-
-        with patch(
-            "main.get_menu_input",
-            side_effect=["invalid", "quit"]
-        ), patch(
-            "main.menu_selection",
-            side_effect=[
-                ValueError("Test error"),
-                (self.case, "mock_chat", True)
-            ]
-        ), patch("main.close_case"):
-            with patch("builtins.print") as mock_builtin_print:
-                main.main()
-
-        self.assertTrue(
-            any(
-                "unexpected error" in str(call).lower()
-                for call in mock_builtin_print.call_args_list
-            )
-        )
-
-    @patch("main.create_chat", return_value="mock_chat")
-    @patch("main.create_new_case")
-    @patch("main.close_case")
-    @patch("main.print_output")
-    def test_start_new_case(
-        self, mock_print, mock_close,
-        mock_new_case, mock_create_chat
-    ):
-        """MAIN-08: Starting a new case closes the previous case."""
-        mock_new_case.return_value = {
-            "case_id": "CASE002",
-            "logs": []
-        }
-
-        new_case, chat = main.start_new_case(self.case)
-
-        mock_close.assert_called_once_with(self.case)
-        mock_new_case.assert_called_once()
-        mock_create_chat.assert_called_once_with(new_case)
-        self.assertEqual(new_case["case_id"], "CASE002")
-        self.assertEqual(chat, "mock_chat")
+        from Logic.in_memory_user_repository import InMemoryUserRepository
+        self.assertIsInstance(repository, InMemoryUserRepository)
+        output.assert_called_once()
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity=2)
