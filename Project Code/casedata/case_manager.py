@@ -129,7 +129,7 @@ class CaseManager:
                 "entries": len(case.logs),
                 "created": case.created,
             }
-            for case in self._repo.list_all()
+            for case in self.list_cases()
             if case.logs
         ]
 

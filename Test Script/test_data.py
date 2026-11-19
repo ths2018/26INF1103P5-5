@@ -826,6 +826,21 @@ class TestCaseManagerUserScoping(ManagerTestCase):
         self.bob.add_log(b, "bob q", "bob a")
         self.assertEqual([r["user_input"] for r in self.bob.load_all_logs()], ["bob q"])
 
+    def test_export_choices_are_scoped_to_the_current_user(self):
+        alice_case = self.alice.create_new_case()
+        self.alice.add_log(alice_case, "alice q", "alice a")
+        bob_case = self.bob.create_new_case()
+        self.bob.add_log(bob_case, "bob q", "bob a")
+
+        self.assertEqual(
+            [choice["case_id"] for choice in self.alice.export_choices()],
+            [alice_case.case_id],
+        )
+        self.assertEqual(
+            [choice["case_id"] for choice in self.bob.export_choices()],
+            [bob_case.case_id],
+        )
+
     def test_anonymous_manager_sees_everything(self):
         self.alice.create_new_case()
         self.bob.create_new_case()
